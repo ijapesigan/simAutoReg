@@ -19,8 +19,7 @@ project <- "simAutoReg"
 pkg_cran <- c(
   "vars",
   "Rcpp",
-  "RcppArmadillo",
-  "glmnet"
+  "RcppArmadillo"
 )
 
 pkg_github <- c()
