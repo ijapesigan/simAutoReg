@@ -93,6 +93,7 @@ using namespace Rcpp;
 //'}
 //'
 //' @export
+// [[Rcpp::export]]
 arma::mat SimVARZIP(int time, int burn_in, arma::vec constant, arma::mat coef, arma::mat chol_cov) {
   int k = constant.n_elem; // Number of variables
   int coef_dim = coef.n_cols; // Dimension of the coefficient matrix

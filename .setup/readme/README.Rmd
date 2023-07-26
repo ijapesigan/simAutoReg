@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
 
 ## Description
 
-Research compendium for the manuscript Monte Carlo Confidence Intervals for Indirect Effects in Ecological Momentary Assessment: A Dynamical Systems Approach.
+Simulate data from autoregressive models.
 
 ## Installation
 
@@ -50,7 +50,3 @@ remotes::install_github("ijapesigan/simAutoReg")
 See
 [GitHub Pages](https://ijapesigan.github.io/simAutoReg)
 for package documentation.
-
-See
-[Quarto Pub](https://ijapesigan.quarto.pub/simAutoReg)
-for package wiki and other resources.
