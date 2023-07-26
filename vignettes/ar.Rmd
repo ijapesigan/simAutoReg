@@ -1,0 +1,38 @@
+---
+title: "simAutoReg: Autoregressive Model - AR(p)"
+author: "Ivan Jacob Agaloos Pesigan"
+output: rmarkdown::html_vignette
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @*
+vignette: >
+  %\VignetteIndexEntry{simAutoReg: Autoregressive Model - AR(p)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+
+```r
+library(simAutoReg)
+set.seed(42)
+y <- SimAR(time = 1000L, burn_in = 200L, constant = 2, coef = c(0.5, -0.3), sd = 0.1)
+plot(x = 1:length(y), y = y, type = "b")
+```
+
+<img src="fig-vignettes-unnamed-chunk-2-1.png" width="3300" />
+
+```r
+stats::ar(y, aic = FALSE, order.max = 2)
+#> 
+#> Call:
+#> stats::ar(x = y, aic = FALSE, order.max = 2)
+#> 
+#> Coefficients:
+#>       1        2  
+#>  0.5016  -0.3380  
+#> 
+#> Order selected 2  sigma^2 estimated as  0.04087
+```

@@ -1,0 +1,202 @@
+---
+title: "simAutoReg: Vector Autoregressive Model - VAR(p)"
+author: "Ivan Jacob Agaloos Pesigan"
+output: rmarkdown::html_vignette
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @*
+vignette: >
+  %\VignetteIndexEntry{simAutoReg: Vector Autoregressive Model - VAR(p)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+## Data Generation
+
+### Normal
+
+
+```r
+library(simAutoReg)
+set.seed(42)
+time <- 10000L
+burn_in <- 200
+k <- 3
+p <- 2
+constant <- c(1, 1, 1)
+coef <- matrix(
+  data = c(
+    0.4, 0.0, 0.0, 0.1, 0.0, 0.0,
+    0.0, 0.5, 0.0, 0.0, 0.2, 0.0,
+    0.0, 0.0, 0.6, 0.0, 0.0, 0.3
+  ),
+  nrow = k,
+  byrow = TRUE
+)
+chol_cov <- chol(
+  matrix(
+    data = c(
+      0.1, 0.0, 0.0,
+      0.0, 0.1, 0.0,
+      0.0, 0.0, 0.1
+    ),
+    nrow = k,
+    byrow = TRUE
+  )
+)
+y <- SimVAR(
+  time = time,
+  burn_in = burn_in,
+  constant = constant,
+  coef = coef,
+  chol_cov = chol_cov
+)
+```
+
+##  Model Fitting
+
+### FitVAROLS
+
+
+```r
+yx <- YX(data = y, p = p)
+FitVAROLS(Y = yx$Y, X = yx$X)
+#>            [,1]       [,2]       [,3]
+#> [1,] 0.41516397 0.01760307 0.01550961
+#> [2,] 0.04609430 0.54341912 0.03845888
+#> [3,] 0.02858174 0.02703281 0.63462768
+#> [4,] 0.14227185 0.03924607 0.04805456
+#> [5,] 0.01618454 0.23419850 0.01222709
+#> [6,] 0.03857114 0.03533042 0.33562745
+```
+
+### vars::VAR
+
+
+```r
+fit <- vars::VAR(y, p = p, type = "const")
+#> Warning in vars::VAR(y, p = p, type = "const"): No column names supplied in y, using: y1, y2, y3 , instead.
+fit
+#> 
+#> VAR Estimation Results:
+#> ======================= 
+#> 
+#> Estimated coefficients for equation y1: 
+#> ======================================= 
+#> Call:
+#> y1 = y1.l1 + y2.l1 + y3.l1 + y1.l2 + y2.l2 + y3.l2 + const 
+#> 
+#>        y1.l1        y2.l1        y3.l1        y1.l2        y2.l2        y3.l2 
+#>  0.381495824  0.014493688 -0.008235351  0.107271863 -0.014818614  0.002528288 
+#>        const 
+#>  1.081177822 
+#> 
+#> 
+#> Estimated coefficients for equation y2: 
+#> ======================================= 
+#> Call:
+#> y2 = y1.l1 + y2.l1 + y3.l1 + y1.l2 + y2.l2 + y3.l2 + const 
+#> 
+#>        y1.l1        y2.l1        y3.l1        y1.l2        y2.l2        y3.l2 
+#> -0.010672062  0.516880335 -0.003886862  0.009852424  0.208161477  0.005060958 
+#>        const 
+#>  0.907993200 
+#> 
+#> 
+#> Estimated coefficients for equation y3: 
+#> ======================================= 
+#> Call:
+#> y3 = y1.l1 + y2.l1 + y3.l1 + y1.l2 + y2.l2 + y3.l2 + const 
+#> 
+#>        y1.l1        y2.l1        y3.l1        y1.l2        y2.l2        y3.l2 
+#> -0.016192833  0.008703253  0.599960140  0.015098029 -0.016965956  0.301688940 
+#>        const 
+#>  1.018053673
+plot(fit)
+```
+
+<img src="fig-vignettes-unnamed-chunk-4-1.png" width="3300" /><img src="fig-vignettes-unnamed-chunk-4-2.png" width="3300" /><img src="fig-vignettes-unnamed-chunk-4-3.png" width="3300" />
+
+### Zero-inflated Poisson
+
+
+```r
+y <- SimVARZip(
+  time = time,
+  burn_in = burn_in,
+  constant = constant,
+  coef = coef,
+  chol_cov = chol_cov
+)
+#> Error in SimVARZip(time = time, burn_in = burn_in, constant = constant, : could not find function "SimVARZip"
+hist(y[, 1])
+```
+
+<img src="fig-vignettes-unnamed-chunk-5-1.png" width="3300" />
+
+##  Model Fitting
+
+### FitVAROLS
+
+
+```r
+yx <- YX(data = y, p = p)
+FitVAROLS(Y = yx$Y, X = yx$X)
+#>            [,1]       [,2]       [,3]
+#> [1,] 0.41516397 0.01760307 0.01550961
+#> [2,] 0.04609430 0.54341912 0.03845888
+#> [3,] 0.02858174 0.02703281 0.63462768
+#> [4,] 0.14227185 0.03924607 0.04805456
+#> [5,] 0.01618454 0.23419850 0.01222709
+#> [6,] 0.03857114 0.03533042 0.33562745
+```
+
+### vars::VAR
+
+
+```r
+fit <- vars::VAR(y, p = p, type = "const")
+#> Warning in vars::VAR(y, p = p, type = "const"): No column names supplied in y, using: y1, y2, y3 , instead.
+fit
+#> 
+#> VAR Estimation Results:
+#> ======================= 
+#> 
+#> Estimated coefficients for equation y1: 
+#> ======================================= 
+#> Call:
+#> y1 = y1.l1 + y2.l1 + y3.l1 + y1.l2 + y2.l2 + y3.l2 + const 
+#> 
+#>        y1.l1        y2.l1        y3.l1        y1.l2        y2.l2        y3.l2 
+#>  0.381495824  0.014493688 -0.008235351  0.107271863 -0.014818614  0.002528288 
+#>        const 
+#>  1.081177822 
+#> 
+#> 
+#> Estimated coefficients for equation y2: 
+#> ======================================= 
+#> Call:
+#> y2 = y1.l1 + y2.l1 + y3.l1 + y1.l2 + y2.l2 + y3.l2 + const 
+#> 
+#>        y1.l1        y2.l1        y3.l1        y1.l2        y2.l2        y3.l2 
+#> -0.010672062  0.516880335 -0.003886862  0.009852424  0.208161477  0.005060958 
+#>        const 
+#>  0.907993200 
+#> 
+#> 
+#> Estimated coefficients for equation y3: 
+#> ======================================= 
+#> Call:
+#> y3 = y1.l1 + y2.l1 + y3.l1 + y1.l2 + y2.l2 + y3.l2 + const 
+#> 
+#>        y1.l1        y2.l1        y3.l1        y1.l2        y2.l2        y3.l2 
+#> -0.016192833  0.008703253  0.599960140  0.015098029 -0.016965956  0.301688940 
+#>        const 
+#>  1.018053673
+plot(fit)
+```
+
+<img src="fig-vignettes-unnamed-chunk-7-1.png" width="3300" /><img src="fig-vignettes-unnamed-chunk-7-2.png" width="3300" /><img src="fig-vignettes-unnamed-chunk-7-3.png" width="3300" />
