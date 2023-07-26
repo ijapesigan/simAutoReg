@@ -1,0 +1,56 @@
+---
+title: "simAutoReg"
+author: "Ivan Jacob Agaloos Pesigan"
+date: "`r Sys.Date()`"
+output: github_document
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @*
+---
+
+<!-- README.md is generated from .setup/readme/README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/ijapesigan/simAutoReg/workflows/R-CMD-check/badge.svg)](https://github.com/ijapesigan/simAutoReg/actions)
+[![test-coverage](https://github.com/ijapesigan/simAutoReg/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/ijapesigan/simAutoReg/actions/workflows/test-coverage.yml)
+[![lint](https://github.com/ijapesigan/simAutoReg/actions/workflows/lint.yml/badge.svg)](https://github.com/ijapesigan/simAutoReg/actions/workflows/lint.yml)
+[![pkgdown](https://github.com/ijapesigan/simAutoReg/actions/workflows/pkgdown-gh-pages.yml/badge.svg)](https://github.com/ijapesigan/simAutoReg/actions/workflows/pkgdown-gh-pages.yml)
+[![quarto (Quarto Pub)](https://github.com/ijapesigan/simAutoReg/actions/workflows/quarto-quarto-pub.yml/badge.svg)](https://github.com/ijapesigan/simAutoReg/actions/workflows/quarto-quarto-pub.yml)
+[![codecov](https://codecov.io/gh/ijapesigan/simAutoReg/branch/main/graph/badge.svg)](https://codecov.io/gh/ijapesigan/simAutoReg)
+<!-- badges: end -->
+
+## Description
+
+Research compendium for the manuscript Monte Carlo Confidence Intervals for Indirect Effects in Ecological Momentary Assessment: A Dynamical Systems Approach.
+
+## Installation
+
+You can install the released version of
+`simAutoReg`
+from
+[GitHub](https://github.com/ijapesigan/simAutoReg) with:
+
+```r
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("ijapesigan/simAutoReg")
+```
+
+## More Information
+
+See
+[GitHub Pages](https://ijapesigan.github.io/simAutoReg)
+for package documentation.
+
+See
+[Quarto Pub](https://ijapesigan.quarto.pub/simAutoReg)
+for package wiki and other resources.
