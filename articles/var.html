@@ -142,13 +142,10 @@ Agaloos Pesigan</h4>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">yx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/YX.html">YX</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">y</span>, p <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/FitVAROLS.html">FitVAROLS</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="va">yx</span><span class="op">$</span><span class="va">Y</span>, X <span class="op">=</span> <span class="va">yx</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            [,1]       [,2]       [,3]</span></span>
-<span><span class="co">#&gt; [1,] 0.41516397 0.01760307 0.01550961</span></span>
-<span><span class="co">#&gt; [2,] 0.04609430 0.54341912 0.03845888</span></span>
-<span><span class="co">#&gt; [3,] 0.02858174 0.02703281 0.63462768</span></span>
-<span><span class="co">#&gt; [4,] 0.14227185 0.03924607 0.04805456</span></span>
-<span><span class="co">#&gt; [5,] 0.01618454 0.23419850 0.01222709</span></span>
-<span><span class="co">#&gt; [6,] 0.03857114 0.03533042 0.33562745</span></span></code></pre></div>
+<span><span class="co">#&gt;            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]</span></span>
+<span><span class="co">#&gt; [1,] 0.41516397 0.04609430 0.02858174 0.14227185 0.01618454 0.03857114</span></span>
+<span><span class="co">#&gt; [2,] 0.01760307 0.54341912 0.02703281 0.03924607 0.23419850 0.03533042</span></span>
+<span><span class="co">#&gt; [3,] 0.01550961 0.03845888 0.63462768 0.04805456 0.01222709 0.33562745</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="varsvar">vars::VAR<a class="anchor" aria-label="anchor" href="#varsvar"></a>
@@ -199,14 +196,13 @@ Agaloos Pesigan</h4>
 <h3 id="zero-inflated-poisson">Zero-inflated Poisson<a class="anchor" aria-label="anchor" href="#zero-inflated-poisson"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">SimVARZip</span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SimVARZIP.html">SimVARZIP</a></span><span class="op">(</span></span>
 <span>  time <span class="op">=</span> <span class="va">time</span>,</span>
 <span>  burn_in <span class="op">=</span> <span class="va">burn_in</span>,</span>
 <span>  constant <span class="op">=</span> <span class="va">constant</span>,</span>
 <span>  coef <span class="op">=</span> <span class="va">coef</span>,</span>
 <span>  chol_cov <span class="op">=</span> <span class="va">chol_cov</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in SimVARZip(time = time, burn_in = burn_in, constant = constant, : could not find function "SimVARZip"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">y</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="fig-vignettes-unnamed-chunk-5-1.png" width="3300"></p>
 </div>
@@ -220,13 +216,10 @@ Agaloos Pesigan</h4>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">yx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/YX.html">YX</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">y</span>, p <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/FitVAROLS.html">FitVAROLS</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="va">yx</span><span class="op">$</span><span class="va">Y</span>, X <span class="op">=</span> <span class="va">yx</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            [,1]       [,2]       [,3]</span></span>
-<span><span class="co">#&gt; [1,] 0.41516397 0.01760307 0.01550961</span></span>
-<span><span class="co">#&gt; [2,] 0.04609430 0.54341912 0.03845888</span></span>
-<span><span class="co">#&gt; [3,] 0.02858174 0.02703281 0.63462768</span></span>
-<span><span class="co">#&gt; [4,] 0.14227185 0.03924607 0.04805456</span></span>
-<span><span class="co">#&gt; [5,] 0.01618454 0.23419850 0.01222709</span></span>
-<span><span class="co">#&gt; [6,] 0.03857114 0.03533042 0.33562745</span></span></code></pre></div>
+<span><span class="co">#&gt;               [,1]       [,2]       [,3]          [,4]        [,5]        [,6]</span></span>
+<span><span class="co">#&gt; [1,]  0.0116075361 0.01603456 0.11563400  0.0014639055 -0.01693222 -0.03847647</span></span>
+<span><span class="co">#&gt; [2,]  0.0016709977 0.54238590 0.05045897 -0.0002872820  0.22225486  0.02740053</span></span>
+<span><span class="co">#&gt; [3,] -0.0004112122 0.04453708 0.66357493 -0.0005013604  0.02516158  0.31300278</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="varsvar-1">vars::VAR<a class="anchor" aria-label="anchor" href="#varsvar-1"></a>
@@ -245,9 +238,9 @@ Agaloos Pesigan</h4>
 <span><span class="co">#&gt; y1 = y1.l1 + y2.l1 + y3.l1 + y1.l2 + y2.l2 + y3.l2 + const </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;        y1.l1        y2.l1        y3.l1        y1.l2        y2.l2        y3.l2 </span></span>
-<span><span class="co">#&gt;  0.381495824  0.014493688 -0.008235351  0.107271863 -0.014818614  0.002528288 </span></span>
+<span><span class="co">#&gt;  0.011590723  0.009087347  0.108111765  0.001443185 -0.023903648 -0.045984398 </span></span>
 <span><span class="co">#&gt;        const </span></span>
-<span><span class="co">#&gt;  1.081177822 </span></span>
+<span><span class="co">#&gt;  0.197666234 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Estimated coefficients for equation y2: </span></span>
@@ -255,10 +248,10 @@ Agaloos Pesigan</h4>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; y2 = y1.l1 + y2.l1 + y3.l1 + y1.l2 + y2.l2 + y3.l2 + const </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;        y1.l1        y2.l1        y3.l1        y1.l2        y2.l2        y3.l2 </span></span>
-<span><span class="co">#&gt; -0.010672062  0.516880335 -0.003886862  0.009852424  0.208161477  0.005060958 </span></span>
-<span><span class="co">#&gt;        const </span></span>
-<span><span class="co">#&gt;  0.907993200 </span></span>
+<span><span class="co">#&gt;         y1.l1         y2.l1         y3.l1         y1.l2         y2.l2 </span></span>
+<span><span class="co">#&gt;  0.0015885479  0.5083170601  0.0135702220 -0.0003888942  0.1880672752 </span></span>
+<span><span class="co">#&gt;         y3.l2         const </span></span>
+<span><span class="co">#&gt; -0.0094180712  0.9693473394 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Estimated coefficients for equation y3: </span></span>
@@ -266,10 +259,10 @@ Agaloos Pesigan</h4>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; y3 = y1.l1 + y2.l1 + y3.l1 + y1.l2 + y2.l2 + y3.l2 + const </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;        y1.l1        y2.l1        y3.l1        y1.l2        y2.l2        y3.l2 </span></span>
-<span><span class="co">#&gt; -0.016192833  0.008703253  0.599960140  0.015098029 -0.016965956  0.301688940 </span></span>
-<span><span class="co">#&gt;        const </span></span>
-<span><span class="co">#&gt;  1.018053673</span></span>
+<span><span class="co">#&gt;         y1.l1         y2.l1         y3.l1         y1.l2         y2.l2 </span></span>
+<span><span class="co">#&gt; -0.0004950656  0.0098883061  0.6260582512 -0.0006047023 -0.0096079532 </span></span>
+<span><span class="co">#&gt;         y3.l2         const </span></span>
+<span><span class="co">#&gt;  0.2755574404  0.9858478576</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></code></pre></div>
 <p><img src="fig-vignettes-unnamed-chunk-7-1.png" width="3300"><img src="fig-vignettes-unnamed-chunk-7-2.png" width="3300"><img src="fig-vignettes-unnamed-chunk-7-3.png" width="3300"></p>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">

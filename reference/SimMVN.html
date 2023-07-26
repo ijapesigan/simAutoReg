@@ -74,12 +74,12 @@ Number of samples to generate.</p></dd>
 
 <dt>location</dt>
 <dd><p>Numeric vector.
-Mean vector of length k, where k is the number of variables.</p></dd>
+Mean vector of length <code>k</code>, where <code>k</code> is the number of variables.</p></dd>
 
 
 <dt>chol_scale</dt>
 <dd><p>Numeric matrix.
-Cholesky decomposition of the covariance matrix of dimensions k x k.</p></dd>
+Cholesky decomposition of the covariance matrix of dimensions <code>k</code> by <code>k</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -87,26 +87,34 @@ Cholesky decomposition of the covariance matrix of dimensions k x k.</p></dd>
     
 
 <p>Matrix containing the simulated multivariate normal random numbers,
-with dimensions n x k, where n is the number of samples
-and k is the number of variables.</p>
+with dimensions <code>n</code> by <code>k</code>, where <code>n</code> is the number of samples
+and <code>k</code> is the number of variables.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The <code>SimMVN</code> function generates multivariate normal random numbers using the Cholesky decomposition method.
-Given the number of samples <code>n</code>, the mean vector <code>location</code> of length k (where k is the number of variables),
-and the Cholesky decomposition <code>chol_scale</code> of the covariance matrix of dimensions k x k,
+    <p>The <code>SimMVN()</code> function generates multivariate normal random numbers
+using the Cholesky decomposition method.
+Given the number of samples <code>n</code>, the mean vector <code>location</code> of length <code>k</code>
+(where <code>k</code> is the number of variables),
+and the Cholesky decomposition <code>chol_scale</code> of the covariance matrix
+of dimensions <code>k</code> by <code>k</code>,
 the function produces a matrix of multivariate normal random numbers.</p>
-<p>The steps involved in generating multivariate normal random numbers are as follows:</p>
-<ul><li><p>Determine the number of variables <code>k</code> from the length of the mean vector.</p></li>
-<li><p>Generate random data from a standard multivariate normal distribution, resulting in an n x k matrix of random numbers.</p></li>
-<li><p>Transform the standard normal random data into multivariate normal random data using the Cholesky decomposition <code>chol_scale</code>.</p></li>
-<li><p>Add the mean vector <code>location</code> to the transformed data to obtain the final simulated multivariate normal random numbers.</p></li>
-</ul><p>The function returns a matrix of simulated multivariate normal random numbers with dimensions n x k,
-where n is the number of samples and k is the number of variables. This matrix can be used for various statistical analyses and simulations.</p>
-    </div>
+<p>The steps involved in generating multivariate normal random numbers are as follows:</p><ul><li><p>Determine the number of variables <code>k</code> from the length of the mean vector.</p></li>
+<li><p>Generate random data from a standard multivariate normal distribution,
+resulting in an <code>n</code> by <code>k</code> matrix of random numbers.</p></li>
+<li><p>Transform the standard normal random data into multivariate normal random data
+using the Cholesky decomposition <code>chol_scale</code>.</p></li>
+<li><p>Add the mean vector <code>location</code> to the transformed data
+to obtain the final simulated multivariate normal random numbers.</p></li>
+<li><p>The function returns a matrix of simulated multivariate normal random numbers
+with dimensions <code>n</code> by <code>k</code>,
+where <code>n</code> is the number of samples and <code>k</code> is the number of variables.
+This matrix can be used for various statistical analyses and simulations.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>The <code>chol</code> function in R to obtain the Cholesky decomposition of a covariance matrix.</p></div>
+    <div class="dont-index"><p>The <code><a href="https://rdrr.io/r/base/chol.html" class="external-link">chol()</a></code> function in R to obtain the Cholesky decomposition
+of a covariance matrix.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

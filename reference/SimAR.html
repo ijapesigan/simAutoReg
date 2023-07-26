@@ -92,7 +92,7 @@ Autoregressive coefficients.</p></dd>
 
 <dt>sd</dt>
 <dd><p>Numeric.
-The standard deviation of the random noise.</p></dd>
+The standard deviation of the random process noise.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -103,20 +103,30 @@ The standard deviation of the random noise.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The <code>SimAR</code> function generates synthetic time series data from an autoregressive (AR) model.
-The generated data follows the AR(p) model, where <code>p</code> is the number of coefficients specified in <code>coef</code>.
-The generated time series data includes a constant term and autoregressive terms based on the provided coefficients.
-Random noise, sampled from a normal distribution with mean 0 and standard deviation <code>sd</code>, is added to the time series.
-Additionally, a burn-in period can be specified to exclude initial data points from the output.</p>
-<p>The steps in generating the autoregressive time series with burn-in are as follows:</p>
-<ul><li><p>Set the order of the AR model to <code>p</code>.</p></li>
-<li><p>Generate random noise from a normal distribution with mean 0 and standard deviation <code>sd</code>.</p></li>
+    <p>The <code>SimAR()</code> function generates synthetic time series data
+from an autoregressive (AR) model.
+The generated data follows the AR(p) model,
+where <code>p</code> is the number of coefficients specified in <code>coef</code>.
+The generated time series data includes a constant term
+and autoregressive terms based on the provided coefficients.
+Random noise, sampled from a normal distribution with mean 0
+and standard deviation <code>sd</code>, is added to the time series.
+A burn-in period is specified to exclude initial data points
+from the output.</p>
+<p>The steps in generating the autoregressive time series with burn-in are as follows:</p><ul><li><p>Set the order of the AR model to <code>p</code> based on the length of <code>coef</code>.</p></li>
+<li><p>Create a vector data of size <code>time + burn_in</code>
+to store the generated AR time series data.</p></li>
+<li><p>Create a vector data of size <code>time + burn_in</code> of random process noise
+from a normal distribution with mean 0
+and standard deviation <code>sd</code>.</p></li>
 <li><p>Generate the autoregressive time series with burn-in using the formula:
 $$Y_t = constant + \sum_{i=1}^{p} (coef[i] * Y_{t-i}) + noise_t$$
-where \(Y_t\) is the time series data at time \(t\), \(constant\) is the constant term,
-\(coef[i]\) are the autoregressive coefficients, \(Y_{t-i}\) are the lagged data points up to order <code>p</code>,
+where \(Y_t\) is the time series data at time \(t\), \(constant\)
+is the constant term,
+\(coef[i]\) are the autoregressive coefficients,
+\(Y_{t-i}\) are the lagged data points up to order <code>p</code>,
 and \(noise_t\) is the random noise at time \(t\).</p></li>
-<li><p>Optionally, remove the burn-in period from the generated time series data.</p></li>
+<li><p>Remove the burn-in period from the generated time series data.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -127,12 +137,17 @@ and \(noise_t\) is the random noise at time \(t\).</p></li>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">SimAR</span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span>, burn_in <span class="op">=</span> <span class="fl">5</span>, constant <span class="op">=</span> <span class="fl">2</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.3</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 2.441758</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 2.756566</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 2.626824</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 2.890127</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 2.644473</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 2.441758</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 2.756566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 2.626824</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 2.890127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 2.644473</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 2.716173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 3.022073</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 2.418413</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 2.246827</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 2.371225</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

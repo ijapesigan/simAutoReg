@@ -94,15 +94,22 @@ Matrix of lagged predictors (X).</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The <code>FitVAROLS</code> function estimates the parameters of a Vector Autoregressive (VAR) model using the Ordinary Least Squares (OLS) method.
-Given the input matrices <code>Y</code> and <code>X</code>, where <code>Y</code> is the matrix of dependent variables, and <code>X</code> is the matrix of lagged predictors,
-the function computes the autoregressive and cross-regression coefficients of the VAR model.</p>
-<p>The steps involved in estimating the VAR model parameters using OLS are as follows:</p>
-<ul><li><p>Compute the QR decomposition of the lagged predictor matrix <code>X</code> using the <code>qr_econ</code> function from the Armadillo library.</p></li>
+    <p>The <code>FitVAROLS()</code> function estimates the parameters
+of a Vector Autoregressive (VAR) model
+using the Ordinary Least Squares (OLS) method.
+Given the input matrices <code>Y</code> and <code>X</code>,
+where <code>Y</code> is the matrix of dependent variables,
+and <code>X</code> is the matrix of lagged predictors,
+the function computes the autoregressive and cross-regression coefficients
+of the VAR model.</p>
+<p>The steps involved in estimating the VAR model parameters using OLS are as follows:</p><ul><li><p>Compute the QR decomposition of the lagged predictor matrix <code>X</code>
+using the <code>qr_econ</code> function from the Armadillo library.</p></li>
 <li><p>Extract the <code>Q</code> and <code>R</code> matrices from the QR decomposition.</p></li>
-<li><p>Solve the linear system <code>R * coef = Q.t() * Y</code> to estimate the VAR model coefficients <code>coef</code>.</p></li>
-</ul><p>The function returns a matrix containing the estimated autoregressive and cross-regression coefficients of the VAR model.</p>
-    </div>
+<li><p>Solve the linear system <code>R * coef = Q.t() * Y</code>
+to estimate the VAR model coefficients <code>coef</code>.</p></li>
+<li><p>The function returns a matrix containing the estimated
+autoregressive and cross-regression coefficients of the VAR model.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>The <code>qr_econ</code> function from the Armadillo library for QR decomposition.</p></div>
@@ -149,13 +156,10 @@ the function computes the autoregressive and cross-regression coefficients of th
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">yx</span> <span class="op">&lt;-</span> <span class="fu"><a href="YX.html">YX</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">p</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">FitVAROLS</span><span class="op">(</span>Y <span class="op">=</span> <span class="va">yx</span><span class="op">$</span><span class="va">Y</span>, X <span class="op">=</span> <span class="va">yx</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]       [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.42673071 0.02782325 0.02599686</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.03491921 0.53150496 0.03527976</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.03724513 0.03254096 0.63595811</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.12736002 0.02983892 0.03252158</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.02720484 0.23142155 0.02762628</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.03087875 0.03465463 0.33113667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.42673071 0.03491921 0.03724513 0.12736002 0.02720484 0.03087875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.02782325 0.53150496 0.03254096 0.02983892 0.23142155 0.03465463</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.02599686 0.03527976 0.63595811 0.03252158 0.02762628 0.33113667</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
