@@ -10,6 +10,7 @@ using namespace Rcpp;
 //'   \exp \left( \boldsymbol{\mu} + \boldsymbol{\varepsilon} \right)
 //'   \quad
 //'   \text{with}
+//'   \quad
 //'   \boldsymbol{\varepsilon} \sim
 //'   \mathcal{N} \left( \boldsymbol{0}, \boldsymbol{\Sigma} \right)
 //' }.
@@ -27,6 +28,23 @@ using namespace Rcpp;
 //' @return Matrix with each row containing the simulated variance vector
 //'   for each sample.
 //'
+//' @details
+//' The [simAutoReg::SimVariance()] function generates random data
+//' for the variance vector
+//' based on the exponential of a multivariate normal distribution.
+//' Given the number of samples `n`,
+//' the constant term \eqn{\boldsymbol{\mu}} represented by the `location` vector,
+//' and the Cholesky decomposition matrix \eqn{\boldsymbol{\Sigma}}
+//' for the multivariate normal random error \eqn{\boldsymbol{\varepsilon}},
+//' the function simulates \eqn{n} independent samples
+//' of the variance vector \eqn{\boldsymbol{\sigma^{2}}}.
+//' Each sample of the variance vector \eqn{\boldsymbol{\sigma^{2}}} is obtained by
+//' calculating the exponential of random variations to the mean vector \eqn{\boldsymbol{\mu}}.
+//' The random variations are generated using the Cholesky decomposition
+//' of the covariance matrix \eqn{\boldsymbol{\Sigma}}.
+//' Finally, the function returns a matrix with each column containing the simulated
+//' variance vector for each sample.
+//'
 //' @examples
 //' set.seed(42)
 //' n <- 100
@@ -39,6 +57,8 @@ using namespace Rcpp;
 //'   )
 //' )
 //' SimVariance(n = n, location = location, chol_scale = chol_scale)
+//'
+//' @importFrom Rcpp sourceCpp
 //'
 //' @export
 // [[Rcpp::export]]
@@ -58,7 +78,6 @@ arma::mat SimVariance(int n, arma::vec location, arma::mat chol_scale) {
 }
 
 /*** R
-# Example usage
 n <- 100
 location <- c(0.5, -0.2, 0.1)
 chol_scale <- chol(

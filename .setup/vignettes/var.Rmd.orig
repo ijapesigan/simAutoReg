@@ -87,7 +87,7 @@ plot(fit)
 ### Zero-inflated Poisson
 
 ```{r}
-y <- SimVARZip(
+y <- SimVARZIP(
   time = time,
   burn_in = burn_in,
   constant = constant,

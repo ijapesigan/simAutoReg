@@ -17,18 +17,28 @@ lapply(
       coef = coef,
       chol_cov = chol_cov
     )
+    dims <- dim(y)
     yx <- YX(y, 2)
-    est <- FitVAROLS(Y = yx$Y, X = yx$X)
+    coef_est <- FitVAROLS(Y = yx$Y, X = yx$X)
     testthat::test_that(
-      text,
+      paste(text, "time"),
       {
         testthat::expect_true(
           all(
             abs(
-              coef - cbind(
-                est[1:3, ],
-                est[4:6, ]
-              )
+              time - dims[1]
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "coef"),
+      {
+        testthat::expect_true(
+          all(
+            abs(
+              coef - coef_est
             ) <= tol
           )
         )
@@ -40,8 +50,8 @@ lapply(
   constant <- c(1, 1, 1),
   coef = matrix(
     data = c(
-      0.5, 0.0, 0.0, 0.4, 0.0, 0.0,
-      0.0, 0.5, 0.0, 0.0, 0.4, 0.0,
+      0.5, 0.2, 0.0, 0.4, 0.0, 0.1,
+      0.0, 0.5, 0.2, 0.0, 0.4, 0.0,
       0.0, 0.0, 0.5, 0.0, 0.0, 0.4
     ),
     nrow = 3,

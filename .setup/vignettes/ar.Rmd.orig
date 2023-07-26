@@ -30,6 +30,6 @@ knitr::opts_chunk$set(
 library(simAutoReg)
 set.seed(42)
 y <- SimAR(time = 1000L, burn_in = 200L, constant = 2, coef = c(0.5, -0.3), sd = 0.1)
-plot(x = 1:length(y), y = y, type = "b")
+plot(x = 1:length(y), y = y, type = "b", xlab = "time")
 stats::ar(y, aic = FALSE, order.max = 2)
 ```

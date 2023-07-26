@@ -10,21 +10,36 @@ lapply(
                  tol,
                  text) {
     message(text)
+    data <- as.vector(
+      SimAR(
+        time = time,
+        burn_in = burn_in,
+        constant = constant,
+        coef = coef,
+        sd = sd
+      )
+    )
     testthat::test_that(
-      text,
+      paste(text, "time"),
+      {
+        testthat::expect_true(
+          all(
+            abs(
+              time - length(data)
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "coef"),
       {
         testthat::expect_true(
           all(
             abs(
               coef - coef(
                 stats::ar(
-                  SimAR(
-                    time = time,
-                    burn_in = burn_in,
-                    constant = constant,
-                    coef = coef,
-                    sd = sd
-                  ),
+                  data,
                   aic = FALSE,
                   order.max = length(coef),
                   method = "ols"

@@ -55,22 +55,27 @@
 //' FitVAROLS(Y = yx$Y, X = yx$X)
 //'
 //' @details
-//' The \code{FitVAROLS} function estimates the parameters of a Vector Autoregressive (VAR) model using the Ordinary Least Squares (OLS) method.
-//' Given the input matrices \code{Y} and \code{X}, where \code{Y} is the matrix of dependent variables, and \code{X} is the matrix of lagged predictors,
-//' the function computes the autoregressive and cross-regression coefficients of the VAR model.
+//' The [simAutoReg::FitVAROLS()] function estimates the parameters
+//' of a Vector Autoregressive (VAR) model
+//' using the Ordinary Least Squares (OLS) method.
+//' Given the input matrices `Y` and `X`,
+//' where `Y` is the matrix of dependent variables,
+//' and `X` is the matrix of lagged predictors,
+//' the function computes the autoregressive and cross-regression coefficients
+//' of the VAR model.
 //'
 //' The steps involved in estimating the VAR model parameters using OLS are as follows:
 //'
-//' \itemize{
-//'   \item Compute the QR decomposition of the lagged predictor matrix \code{X} using the \code{qr_econ} function from the Armadillo library.
-//'   \item Extract the \code{Q} and \code{R} matrices from the QR decomposition.
-//'   \item Solve the linear system \code{R * coef = Q.t() * Y} to estimate the VAR model coefficients \code{coef}.
-//' }
-//'
-//' The function returns a matrix containing the estimated autoregressive and cross-regression coefficients of the VAR model.
+//' - Compute the QR decomposition of the lagged predictor matrix `X`
+//'   using the `qr_econ` function from the Armadillo library.
+//' - Extract the `Q` and `R` matrices from the QR decomposition.
+//' - Solve the linear system `R * coef = Q.t() * Y`
+//'   to estimate the VAR model coefficients `coef`.
+//' - The function returns a matrix containing the estimated
+//'   autoregressive and cross-regression coefficients of the VAR model.
 //'
 //' @seealso
-//' The \code{qr_econ} function from the Armadillo library for QR decomposition.
+//' The `qr_econ` function from the Armadillo library for QR decomposition.
 //'
 //' @importFrom Rcpp sourceCpp
 //'
@@ -84,11 +89,10 @@ arma::mat FitVAROLS(arma::mat Y, arma::mat X) {
   // Solve the linear system R * coef = Q.t() * Y
   arma::mat coef = arma::solve(R, Q.t() * Y);
 
-  return coef;
+  return coef.t();
 }
 
 /*** R
-set.seed(42)
 time <- 100000L
 burn_in <- 200
 k <- 3

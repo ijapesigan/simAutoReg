@@ -15,24 +15,24 @@ using namespace Rcpp;
 //' @param burn_in Integer.
 //'   Number of burn-in observations to exclude before returning the results.
 //' @param constant Numeric vector.
-//'   The constant term vector of length k, where k is the number of variables.
+//'   The constant term vector of length `k`, where `k` is the number of variables.
 //' @param coef Numeric matrix.
-//'   Coefficient matrix with dimensions k x (k * p).
-//'   Each k x k block corresponds to the coefficient matrix
+//'   Coefficient matrix with dimensions `k` by `(k * p)`.
+//'   Each `k` by `k` block corresponds to the coefficient matrix
 //'   for a particular lag.
 //' @param chol_cov Numeric matrix.
 //'   The Cholesky decomposition of the covariance matrix
 //'   of the multivariate normal noise.
-//'   It should have dimensions k x k.
+//'   It should have dimensions `k` by `k`.
 //'
 //' @return Numeric matrix containing the simulated time series data
-//'   with dimensions k x (time - burn_in),
-//'   where k is the number of variables and time is the number of observations.
+//'   with dimensions `k` by `(time - burn_in)`,
+//'   where `k` is the number of variables and time is the number of observations.
 //'
 //' @examples
 //' set.seed(42)
-//' time <- 100000L
-//' burn_in <- 200
+//' time <- 50L
+//' burn_in <- 10L
 //' k <- 3
 //' p <- 2
 //' constant <- c(1, 1, 1)
@@ -66,31 +66,54 @@ using namespace Rcpp;
 //' head(y)
 //'
 //' @details
-//' The \code{SimVARZIP} function generates synthetic time series data from a Vector Autoregressive Zero-Inflated Poisson (VARZIP) model.
-//' The VARZIP model is an extension of the Vector Autoregressive (VAR) model with zero-inflated Poisson (ZIP) count process.
-//' The VARZIP model is defined by the constant term \code{constant}, the coefficient matrix \code{coef},
-//' and the Cholesky decomposition of the covariance matrix of the multivariate normal noise \code{chol_cov}.
-//' The generated time series data follows a VAR(p) process, where \code{p} is the number of lags specified by the size of \code{coef}.
-//' The first variable in the VARZIP model follows a ZIP process, where it can be either zero-inflated or generated from a Poisson distribution.
-//' The generated data includes a burn-in period, which is excluded before returning the results.
+//' The [simAutoReg::SimVARZIP()] function generates synthetic time series data
+//' from a Vector Autoregressive (VAR)
+//' with Zero-Inflated Poisson (ZIP) model for the first observed variable.
+//' See [simAutoReg::SimVAR()] for more details on generating data for VAR(p).
+//' The `SimVARZIP` function goes further by using the generated values
+//' for the first variable to generate data from the ZIP model.
+//' The exponential of the values from the first variable
+//' from the original VAR(p) model
+//' are used as the `intensity` parameter in the Poisson distribution
+//' in the ZIP model.
+//' Data from the ZIP model are used to replace the original values
+//' for the first variable.
+//' Values for the rest of the variables are unchanged.
+//' The generated data includes a burn-in period,
+//' which is excluded before returning the results.
 //'
-//' The steps involved in generating the VARZIP time series data are as follows:
+//' The steps involved in generating the time series data are as follows:
 //'
-//' \itemize{
-//'   \item Extract the number of variables \code{k} and the number of lags \code{p} from the input.
-//'   \item Create a matrix \code{data} of size \code{k} x (\code{time + burn_in}) to store the generated VARZIP time series data.
-//'   \item Set the initial values of the matrix \code{data} using the constant term \code{constant}.
-//'   \item For each time point starting from the \code{p}-th time point to \code{time + burn_in - 1}:
-//'   \item Generate a vector of random noise from a multivariate normal distribution with mean 0 and covariance matrix \code{chol_cov}.
-//'   \item Generate the VAR time series values for each variable \code{j} at time \code{i} by applying the autoregressive terms for each lag \code{lag} and each variable \code{l}.
-//'   \item Add the generated noise to the VAR time series values.
-//'   \item For the first variable, apply the Zero-Inflated Poisson (ZIP) model:
-//'   \item Compute the intensity \code{intensity} as the exponential of the first variable's value at time \code{i}.
-//'   \item Sample a random value \code{u} from a uniform distribution on [0, 1].
-//'   \item If \code{u} is less than \code{intensity / (1 + intensity)}, set the first variable's value to zero (inflation).
-//'   \item Otherwise, sample the first variable's value from a Poisson distribution with mean \code{intensity} (count process).
-//'   \item Transpose the data matrix \code{data} and return only the required time period after burn-in as a numeric matrix.
-//'}
+//' - Extract the number of variables `k`
+//'   and the number of lags `p` from the input.
+//' - Create a matrix `data` of size `k` x (`time + burn_in`)
+//'   to store the generated data.
+//' - Set the initial values of the matrix `data`
+//'   using the constant term `constant`.
+//' - For each time point starting from the `p`-th time point
+//'   to `time + burn_in - 1`:
+//'       - Generate a vector of random process noise
+//'         from a multivariate normal distribution
+//'         with mean 0 and covariance matrix `chol_cov`.
+//'       - Generate the VAR time series values for each variable `j`
+//'         at time `t` by applying the autoregressive terms
+//'         for each lag `lag` and each variable `l`.
+//'       - Add the generated noise to the VAR time series values.
+//'       - For the first variable,
+//'         apply the Zero-Inflated Poisson (ZIP) model:
+//'             - Compute the intensity `intensity`
+//'               as the exponential of the first variable's value at time `t`.
+//'             - Sample a random value `u`
+//'               from a uniform distribution on \[0, 1\].
+//'             - If `u` is less than `intensity / (1 + intensity)`,
+//'               set the first variable's value to zero (inflation).
+//'             - Otherwise, sample the first variable's value
+//'               from a Poisson distribution
+//'               with mean `intensity` (count process).
+//'       - Transpose the data matrix `data` and return only
+//'         the required time period after burn-in as a numeric matrix.
+//'
+//' @importFrom Rcpp sourceCpp
 //'
 //' @export
 // [[Rcpp::export]]
@@ -106,7 +129,7 @@ arma::mat SimVARZIP(int time, int burn_in, arma::vec constant, arma::mat coef, a
   data.each_col() = constant; // Fill each column with the constant vector
 
   // Generate the VAR time series
-  for (int i = p; i < time + burn_in; i++) {
+  for (int t = p; t < time + burn_in; t++) {
     // Generate noise from a multivariate normal distribution
     arma::vec noise = arma::randn(k);
     arma::vec mult_noise = chol_cov * noise;
@@ -115,19 +138,19 @@ arma::mat SimVARZIP(int time, int burn_in, arma::vec constant, arma::mat coef, a
     for (int j = 0; j < k; j++) {
       for (int lag = 0; lag < p; lag++) {
         for (int l = 0; l < k; l++) {
-          data(j, i) += coef(j, lag * k + l) * data(l, i - lag - 1);
+          data(j, t) += coef(j, lag * k + l) * data(l, t - lag - 1);
         }
       }
-      data(j, i) += mult_noise(j);
+      data(j, t) += mult_noise(j);
     }
     // Use ZIP model for the first variable
-    double intensity = std::exp(data(0, i));
+    double intensity = std::exp(data(0, t));
     if (R::runif(0, 1) < intensity / (1 + intensity)) {
       // Sample from the point mass at zero (inflation)
-      data(0, i) = 0;
+      data(0, t) = 0;
     } else {
       // Sample from the Poisson distribution (count process)
-      data(0, i) = R::rpois(intensity);
+      data(0, t) = R::rpois(intensity);
     }
   }
 

@@ -4,17 +4,20 @@ using namespace Rcpp;
 
 //' Create Y and X Matrices
 //'
-//' This function creates the Y and X matrices.
+//' This function creates the dependent variable (Y)
+//' and predictor variable (X) matrices.
 //'
 //' @author Ivan Jacob Agaloos Pesigan
 //'
 //' @param data Numeric matrix.
-//'   The time series data with dimensions n x k,
-//'   where n is the number of observations and k is the number of variables.
+//'   The time series data with dimensions `t` by `k`,
+//'   where `t` is the number of observations and `k` is the number of variables.
 //' @param p Integer.
 //'   The order of the VAR model (number of lags).
 //'
-//' @return List containing the Y and X matrices.
+//' @return List containing the dependent variable (Y)
+//' and predictor variable (X) matrices.
+//' Note that the resulting matrices will have `t - p` rows.
 //'
 //' @examples
 //' set.seed(42)
@@ -54,39 +57,46 @@ using namespace Rcpp;
 //' str(yx)
 //'
 //' @details
-//' The \code{YX} function creates the Y and X matrices required for fitting a Vector Autoregressive (VAR) model.
-//' Given the input \code{data} matrix with dimensions n x k, where n is the number of observations and k is the number of variables,
-//' and the order of the VAR model \code{p} (number of lags), the function constructs lagged predictor matrix X and the dependent variable matrix Y.
-//' The matrices X and Y are used as inputs for estimating the VAR model parameters.
+//' The [simAutoReg::YX()] function creates the `Y` and `X` matrices
+//' required for fitting a Vector Autoregressive (VAR) model.
+//' Given the input `data` matrix with dimensions `t` by `k`,
+//' where `t` is the number of observations and `k` is the number of variables,
+//' and the order of the VAR model `p` (number of lags),
+//' the function constructs lagged predictor matrix `X`
+//' and the dependent variable matrix `Y`.
 //'
-//' The steps involved in creating the Y and X matrices are as follows:
+//' The steps involved in creating the `Y` and `X` matrices are as follows:
 //'
-//' \itemize{
-//'   \item Determine the number of observations \code{n} and the number of variables \code{k} from the input data matrix.
-//'   \item Create matrices X and Y to store lagged variables and the dependent variable, respectively.
-//'   \item Populate the matrices X and Y with the appropriate lagged data. The predictors matrix X contains the lagged values of the dependent variables,
-//'     while the dependent variable matrix Y contains the original values of the dependent variables.
-//' }
-//'
-//' The function returns a list containing the Y and X matrices, which can be used for further analysis and estimation of the VAR model parameters.
+//' - Determine the number of observations `t` and the number of variables `k`
+//'   from the input data matrix.
+//' - Create matrices `X` and `Y` to store lagged variables
+//'   and the dependent variable, respectively.
+//' - Populate the matrices `X` and `Y` with the appropriate lagged data.
+//'   The predictors matrix `X` contains the lagged values of the dependent variables,
+//'   while the dependent variable matrix `Y` contains the original values
+//'   of the dependent variables.
+//' - The function returns a list containing the `Y` and `X` matrices,
+//'   which can be used for further analysis and estimation
+//'   of the VAR model parameters.
 //'
 //' @seealso
-//' The \code{SimVAR} function for simulating time series data from a VAR model.
+//' The [simAutoReg::SimVAR()] function for simulating time series data
+//' from a VAR model.
 //'
 //' @importFrom Rcpp sourceCpp
 //'
 //' @export
 // [[Rcpp::export]]
 List YX(arma::mat data, int p) {
-  int n = data.n_rows; // Number of observations
+  int t = data.n_rows; // Number of observations
   int k = data.n_cols; // Number of variables
 
   // Create matrices to store lagged variables and the dependent variable
-  arma::mat X(n - p, k * p, arma::fill::zeros);
-  arma::mat Y(n - p, k, arma::fill::zeros);
+  arma::mat X(t - p, k * p, arma::fill::zeros);
+  arma::mat Y(t - p, k, arma::fill::zeros);
 
   // Populate the matrices X and Y with lagged data
-  for (int i = 0; i < (n - p); i++) {
+  for (int i = 0; i < (t - p); i++) {
     int index = 0;
     // Arrange predictors from smallest lag to biggest
     for (int lag = p - 1; lag >= 0; lag--) {
