@@ -27,3 +27,4 @@ Suggests:
     rmarkdown,
     testthat,
     vars
+RoxygenNote: 7.2.3
