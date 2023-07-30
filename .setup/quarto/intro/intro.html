@@ -420,8 +420,8 @@ with mean 0 and covariance matrix <code>chol_cov</code>.
 using the formula:
 </p>
 <p style="text-align: center;"><code class="reqn">Y_{tj} = constant_j +
-      \sum_{l = 1}^{p} \sum_{m = 1}^{k} (coef_{jm} * Y_{im}) +
-      \text{noise}_{j}</code>
+    \sum_{l = 1}^{p} \sum_{m = 1}^{k} (coef_{jm} * Y_{im}) +
+    \text{noise}_{j}</code>
 </p>
 
 <p>where <code class="reqn">Y_{tj}</code> is the value of variable <code>j</code> at time <code>t</code>,
@@ -433,13 +433,13 @@ up to order <code>p</code> at time <code>t</code>,
 and <code class="reqn">noise_{j}</code> is the element <code>j</code>
 from the generated vector of random process noise.
 </p>
+</li></ul>
+
 </li>
 <li><p> Transpose the matrix <code>data</code> and return only
 the required time period after the burn-in period,
 which is from column <code>burn_in</code> to column <code>time + burn_in - 1</code>.
 </p>
-</li></ul>
-
 </li></ul>
 
 
@@ -475,17 +475,7 @@ coef &lt;- matrix(
   nrow = k,
   byrow = TRUE
 )
-chol_cov &lt;- chol(
-  matrix(
-    data = c(
-      0.1, 0.0, 0.0,
-      0.0, 0.1, 0.0,
-      0.0, 0.0, 0.1
-    ),
-    nrow = k,
-    byrow = TRUE
-  )
-)
+chol_cov &lt;- chol(diag(3))
 y &lt;- SimVAR(
   time = time,
   burn_in = burn_in,
