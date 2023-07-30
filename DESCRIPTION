@@ -25,6 +25,4 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
-    testthat,
-    vars
-RoxygenNote: 7.2.3
+    testthat

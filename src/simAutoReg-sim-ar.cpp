@@ -1,6 +1,8 @@
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
+using namespace Rcpp;
+
 //' Simulate Data from an Autoregressive Model with Constant Term
 //'
 //' This function generates synthetic time series data
@@ -35,7 +37,7 @@
 //' Random noise, sampled from a normal distribution with mean 0
 //' and standard deviation `sd`, is added to the time series.
 //' A burn-in period is specified to exclude initial data points
-//' from the output. 
+//' from the output.
 //'
 //' The steps in generating the autoregressive time series with burn-in are as follows:
 //'
@@ -48,7 +50,7 @@
 //' - Generate the autoregressive time series with burn-in using the formula:
 //'   \deqn{Y_t = constant + \sum_{i=1}^{p} (coef[i] * Y_{t-i}) + noise_t}
 //'   where \eqn{Y_t} is the time series data at time \eqn{t}, \eqn{constant}
-//'   is the constant term, 
+//'   is the constant term,
 //'   \eqn{coef[i]} are the autoregressive coefficients,
 //'   \eqn{Y_{t-i}} are the lagged data points up to order `p`,
 //'   and \eqn{noise_t} is the random noise at time \eqn{t}.
@@ -58,7 +60,8 @@
 //'
 //' @export
 // [[Rcpp::export]]
-arma::vec SimAR(int time, int burn_in, double constant, arma::vec coef, double sd) {
+arma::vec SimAR(int time, int burn_in, const double& constant, const arma::vec& coef, const double& sd)
+{
   // Order of the AR model
   int p = coef.size();
   int total_time = time + burn_in;
@@ -68,29 +71,29 @@ arma::vec SimAR(int time, int burn_in, double constant, arma::vec coef, double s
 
   // Generate random noise from a normal distribution
   arma::vec noise(total_time);
-  for (int i = 0; i < total_time; i++) {
+  for (int i = 0; i < total_time; i++)
+  {
     noise(i) = R::rnorm(0, sd);
   }
-  
+
   // Generate the autoregressive time series with burn-in
-  for (int i = 0; i < total_time; i++) {
+  for (int i = 0; i < total_time; i++)
+  {
     data(i) = constant;
-    for (int lag = 0; lag < p; lag++) {
-      if (i - lag - 1 >= 0) {
+    for (int lag = 0; lag < p; lag++)
+    {
+      if (i - lag - 1 >= 0)
+      {
         data(i) += coef(lag) * data(i - lag - 1) + noise(i);
       }
     }
   }
-  
+
   // Remove the burn-in period
-  if (burn_in > 0) {
+  if (burn_in > 0)
+  {
     data = data(arma::span(burn_in, total_time - 1));
   }
 
-  // Convert arma::vec to Rcpp::NumericVector
   return data;
 }
-
-/*** R
-SimAR(time = 10, burn_in = 5, constant = 2, coef = c(0.5, -0.3), sd = 0.1)
-*/

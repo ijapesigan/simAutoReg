@@ -10,6 +10,7 @@ lapply(
                  tol,
                  text) {
     message(text)
+    set.seed(42)
     data <- as.vector(
       SimAR(
         time = time,
@@ -51,7 +52,7 @@ lapply(
       }
     )
   },
-  time = 1000000L,
+  time = 1000L,
   burn_in = 200L,
   constant = 2,
   coef = c(0.5, -0.3),

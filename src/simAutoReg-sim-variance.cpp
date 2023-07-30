@@ -1,5 +1,6 @@
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
+
 using namespace Rcpp;
 
 //' Generate Random Data for the Variance Vector
@@ -62,7 +63,8 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVariance(int n, arma::vec location, arma::mat chol_scale) {
+arma::mat SimVariance(int n, const arma::vec& location, const arma::mat& chol_scale)
+{
   int k = location.n_elem; // Number of variables
 
   // Generate multivariate normal random vectors epsilon
@@ -76,16 +78,3 @@ arma::mat SimVariance(int n, arma::vec location, arma::mat chol_scale) {
 
   return variance;
 }
-
-/*** R
-n <- 100
-location <- c(0.5, -0.2, 0.1)
-chol_scale <- chol(
-  matrix(
-    data = c(1.0, 0.3, 0.3, 0.3, 1.0, 0.2, 0.3, 0.2, 1.0),
-    nrow = 3,
-    byrow = TRUE
-  )
-)
-SimVariance(n = n, location = location, chol_scale = chol_scale)
-*/

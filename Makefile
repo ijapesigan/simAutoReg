@@ -54,7 +54,6 @@ lint: style
 data:
 	@echo "\n\nBuilding data...\n\n"
 	@Rscript -e "rProject::DataProcess(\"${PWD}\")"
-	@Rscript -e "rProject::DataAnalysis(\"${PWD}\")"
 
 dependencies:
 	@echo "\n\nBuilding dependencies...\n\n"
@@ -63,6 +62,7 @@ dependencies:
 vignettes:
 	@echo "\n\nInitial build...\n\n"
 	@Rscript -e "rProject::Build(\"${PWD}\")"
+	@Rscript -e "rProject::DataAnalysis(\"${PWD}\")"
 	@echo "\n\nPrecompiling vignettes...\n\n"
 	@Rscript -e "rProject::VignettesPrecompile(\"${PWD}\")"
 

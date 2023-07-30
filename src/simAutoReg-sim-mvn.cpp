@@ -21,7 +21,7 @@ using namespace Rcpp;
 //'
 //' @examples
 //' set.seed(42)
-//' n <- 100000L
+//' n <- 1000L
 //' location <- c(0.5, -0.2, 0.1)
 //' scale <- matrix(
 //'   data = c(1.0, 0.3, 0.3, 0.3, 1.0, 0.2, 0.3, 0.2, 1.0),
@@ -34,7 +34,7 @@ using namespace Rcpp;
 //' var(y)
 //'
 //' @details
-//' The [simAutoReg::SimMVN()] function generates multivariate normal random numbers 
+//' The [simAutoReg::SimMVN()] function generates multivariate normal random numbers
 //' using the Cholesky decomposition method.
 //' Given the number of samples `n`, the mean vector `location` of length `k`
 //' (where `k` is the number of variables),
@@ -64,7 +64,8 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-arma::mat SimMVN(int n, arma::vec location, arma::mat chol_scale) {
+arma::mat SimMVN(int n, const arma::vec& location, const arma::mat& chol_scale)
+{
   int k = location.n_elem;
 
   // Generate multivariate normal random numbers
@@ -73,17 +74,3 @@ arma::mat SimMVN(int n, arma::vec location, arma::mat chol_scale) {
 
   return data;
 }
-
-/*** R
-n <- 100000L
-location <- c(0.5, -0.2, 0.1)
-scale <- matrix(
-  data = c(1.0, 0.3, 0.3, 0.3, 1.0, 0.2, 0.3, 0.2, 1.0),
-  nrow = 3,
-  byrow = TRUE
-)
-chol_scale <- chol(scale)
-y <- SimMVN(n = n, location = location, chol_scale = chol_scale)
-colMeans(y)
-var(y)
-*/

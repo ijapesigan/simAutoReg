@@ -1,5 +1,6 @@
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
+
 using namespace Rcpp;
 
 //' Create Y and X Matrices
@@ -20,40 +21,7 @@ using namespace Rcpp;
 //' Note that the resulting matrices will have `t - p` rows.
 //'
 //' @examples
-//' set.seed(42)
-//' time <- 100000L
-//' burn_in <- 200
-//' k <- 3
-//' p <- 2
-//' constant <- c(1, 1, 1)
-//' coef <- matrix(
-//'   data = c(
-//'     0.4, 0.0, 0.0, 0.1, 0.0, 0.0,
-//'     0.0, 0.5, 0.0, 0.0, 0.2, 0.0,
-//'     0.0, 0.0, 0.6, 0.0, 0.0, 0.3
-//'   ),
-//'   nrow = k,
-//'   byrow = TRUE
-//' )
-//' chol_cov <- chol(
-//'   matrix(
-//'     data = c(
-//'       0.1, 0.0, 0.0,
-//'       0.0, 0.1, 0.0,
-//'       0.0, 0.0, 0.1
-//'     ),
-//'     nrow = k,
-//'     byrow = TRUE
-//'   )
-//' )
-//' y <- SimVAR(
-//'   time = time,
-//'   burn_in = burn_in,
-//'   constant = constant,
-//'   coef = coef,
-//'   chol_cov = chol_cov
-//' )
-//' yx <- YX(data = y, p = p)
+//' yx <- YX(data = VAR, p = 2)
 //' str(yx)
 //'
 //' @details
@@ -72,7 +40,8 @@ using namespace Rcpp;
 //' - Create matrices `X` and `Y` to store lagged variables
 //'   and the dependent variable, respectively.
 //' - Populate the matrices `X` and `Y` with the appropriate lagged data.
-//'   The predictors matrix `X` contains the lagged values of the dependent variables,
+//'   The predictors matrix `X` contains a column of ones
+//'   and the lagged values of the dependent variables,
 //'   while the dependent variable matrix `Y` contains the original values
 //'   of the dependent variables.
 //' - The function returns a list containing the `Y` and `X` matrices,
@@ -87,19 +56,23 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-List YX(arma::mat data, int p) {
+List YX(const arma::mat& data, int p)
+{
   int t = data.n_rows; // Number of observations
   int k = data.n_cols; // Number of variables
 
   // Create matrices to store lagged variables and the dependent variable
-  arma::mat X(t - p, k * p, arma::fill::zeros);
+  arma::mat X(t - p, k * p + 1, arma::fill::zeros); // Add 1 column for the constant
   arma::mat Y(t - p, k, arma::fill::zeros);
 
   // Populate the matrices X and Y with lagged data
-  for (int i = 0; i < (t - p); i++) {
-    int index = 0;
+  for (int i = 0; i < (t - p); i++)
+  {
+    X(i, 0) = 1; // Set the first column to 1 for the constant term
+    int index = 1;
     // Arrange predictors from smallest lag to biggest
-    for (int lag = p - 1; lag >= 0; lag--) {
+    for (int lag = p - 1; lag >= 0; lag--)
+    {
       X.row(i).subvec(index, index + k - 1) = data.row(i + lag);
       index += k;
     }
@@ -113,41 +86,3 @@ List YX(arma::mat data, int p) {
 
   return result;
 }
-
-/*** R
-set.seed(42)
-time <- 100000L
-burn_in <- 200
-k <- 3
-p <- 2
-constant <- c(1, 1, 1)
-coef <- matrix(
-  data = c(
-    0.4, 0.0, 0.0, 0.1, 0.0, 0.0,
-    0.0, 0.5, 0.0, 0.0, 0.2, 0.0,
-    0.0, 0.0, 0.6, 0.0, 0.0, 0.3
-  ),
-  nrow = k,
-  byrow = TRUE
-)
-chol_cov <- chol(
-  matrix(
-    data = c(
-      0.1, 0.0, 0.0,
-      0.0, 0.1, 0.0,
-      0.0, 0.0, 0.1
-    ),
-    nrow = k,
-    byrow = TRUE
-  )
-)
-y <- SimVAR(
-  time = time,
-  burn_in = burn_in,
-  constant = constant,
-  coef = coef,
-  chol_cov = chol_cov
-)
-yx <- YX(data = y, p = p)
-str(yx)
-*/

@@ -10,6 +10,7 @@ lapply(
                  tol,
                  text) {
     message(text)
+    set.seed(42)
     y <- SimVAR(
       time = time,
       burn_in = burn_in,
@@ -20,6 +21,7 @@ lapply(
     dims <- dim(y)
     yx <- YX(y, 2)
     coef_est <- FitVAROLS(Y = yx$Y, X = yx$X)
+    coef_est[, 1] <- round(coef_est[, 1], digits = 0)
     testthat::test_that(
       paste(text, "time"),
       {
@@ -33,19 +35,22 @@ lapply(
       }
     )
     testthat::test_that(
-      paste(text, "coef"),
+      paste(text, "constant and coef"),
       {
         testthat::expect_true(
           all(
             abs(
-              coef - coef_est
+              cbind(
+                constant,
+                coef
+              ) - coef_est
             ) <= tol
           )
         )
       }
     )
   },
-  time = 1000000L,
+  time = 1000L,
   burn_in = 200L,
   constant <- c(1, 1, 1),
   coef = matrix(

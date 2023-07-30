@@ -45,17 +45,7 @@ using namespace Rcpp;
 //'   nrow = k,
 //'   byrow = TRUE
 //' )
-//' chol_cov <- chol(
-//'   matrix(
-//'     data = c(
-//'       0.1, 0.0, 0.0,
-//'       0.0, 0.1, 0.0,
-//'       0.0, 0.0, 0.1
-//'     ),
-//'     nrow = k,
-//'     byrow = TRUE
-//'   )
-//' )
+//' chol_cov <- chol(diag(3))
 //' y <- SimVARZIP(
 //'   time = time,
 //'   burn_in = burn_in,
@@ -92,35 +82,36 @@ using namespace Rcpp;
 //'   using the constant term `constant`.
 //' - For each time point starting from the `p`-th time point
 //'   to `time + burn_in - 1`:
-//'       - Generate a vector of random process noise
-//'         from a multivariate normal distribution
-//'         with mean 0 and covariance matrix `chol_cov`.
-//'       - Generate the VAR time series values for each variable `j`
-//'         at time `t` by applying the autoregressive terms
-//'         for each lag `lag` and each variable `l`.
-//'       - Add the generated noise to the VAR time series values.
-//'       - For the first variable,
-//'         apply the Zero-Inflated Poisson (ZIP) model:
-//'             - Compute the intensity `intensity`
-//'               as the exponential of the first variable's value at time `t`.
-//'             - Sample a random value `u`
-//'               from a uniform distribution on \[0, 1\].
-//'             - If `u` is less than `intensity / (1 + intensity)`,
-//'               set the first variable's value to zero (inflation).
-//'             - Otherwise, sample the first variable's value
-//'               from a Poisson distribution
-//'               with mean `intensity` (count process).
-//'       - Transpose the data matrix `data` and return only
-//'         the required time period after burn-in as a numeric matrix.
+//'   * Generate a vector of random process noise
+//'     from a multivariate normal distribution
+//'     with mean 0 and covariance matrix `chol_cov`.
+//'   * Generate the VAR time series values for each variable `j`
+//'     at time `t` by applying the autoregressive terms
+//'     for each lag `lag` and each variable `l`.
+//'     - Add the generated noise to the VAR time series values.
+//'     - For the first variable,
+//'       apply the Zero-Inflated Poisson (ZIP) model:
+//'       * Compute the intensity `intensity`
+//'         as the exponential of the first variable's value at time `t`.
+//'       * Sample a random value `u`
+//'         from a uniform distribution on \[0, 1\].
+//'       * If `u` is less than `intensity / (1 + intensity)`,
+//'         set the first variable's value to zero (inflation).
+//'       * Otherwise, sample the first variable's value
+//'         from a Poisson distribution
+//'         with mean `intensity` (count process).
+//' - Transpose the data matrix `data` and return only
+//'   the required time period after burn-in as a numeric matrix.
 //'
 //' @importFrom Rcpp sourceCpp
 //'
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVARZIP(int time, int burn_in, arma::vec constant, arma::mat coef, arma::mat chol_cov) {
-  int k = constant.n_elem; // Number of variables
+arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant, const arma::mat& coef, const arma::mat& chol_cov)
+{
+  int k = constant.n_elem;    // Number of variables
   int coef_dim = coef.n_cols; // Dimension of the coefficient matrix
-  int p = coef_dim / k; // Order of the VAR model (number of lags)
+  int p = coef_dim / k;       // Order of the VAR model (number of lags)
 
   // Matrix to store the generated VAR time series data
   arma::mat data(k, time + burn_in);
@@ -129,15 +120,19 @@ arma::mat SimVARZIP(int time, int burn_in, arma::vec constant, arma::mat coef, a
   data.each_col() = constant; // Fill each column with the constant vector
 
   // Generate the VAR time series
-  for (int t = p; t < time + burn_in; t++) {
+  for (int t = p; t < time + burn_in; t++)
+  {
     // Generate noise from a multivariate normal distribution
     arma::vec noise = arma::randn(k);
     arma::vec mult_noise = chol_cov * noise;
 
     // Generate eta_t vector
-    for (int j = 0; j < k; j++) {
-      for (int lag = 0; lag < p; lag++) {
-        for (int l = 0; l < k; l++) {
+    for (int j = 0; j < k; j++)
+    {
+      for (int lag = 0; lag < p; lag++)
+      {
+        for (int l = 0; l < k; l++)
+        {
           data(j, t) += coef(j, lag * k + l) * data(l, t - lag - 1);
         }
       }
@@ -145,10 +140,13 @@ arma::mat SimVARZIP(int time, int burn_in, arma::vec constant, arma::mat coef, a
     }
     // Use ZIP model for the first variable
     double intensity = std::exp(data(0, t));
-    if (R::runif(0, 1) < intensity / (1 + intensity)) {
+    if (R::runif(0, 1) < intensity / (1 + intensity))
+    {
       // Sample from the point mass at zero (inflation)
       data(0, t) = 0;
-    } else {
+    }
+    else
+    {
       // Sample from the Poisson distribution (count process)
       data(0, t) = R::rpois(intensity);
     }
@@ -157,40 +155,3 @@ arma::mat SimVARZIP(int time, int burn_in, arma::vec constant, arma::mat coef, a
   // Transpose the data matrix and return only the required time period after burn-in
   return data.cols(burn_in, time + burn_in - 1).t();
 }
-
-/*** R
-set.seed(42)
-time <- 100000L
-burn_in <- 200
-k <- 3
-p <- 2
-constant <- c(1, 1, 1)
-coef <- matrix(
-  data = c(
-    0.4, 0.0, 0.0, 0.1, 0.0, 0.0,
-    0.0, 0.5, 0.0, 0.0, 0.2, 0.0,
-    0.0, 0.0, 0.6, 0.0, 0.0, 0.3
-  ),
-  nrow = k,
-  byrow = TRUE
-)
-chol_cov <- chol(
-  matrix(
-    data = c(
-      0.1, 0.0, 0.0,
-      0.0, 0.1, 0.0,
-      0.0, 0.0, 0.1
-    ),
-    nrow = k,
-    byrow = TRUE
-  )
-)
-y <- SimVARZIP(
-  time = time,
-  burn_in = burn_in,
-  constant = constant,
-  coef = coef,
-  chol_cov = chol_cov
-)
-head(y)
-*/

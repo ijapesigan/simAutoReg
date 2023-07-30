@@ -45,17 +45,7 @@ using namespace Rcpp;
 //'   nrow = k,
 //'   byrow = TRUE
 //' )
-//' chol_cov <- chol(
-//'   matrix(
-//'     data = c(
-//'       0.1, 0.0, 0.0,
-//'       0.0, 0.1, 0.0,
-//'       0.0, 0.0, 0.1
-//'     ),
-//'     nrow = k,
-//'     byrow = TRUE
-//'   )
-//' )
+//' chol_cov <- chol(diag(3))
 //' y <- SimVAR(
 //'   time = time,
 //'   burn_in = burn_in,
@@ -87,34 +77,35 @@ using namespace Rcpp;
 //'   using the constant term `constant`.
 //' - For each time point starting from the `p`-th time point
 //'   to `time + burn_in - 1`:
-//'     - Generate a vector of random noise
-//'       from a multivariate normal distribution
-//'       with mean 0 and covariance matrix `chol_cov`.
-//'     - Generate the VAR time series values for each variable `j` at time `t`
-//'       using the formula:
-//'       \deqn{Y_{tj} = constant_j +
-//'       \sum_{l = 1}^{p} \sum_{m = 1}^{k} (coef_{jm} * Y_{im}) +
-//'       \text{noise}_{j}}
-//'       where \eqn{Y_{tj}} is the value of variable `j` at time `t`,
-//'       \eqn{constant_j} is the constant term for variable `j`,
-//'       \eqn{coef_{jm}} are the coefficients for variable `j`
-//'       from lagged variables up to order `p`,
-//'       \eqn{Y_{tm}} are the lagged values of variable `m`
-//'       up to order `p` at time `t`,
-//'       and \eqn{noise_{j}} is the element `j`
-//'       from the generated vector of random process noise.
-//'     - Transpose the matrix `data` and return only
-//'       the required time period after the burn-in period,
-//'       which is from column `burn_in` to column `time + burn_in - 1`.
+//'   * Generate a vector of random noise
+//'     from a multivariate normal distribution
+//'     with mean 0 and covariance matrix `chol_cov`.
+//'   * Generate the VAR time series values for each variable `j` at time `t`
+//'     using the formula:
+//'     \deqn{Y_{tj} = constant_j +
+//'     \sum_{l = 1}^{p} \sum_{m = 1}^{k} (coef_{jm} * Y_{im}) +
+//'     \text{noise}_{j}}
+//'     where \eqn{Y_{tj}} is the value of variable `j` at time `t`,
+//'     \eqn{constant_j} is the constant term for variable `j`,
+//'     \eqn{coef_{jm}} are the coefficients for variable `j`
+//'     from lagged variables up to order `p`,
+//'     \eqn{Y_{tm}} are the lagged values of variable `m`
+//'     up to order `p` at time `t`,
+//'     and \eqn{noise_{j}} is the element `j`
+//'     from the generated vector of random process noise.
+//' - Transpose the matrix `data` and return only
+//'   the required time period after the burn-in period,
+//'   which is from column `burn_in` to column `time + burn_in - 1`.
 //'
 //' @importFrom Rcpp sourceCpp
 //'
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVAR(int time, int burn_in, arma::vec constant, arma::mat coef, arma::mat chol_cov) {
-  int k = constant.n_elem; // Number of variables
+arma::mat SimVAR(int time, int burn_in, const arma::vec& constant, const arma::mat& coef, const arma::mat& chol_cov)
+{
+  int k = constant.n_elem;    // Number of variables
   int coef_dim = coef.n_cols; // Dimension of the coefficient matrix
-  int p = coef_dim / k; // Order of the VAR model (number of lags)
+  int p = coef_dim / k;       // Order of the VAR model (number of lags)
 
   // Matrix to store the generated VAR time series data
   arma::mat data(k, time + burn_in);
@@ -123,15 +114,19 @@ arma::mat SimVAR(int time, int burn_in, arma::vec constant, arma::mat coef, arma
   data.each_col() = constant; // Fill each column with the constant vector
 
   // Generate the VAR time series
-  for (int t = p; t < time + burn_in; t++) {
+  for (int t = p; t < time + burn_in; t++)
+  {
     // Generate noise from a multivariate normal distribution
     arma::vec noise = arma::randn(k);
     arma::vec mult_noise = chol_cov * noise;
 
     // Generate eta_t vector
-    for (int j = 0; j < k; j++) {
-      for (int lag = 0; lag < p; lag++) {
-        for (int l = 0; l < k; l++) {
+    for (int j = 0; j < k; j++)
+    {
+      for (int lag = 0; lag < p; lag++)
+      {
+        for (int l = 0; l < k; l++)
+        {
           data(j, t) += coef(j, lag * k + l) * data(l, t - lag - 1);
         }
       }
@@ -145,7 +140,7 @@ arma::mat SimVAR(int time, int burn_in, arma::vec constant, arma::mat coef, arma
 
 /*** R
 set.seed(42)
-time <- 100000L
+time <- 1000L
 burn_in <- 200
 k <- 3
 p <- 2

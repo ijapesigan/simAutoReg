@@ -6,4 +6,5 @@
     - Multivariate normal data
     - Variances
 - Fitting funtion
-    - VAR(p) OLS for auto and cross regression coefficients
+    - VAR(p) OLS for constant vector, auto and cross regression coefficients
+    - VAR(p) Lasso for auto and cross regression coefficients
