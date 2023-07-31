@@ -176,12 +176,12 @@ using OLS.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">Y_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="StdMat.html">StdMat</a></span><span class="op">(</span><span class="va">VAR_YX</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">X_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="StdMat.html">StdMat</a></span><span class="op">(</span><span class="va">VAR_YX</span><span class="op">$</span><span class="va">X</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">58.57</span></span></span>
+<span class="r-in"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">73.90722</span></span></span>
 <span class="r-in"><span><span class="fu">FitVARLasso</span><span class="op">(</span>Y_std <span class="op">=</span> <span class="va">Y_std</span>, X_std <span class="op">=</span> <span class="va">X_std</span>, lambda <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]      [,2]      [,3]       [,4]        [,5]     [,6]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.349251 0.0000000 0.0000000 0.09170115 0.007174126 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.000000 0.4627374 0.0000000 0.00000000 0.217754005 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.000000 0.0000000 0.5931212 0.00000000 0.000000000 0.278771</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]      [,3]       [,4]      [,5]      [,6]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.3440823 0.0000000 0.0000000 0.08601767 0.0000000 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.0000000 0.4580172 0.0000000 0.00000000 0.2130337 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.0000000 0.0000000 0.5889874 0.00000000 0.0000000 0.2746474</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
