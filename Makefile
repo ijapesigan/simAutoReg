@@ -1,6 +1,6 @@
 .PHONY: all build clean cleanall cleanpkg cleanproj cleanpush cleantinytex clone coverage data dependencies docs dotfiles install latex lint local localforce pdf pkg pkgdown project push quarto style tinytex tinytexforce vignettes
 
-push: build docs latex cleanpush coverage
+push: build docs latex coverage cleanpush
 
 project:
 	@echo "\n\nBuilding project...\n\n"
