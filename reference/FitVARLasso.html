@@ -113,27 +113,47 @@ cross-regression coefficients.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The <code>FitVARLasso()</code> function estimates the parameters
-of a Vector Autoregressive (VAR) model using the Lasso regularization method.
+of a Vector Autoregressive (VAR) model
+using the Lasso regularization method.
 Given the input matrices <code>Y_std</code> and <code>X_std</code>,
 where <code>Y_std</code> is the matrix of standardized dependent variables,
 and <code>X_std</code> is the matrix of standardized predictors,
 the function computes the autoregressive and cross-regression coefficients
 of the VAR model with sparsity induced by the Lasso regularization.</p>
-<p>The steps involved in estimating the VAR model parameters using Lasso are as follows:</p><ul><li><p><strong>Initialization</strong>: The function initializes the coefficient matrix <code>beta</code> with OLS estimates.
-The <code>beta</code> matrix will store the estimated autoregressive and cross-regression coefficients.</p></li>
-<li><p><strong>Coordinate Descent Loop</strong>: The function performs the cyclical coordinate descent algorithm to estimate the coefficients iteratively.
-The loop iterates <code>max_iter</code> times (default is 10000), or until convergence is achieved.
-The outer loop iterates over the predictor variables (columns of <code>X_std</code>),
-while the inner loop iterates over the outcome variables (columns of <code>Y_std</code>).</p></li>
-<li><p><strong>Coefficient Update</strong>: For each predictor variable (column of <code>X_std</code>), the function iteratively updates the corresponding column of <code>beta</code> using the coordinate descent algorithm with L1 norm regularization (Lasso).
-The update involves calculating the soft-thresholded value <code>c</code>, which encourages sparsity in the coefficients.
-The algorithm continues until the change in coefficients between iterations is below the specified tolerance <code>tol</code> or when the maximum number of iterations is reached.</p></li>
-<li><p><strong>Convergence Check</strong>: The function checks for convergence by comparing the current <code>beta</code> matrix with the previous iteration's <code>beta_old</code>.
-If the maximum absolute difference between <code>beta</code> and <code>beta_old</code> is below the tolerance <code>tol</code>, the algorithm is considered converged, and the loop exits.</p></li>
+<p>The steps involved in estimating the VAR model parameters
+using Lasso are as follows:</p><ul><li><p><strong>Initialization</strong>: The function initializes the coefficient matrix
+<code>beta</code> with OLS estimates.
+The <code>beta</code> matrix will store the estimated autoregressive and
+cross-regression coefficients.</p></li>
+<li><p><strong>Coordinate Descent Loop</strong>: The function performs
+the cyclical coordinate descent algorithm
+to estimate the coefficients iteratively.
+The loop iterates <code>max_iter</code> times (default is 10000),
+or until convergence is achieved.
+The outer loop iterates over the predictor variables
+(columns of <code>X_std</code>),
+while the inner loop iterates over the outcome variables
+(columns of <code>Y_std</code>).</p></li>
+<li><p><strong>Coefficient Update</strong>: For each predictor variable (column of <code>X_std</code>),
+the function iteratively updates the corresponding column of <code>beta</code>
+using the coordinate descent algorithm with L1 norm regularization
+(Lasso).
+The update involves calculating the soft-thresholded value <code>c</code>,
+which encourages sparsity in the coefficients.
+The algorithm continues until the change in coefficients
+between iterations is below the specified tolerance <code>tol</code>
+or when the maximum number of iterations is reached.</p></li>
+<li><p><strong>Convergence Check</strong>: The function checks for convergence
+by comparing the current <code>beta</code>
+matrix with the previous iteration's <code>beta_old</code>.
+If the maximum absolute difference between <code>beta</code> and <code>beta_old</code>
+is below the tolerance <code>tol</code>,
+the algorithm is considered converged, and the loop exits.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>The <code><a href="FitVAROLS.html">FitVAROLS()</a></code> function for estimating VAR model parameters using OLS.</p>
+    <div class="dont-index"><p>The <code><a href="FitVAROLS.html">FitVAROLS()</a></code> function for estimating VAR model parameters
+using OLS.</p>
 <p>Other Simulation of Autoregressive Data Functions: 
 <code><a href="FitVAROLS.html">FitVAROLS</a>()</code>,
 <code><a href="OrigScale.html">OrigScale</a>()</code>,

@@ -113,7 +113,8 @@ Random noise, sampled from a normal distribution with mean 0
 and standard deviation <code>sd</code>, is added to the time series.
 A burn-in period is specified to exclude initial data points
 from the output.</p>
-<p>The steps in generating the autoregressive time series with burn-in are as follows:</p><ul><li><p>Set the order of the AR model to <code>p</code> based on the length of <code>coef</code>.</p></li>
+<p>The steps in generating the autoregressive time series with burn-in
+are as follows:</p><ul><li><p>Set the order of the AR model to <code>p</code> based on the length of <code>coef</code>.</p></li>
 <li><p>Create a vector data of size <code>time + burn_in</code>
 to store the generated AR time series data.</p></li>
 <li><p>Create a vector data of size <code>time + burn_in</code> of random process noise

@@ -123,16 +123,20 @@ for each sample.</p>
 for the variance vector
 based on the exponential of a multivariate normal distribution.
 Given the number of samples <code>n</code>,
-the constant term \(\boldsymbol{\mu}\) represented by the <code>location</code> vector,
+the constant term \(\boldsymbol{\mu}\) represented
+by the <code>location</code> vector,
 and the Cholesky decomposition matrix \(\boldsymbol{\Sigma}\)
 for the multivariate normal random error \(\boldsymbol{\varepsilon}\),
 the function simulates \(n\) independent samples
 of the variance vector \(\boldsymbol{\sigma^{2}}\).
-Each sample of the variance vector \(\boldsymbol{\sigma^{2}}\) is obtained by
-calculating the exponential of random variations to the mean vector \(\boldsymbol{\mu}\).
+Each sample of the variance vector \(\boldsymbol{\sigma^{2}}\)
+is obtained by
+calculating the exponential of random variations
+to the mean vector \(\boldsymbol{\mu}\).
 The random variations are generated using the Cholesky decomposition
 of the covariance matrix \(\boldsymbol{\Sigma}\).
-Finally, the function returns a matrix with each column containing the simulated
+Finally, the function returns a matrix with each column
+containing the simulated
 variance vector for each sample.</p>
     </div>
     <div class="section level2">

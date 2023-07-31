@@ -90,7 +90,8 @@ Matrix of predictors (X).</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Matrix of estimated autoregressive and cross-regression coefficients.</p>
+<p>Matrix of estimated autoregressive
+and cross-regression coefficients.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -104,7 +105,8 @@ the function computes the autoregressive and cross-regression coefficients
 of the VAR model.
 Note that if the first column of <code>X</code> is a vector of ones,
 the constant vector is also estimated.</p>
-<p>The steps involved in estimating the VAR model parameters using OLS are as follows:</p><ul><li><p>Compute the QR decomposition of the lagged predictor matrix <code>X</code>
+<p>The steps involved in estimating the VAR model parameters
+using OLS are as follows:</p><ul><li><p>Compute the QR decomposition of the lagged predictor matrix <code>X</code>
 using the <code>qr</code> function from the Armadillo library.</p></li>
 <li><p>Extract the <code>Q</code> and <code>R</code> matrices from the QR decomposition.</p></li>
 <li><p>Solve the linear system <code>R * coef = Q.t() * Y</code>
