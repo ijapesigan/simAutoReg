@@ -28,8 +28,8 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/ar.html">simAutoReg: Autoregressive Model - AR(p)</a>
-    <a class="dropdown-item" href="../articles/session/session.html">simAutoReg: Session</a>
     <a class="dropdown-item" href="../articles/var.html">simAutoReg: Vector Autoregressive Model - VAR(p)</a>
+    <a class="dropdown-item" href="../articles/session/session.html">simAutoReg: Session</a>
   </div>
 </li>
 <li class="nav-item">
@@ -55,7 +55,121 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="simulation-functions">Simulation Functions<a class="anchor" aria-label="anchor" href="#simulation-functions"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="SimAR.html">SimAR()</a></code> 
+        </dt>
+        <dd>Simulate Data from an Autoregressive Model with Constant Term</dd>
+      </dl><dl><dt>
+          
+          <code><a href="SimMVN.html">SimMVN()</a></code> 
+        </dt>
+        <dd>Simulate Multivariate Normal Random Numbers</dd>
+      </dl><dl><dt>
+          
+          <code><a href="SimVAR.html">SimVAR()</a></code> 
+        </dt>
+        <dd>Simulate Data from a Vector Autoregressive (VAR) Model</dd>
+      </dl><dl><dt>
+          
+          <code><a href="SimVARZIP.html">SimVARZIP()</a></code> 
+        </dt>
+        <dd>Simulate Data from a Vector Autoregressive Zero-Inflated Poisson (VARZIP) Model</dd>
+      </dl><dl><dt>
+          
+          <code><a href="SimVariance.html">SimVariance()</a></code> 
+        </dt>
+        <dd>Generate Random Data for the Variance Vector</dd>
+      </dl></div><div class="section level2">
+      <h2 id="model-fitting-functions">Model Fitting Functions<a class="anchor" aria-label="anchor" href="#model-fitting-functions"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="FitVARLasso.html">FitVARLasso()</a></code> 
+        </dt>
+        <dd>Fit Vector Autoregressive (VAR) Model Parameters using Lasso Regularization</dd>
+      </dl><dl><dt>
+          
+          <code><a href="FitVAROLS.html">FitVAROLS()</a></code> 
+        </dt>
+        <dd>Fit Vector Autoregressive (VAR) Model Parameters using OLS</dd>
+      </dl><dl><dt>
+          
+          <code><a href="SearchVARLasso.html">SearchVARLasso()</a></code> 
+        </dt>
+        <dd>Compute AIC, BIC, and EBIC for Lasso Regularization</dd>
+      </dl><dl><dt>
+          
+          <code><a href="SelectVARLasso.html">SelectVARLasso()</a></code> 
+        </dt>
+        <dd>Select the Lasso Estimates from the Grid Search</dd>
+      </dl></div><div class="section level2">
+      <h2 id="utility-functions">Utility Functions<a class="anchor" aria-label="anchor" href="#utility-functions"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="OrigScale.html">OrigScale()</a></code> 
+        </dt>
+        <dd>Return Standardized Estimates to the Original Scale</dd>
+      </dl><dl><dt>
+          
+          <code><a href="StdMat.html">StdMat()</a></code> 
+        </dt>
+        <dd>Standardize Matrix</dd>
+      </dl><dl><dt>
+          
+          <code><a href="YX.html">YX()</a></code> 
+        </dt>
+        <dd>Create Y and X Matrices</dd>
+      </dl></div><div class="section level2">
+      <h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="VAR.html">VAR</a></code> 
+        </dt>
+        <dd>Data from the Vector Autoregressive Model</dd>
+      </dl><dl><dt>
+          
+          <code><a href="VAR_YX.html">VAR_YX</a></code> 
+        </dt>
+        <dd>Data from the Vector Autoregressive Model (Y) and Lagged Predictors (X)</dd>
+      </dl></div><div class="section level2">
+      <h2 id="all">All<a class="anchor" aria-label="anchor" href="#all"></a></h2>
       
       
 
@@ -136,7 +250,8 @@
         </dt>
         <dd>Create Y and X Matrices</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
