@@ -31,7 +31,7 @@ using namespace Rcpp;
 //' @examples
 //' Y_std <- StdMat(VAR_YX$Y)
 //' X_std <- StdMat(VAR_YX$X[, -1])
-//' lambda <- 58.57
+//' lambda <- 73.90722
 //' FitVARLasso(Y_std = Y_std, X_std = X_std, lambda = lambda)
 //'
 //' @details
