@@ -16,6 +16,8 @@
 #' search <- SearchVARLasso(Y_std = Y_std, X_std = X_std, lambdas = lambdas)
 #' SelectVARLasso(search, crit = "ebic")
 #'
+#' @family Simulation of Autoregressive Data Functions
+#' @keywords simAutoReg fit
 #' @export
 SelectVARLasso <- function(search, crit = "ebic") {
   stopifnot(crit %in% c("aic", "bic", "ebic"))

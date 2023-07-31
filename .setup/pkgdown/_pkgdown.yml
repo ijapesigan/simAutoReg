@@ -8,3 +8,27 @@ template:
     heading_font: {google: "Roboto Slab"}
     code_font: {google: "JetBrains Mono"}
 
+reference:
+- title: Simulation Functions
+  contents:
+  - has_keyword("sim")
+- title: Model Fitting Functions
+  contents:
+  - has_keyword("fit")
+- title: Utility Functions
+  contents:
+  - has_keyword("utils")
+- title: Data
+  contents:
+  - has_keyword("data")
+- title: All
+  contents:
+  - has_keyword("simAutoReg")
+
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - ar
+  - var
+  - session/session

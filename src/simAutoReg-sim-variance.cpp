@@ -61,6 +61,8 @@ using namespace Rcpp;
 //'
 //' @importFrom Rcpp sourceCpp
 //'
+//' @family Simulation of Autoregressive Data Functions
+//' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVariance(int n, const arma::vec& location, const arma::mat& chol_scale)

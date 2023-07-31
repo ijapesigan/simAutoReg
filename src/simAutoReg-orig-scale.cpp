@@ -29,6 +29,8 @@ using namespace Rcpp;
 //'
 //' @importFrom Rcpp sourceCpp
 //'
+//' @family Simulation of Autoregressive Data Functions
+//' @keywords simAutoReg utils
 //' @export
 // [[Rcpp::export]]
 arma::mat OrigScale(const arma::mat& coef_std,

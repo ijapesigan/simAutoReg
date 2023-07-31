@@ -4,5 +4,5 @@
 #'   minus p = 2 terminal rows
 #'   and `X` is a matrix of ones for the first column and lagged values of `Y`
 #'   for the rest of the columns.
-#' @keywords data
+#' @keywords simAutoReg data
 "VAR_YX"

@@ -54,6 +54,8 @@ using namespace Rcpp;
 //'
 //' @importFrom Rcpp sourceCpp
 //'
+//' @family Simulation of Autoregressive Data Functions
+//' @keywords simAutoReg utils
 //' @export
 // [[Rcpp::export]]
 List YX(const arma::mat& data, int p)

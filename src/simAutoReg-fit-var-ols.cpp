@@ -47,6 +47,8 @@
 //'
 //' @importFrom Rcpp sourceCpp
 //'
+//' @family Simulation of Autoregressive Data Functions
+//' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
 arma::mat FitVAROLS(const arma::mat& Y, const arma::mat& X)

@@ -62,6 +62,8 @@ using namespace Rcpp;
 //'
 //' @importFrom Rcpp sourceCpp
 //'
+//' @family Simulation of Autoregressive Data Functions
+//' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
 arma::mat FitVARLasso(const arma::mat& Y_std, const arma::mat& X_std, const double& lambda, int max_iter = 10000, double tol = 1e-5)
@@ -171,6 +173,8 @@ arma::mat FitVARLasso(const arma::mat& Y_std, const arma::mat& X_std, const doub
 //' search <- SearchVARLasso(Y_std = Y_std, X_std = X_std, lambdas = lambdas)
 //' plot(x = 1:nrow(search$criteria), y = search$criteria[, 4], type = "b", xlab = "lambda", ylab = "EBIC")
 //'
+//' @family Simulation of Autoregressive Data Functions
+//' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
 Rcpp::List SearchVARLasso(const arma::mat& Y_std, const arma::mat& X_std, const arma::vec& lambdas, int max_iter = 10000, double tol = 1e-5) {

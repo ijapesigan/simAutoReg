@@ -22,6 +22,8 @@ using namespace Rcpp;
 //'
 //' @importFrom Rcpp sourceCpp
 //'
+//' @family Simulation of Autoregressive Data Functions
+//' @keywords simAutoReg utils
 //' @export
 // [[Rcpp::export]]
 arma::mat StdMat(const arma::mat& X)

@@ -58,6 +58,8 @@ using namespace Rcpp;
 //'
 //' @importFrom Rcpp sourceCpp
 //'
+//' @family Simulation of Autoregressive Data Functions
+//' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
 arma::vec SimAR(int time, int burn_in, const double& constant, const arma::vec& coef, const double& sd)
