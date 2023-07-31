@@ -266,7 +266,8 @@ and standard deviation <code>sd</code>, is added to the time series.
 A burn-in period is specified to exclude initial data points
 from the output.
 </p>
-<p>The steps in generating the autoregressive time series with burn-in are as follows:
+<p>The steps in generating the autoregressive time series with burn-in
+are as follows:
 </p>
 
 <ul>
@@ -309,6 +310,23 @@ and <code class="reqn">noise_t</code> is the random noise at time <code class="r
 <h3 class="anchored">Author(s)</h3>
 
 <p>Ivan Jacob Agaloos Pesigan
+</p>
+
+
+<h3 class="anchored">See Also</h3>
+
+<p>Other Simulation of Autoregressive Data Functions: 
+<code>FitVARLasso()</code>,
+<code>FitVAROLS()</code>,
+<code>OrigScale()</code>,
+<code>SearchVARLasso()</code>,
+<code>SelectVARLasso()</code>,
+<code>SimMVN()</code>,
+<code>SimVARZIP()</code>,
+<code>SimVAR()</code>,
+<code>SimVariance()</code>,
+<code>StdMat()</code>,
+<code>YX()</code>
 </p>
 
 
@@ -448,13 +466,31 @@ which is from column <code>burn_in</code> to column <code>time + burn_in - 1</co
 
 <p>Numeric matrix containing the simulated time series data
 with dimensions <code>k</code> by <code>(time - burn_in)</code>,
-where <code>k</code> is the number of variables and time is the number of observations.
+where <code>k</code> is the number of variables and
+time is the number of observations.
 </p>
 
 
 <h3 class="anchored">Author(s)</h3>
 
 <p>Ivan Jacob Agaloos Pesigan
+</p>
+
+
+<h3 class="anchored">See Also</h3>
+
+<p>Other Simulation of Autoregressive Data Functions: 
+<code>FitVARLasso()</code>,
+<code>FitVAROLS()</code>,
+<code>OrigScale()</code>,
+<code>SearchVARLasso()</code>,
+<code>SelectVARLasso()</code>,
+<code>SimAR()</code>,
+<code>SimMVN()</code>,
+<code>SimVARZIP()</code>,
+<code>SimVariance()</code>,
+<code>StdMat()</code>,
+<code>YX()</code>
 </p>
 
 
