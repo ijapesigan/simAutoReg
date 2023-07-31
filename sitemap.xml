@@ -31,7 +31,19 @@
     <loc>https://github.com/ijapesigan/simAutoReg/news/index.html</loc>
   </url>
   <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/FitVARLasso.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/FitVAROLS.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/OrigScale.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SearchVARLasso.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SelectVARLasso.html</loc>
   </url>
   <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/SimAR.html</loc>
@@ -47,6 +59,15 @@
   </url>
   <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVariance.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/StdMat.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/VAR.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/VAR_YX.html</loc>
   </url>
   <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/YX.html</loc>

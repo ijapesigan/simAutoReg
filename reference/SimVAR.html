@@ -132,8 +132,8 @@ with mean 0 and covariance matrix <code>chol_cov</code>.</p></li>
 <li><p>Generate the VAR time series values for each variable <code>j</code> at time <code>t</code>
 using the formula:
 $$Y_{tj} = constant_j +
-      \sum_{l = 1}^{p} \sum_{m = 1}^{k} (coef_{jm} * Y_{im}) +
-      \text{noise}_{j}$$
+    \sum_{l = 1}^{p} \sum_{m = 1}^{k} (coef_{jm} * Y_{im}) +
+    \text{noise}_{j}$$
 where \(Y_{tj}\) is the value of variable <code>j</code> at time <code>t</code>,
 \(constant_j\) is the constant term for variable <code>j</code>,
 \(coef_{jm}\) are the coefficients for variable <code>j</code>
@@ -142,10 +142,10 @@ from lagged variables up to order <code>p</code>,
 up to order <code>p</code> at time <code>t</code>,
 and \(noise_{j}\) is the element <code>j</code>
 from the generated vector of random process noise.</p></li>
+</ul></li>
 <li><p>Transpose the matrix <code>data</code> and return only
 the required time period after the burn-in period,
 which is from column <code>burn_in</code> to column <code>time + burn_in - 1</code>.</p></li>
-</ul></li>
 </ul></div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -169,17 +169,7 @@ which is from column <code>burn_in</code> to column <code>time + burn_in - 1</co
 <span class="r-in"><span>  nrow <span class="op">=</span> <span class="va">k</span>,</span></span>
 <span class="r-in"><span>  byrow <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">chol_cov</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chol.html" class="external-link">chol</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      <span class="fl">0.1</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span></span>
-<span class="r-in"><span>      <span class="fl">0.0</span>, <span class="fl">0.1</span>, <span class="fl">0.0</span>,</span></span>
-<span class="r-in"><span>      <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.1</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span>,</span></span>
-<span class="r-in"><span>    nrow <span class="op">=</span> <span class="va">k</span>,</span></span>
-<span class="r-in"><span>    byrow <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">chol_cov</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chol.html" class="external-link">chol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">SimVAR</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  time <span class="op">=</span> <span class="va">time</span>,</span></span>
 <span class="r-in"><span>  burn_in <span class="op">=</span> <span class="va">burn_in</span>,</span></span>
@@ -188,13 +178,13 @@ which is from column <code>burn_in</code> to column <code>time + burn_in - 1</co
 <span class="r-in"><span>  chol_cov <span class="op">=</span> <span class="va">chol_cov</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]     [,2]     [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.888457 3.542805 6.224626</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.458366 3.056614 6.315703</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1.934331 2.936204 6.114952</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 2.403502 3.203396 6.685963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 1.984004 3.434046 7.095324</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 1.560075 3.323280 6.986726</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]     [,2]     [,3]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.6604813 4.407838 7.473852</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.2947893 2.772433 7.051225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1.7966908 2.317002 5.759385</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 3.2784861 3.105018 6.957684</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 1.9508525 3.791006 7.690658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.6096591 3.407655 6.828098</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

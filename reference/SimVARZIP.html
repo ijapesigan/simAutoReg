@@ -131,26 +131,26 @@ to store the generated data.</p></li>
 <li><p>Set the initial values of the matrix <code>data</code>
 using the constant term <code>constant</code>.</p></li>
 <li><p>For each time point starting from the <code>p</code>-th time point
-to <code>time + burn_in - 1</code>:
-- Generate a vector of random process noise
+to <code>time + burn_in - 1</code>:</p><ul><li><p>Generate a vector of random process noise
 from a multivariate normal distribution
-with mean 0 and covariance matrix <code>chol_cov</code>.
-- Generate the VAR time series values for each variable <code>j</code>
+with mean 0 and covariance matrix <code>chol_cov</code>.</p></li>
+<li><p>Generate the VAR time series values for each variable <code>j</code>
 at time <code>t</code> by applying the autoregressive terms
-for each lag <code>lag</code> and each variable <code>l</code>.
-- Add the generated noise to the VAR time series values.
-- For the first variable,
-apply the Zero-Inflated Poisson (ZIP) model:
-- Compute the intensity <code>intensity</code>
-as the exponential of the first variable's value at time <code>t</code>.
-- Sample a random value <code>u</code>
-from a uniform distribution on [0, 1].
-- If <code>u</code> is less than <code>intensity / (1 + intensity)</code>,
-set the first variable's value to zero (inflation).
-- Otherwise, sample the first variable's value
+for each lag <code>lag</code> and each variable <code>l</code>.</p><ul><li><p>Add the generated noise to the VAR time series values.</p></li>
+<li><p>For the first variable,
+apply the Zero-Inflated Poisson (ZIP) model:</p><ul><li><p>Compute the intensity <code>intensity</code>
+as the exponential of the first variable's value at time <code>t</code>.</p></li>
+<li><p>Sample a random value <code>u</code>
+from a uniform distribution on [0, 1].</p></li>
+<li><p>If <code>u</code> is less than <code>intensity / (1 + intensity)</code>,
+set the first variable's value to zero (inflation).</p></li>
+<li><p>Otherwise, sample the first variable's value
 from a Poisson distribution
-with mean <code>intensity</code> (count process).
-- Transpose the data matrix <code>data</code> and return only
+with mean <code>intensity</code> (count process).</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Transpose the data matrix <code>data</code> and return only
 the required time period after burn-in as a numeric matrix.</p></li>
 </ul></div>
     <div class="section level2">
@@ -175,17 +175,7 @@ the required time period after burn-in as a numeric matrix.</p></li>
 <span class="r-in"><span>  nrow <span class="op">=</span> <span class="va">k</span>,</span></span>
 <span class="r-in"><span>  byrow <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">chol_cov</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chol.html" class="external-link">chol</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      <span class="fl">0.1</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span></span>
-<span class="r-in"><span>      <span class="fl">0.0</span>, <span class="fl">0.1</span>, <span class="fl">0.0</span>,</span></span>
-<span class="r-in"><span>      <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.1</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span>,</span></span>
-<span class="r-in"><span>    nrow <span class="op">=</span> <span class="va">k</span>,</span></span>
-<span class="r-in"><span>    byrow <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">chol_cov</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chol.html" class="external-link">chol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">SimVARZIP</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  time <span class="op">=</span> <span class="va">time</span>,</span></span>
 <span class="r-in"><span>  burn_in <span class="op">=</span> <span class="va">burn_in</span>,</span></span>
@@ -195,12 +185,12 @@ the required time period after burn-in as a numeric matrix.</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]     [,2]     [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    0 3.289680 5.520179</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0 3.330684 6.031244</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0 3.490722 6.127575</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]    0 3.611765 6.486873</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]    0 3.371803 6.933250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]    0 3.328806 6.936223</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    0 6.764584 8.267509</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0 6.272943 9.135121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0 5.122119 8.865270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]    1 5.086065 8.045026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]    0 3.057915 7.248725</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]    0 3.709934 5.680281</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
