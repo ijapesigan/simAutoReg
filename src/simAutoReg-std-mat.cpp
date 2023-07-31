@@ -31,7 +31,8 @@ arma::mat StdMat(const arma::mat& X)
   int q = X.n_cols; // Number of predictors
   int n = X.n_rows; // Number of observations
 
-  arma::mat X_std(n, q, arma::fill::zeros); // Initialize the standardized matrix
+  arma::mat X_std(n, q, arma::fill::zeros); // Initialize the standardized 
+                                            // matrix
 
   // Calculate column means
   arma::vec col_means(q, arma::fill::zeros);

@@ -8,7 +8,8 @@ using namespace Rcpp;
 //' @author Ivan Jacob Agaloos Pesigan
 //'
 //' @param coef_std Numeric matrix.
-//'   Standardized estimates of the autoregression and cross regression coefficients.
+//'   Standardized estimates of the autoregression
+//'   and cross regression coefficients.
 //' @param sd_Y Numeric vector.
 //'   Standard deviations of the `Y` matrix.
 //' @param sd_X Numeric vector.
@@ -24,7 +25,8 @@ using namespace Rcpp;
 //' sd_X <- sqrt(diag(var(VAR_YX$X[, -1])))
 //' mean_Y <- colMeans(VAR_YX$Y)
 //' mean_X <- colMeans(VAR_YX$X[, -1])
-//' OrigScale(coef_std = coef_std, sd_Y = sd_Y, sd_X = sd_X, mean_Y = mean_Y, mean_X = mean_X)
+//' OrigScale(coef_std = coef_std, sd_Y = sd_Y, sd_X = sd_X,
+//'   mean_Y = mean_Y, mean_X = mean_X)
 //' FitVAROLS(Y = VAR_YX$Y, X = VAR_YX$X[, -1])
 //'
 //' @importFrom Rcpp sourceCpp
@@ -37,7 +39,8 @@ arma::mat OrigScale(const arma::mat& coef_std,
                     const arma::vec& sd_Y,
                     const arma::vec& sd_X,
                     const arma::vec& mean_Y,
-                    const arma::vec& mean_X) {
+                    const arma::vec& mean_X)
+{
   int k = coef_std.n_rows; // Number of outcomes
   int q = coef_std.n_cols; // Number of predictors
 

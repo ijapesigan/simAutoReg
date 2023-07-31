@@ -34,7 +34,8 @@ using namespace Rcpp;
 //' var(y)
 //'
 //' @details
-//' The [simAutoReg::SimMVN()] function generates multivariate normal random numbers
+//' The [simAutoReg::SimMVN()] function generates
+//' multivariate normal random numbers
 //' using the Cholesky decomposition method.
 //' Given the number of samples `n`, the mean vector `location` of length `k`
 //' (where `k` is the number of variables),
@@ -42,16 +43,19 @@ using namespace Rcpp;
 //' of dimensions `k` by `k`,
 //' the function produces a matrix of multivariate normal random numbers.
 //'
-//' The steps involved in generating multivariate normal random numbers are as follows:
+//' The steps involved in generating multivariate normal random numbers
+//' are as follows:
 //'
 //' - Determine the number of variables `k` from the length of the mean vector.
 //' - Generate random data from a standard multivariate normal distribution,
 //'   resulting in an `n` by `k` matrix of random numbers.
-//' - Transform the standard normal random data into multivariate normal random data
+//' - Transform the standard normal random data
+//'   into multivariate normal random data
 //'   using the Cholesky decomposition `chol_scale`.
 //' - Add the mean vector `location` to the transformed data
 //'   to obtain the final simulated multivariate normal random numbers.
-//' - The function returns a matrix of simulated multivariate normal random numbers
+//' - The function returns a matrix of simulated
+//'   multivariate normal random numbers
 //'   with dimensions `n` by `k`,
 //'   where `n` is the number of samples and `k` is the number of variables.
 //'   This matrix can be used for various statistical analyses and simulations.
@@ -66,7 +70,9 @@ using namespace Rcpp;
 //' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
-arma::mat SimMVN(int n, const arma::vec& location, const arma::mat& chol_scale)
+arma::mat SimMVN(int n,
+                 const arma::vec& location,
+                 const arma::mat& chol_scale)
 {
   int k = location.n_elem;
 

@@ -34,16 +34,20 @@ using namespace Rcpp;
 //' for the variance vector
 //' based on the exponential of a multivariate normal distribution.
 //' Given the number of samples `n`,
-//' the constant term \eqn{\boldsymbol{\mu}} represented by the `location` vector,
+//' the constant term \eqn{\boldsymbol{\mu}} represented
+//' by the `location` vector,
 //' and the Cholesky decomposition matrix \eqn{\boldsymbol{\Sigma}}
 //' for the multivariate normal random error \eqn{\boldsymbol{\varepsilon}},
 //' the function simulates \eqn{n} independent samples
 //' of the variance vector \eqn{\boldsymbol{\sigma^{2}}}.
-//' Each sample of the variance vector \eqn{\boldsymbol{\sigma^{2}}} is obtained by
-//' calculating the exponential of random variations to the mean vector \eqn{\boldsymbol{\mu}}.
+//' Each sample of the variance vector \eqn{\boldsymbol{\sigma^{2}}}
+//' is obtained by
+//' calculating the exponential of random variations
+//' to the mean vector \eqn{\boldsymbol{\mu}}.
 //' The random variations are generated using the Cholesky decomposition
 //' of the covariance matrix \eqn{\boldsymbol{\Sigma}}.
-//' Finally, the function returns a matrix with each column containing the simulated
+//' Finally, the function returns a matrix with each column
+//' containing the simulated
 //' variance vector for each sample.
 //'
 //' @examples
@@ -65,7 +69,9 @@ using namespace Rcpp;
 //' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVariance(int n, const arma::vec& location, const arma::mat& chol_scale)
+arma::mat SimVariance(int n,
+                      const arma::vec& location,
+                      const arma::mat& chol_scale)
 {
   int k = location.n_elem; // Number of variables
 

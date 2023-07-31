@@ -15,7 +15,8 @@
 //' @param X Numeric matrix.
 //'   Matrix of predictors (X).
 //'
-//' @return Matrix of estimated autoregressive and cross-regression coefficients.
+//' @return Matrix of estimated autoregressive
+//' and cross-regression coefficients.
 //'
 //' @examples
 //' FitVAROLS(Y = VAR_YX$Y, X = VAR_YX$X)
@@ -32,7 +33,8 @@
 //' Note that if the first column of `X` is a vector of ones,
 //' the constant vector is also estimated.
 //'
-//' The steps involved in estimating the VAR model parameters using OLS are as follows:
+//' The steps involved in estimating the VAR model parameters
+//' using OLS are as follows:
 //'
 //' - Compute the QR decomposition of the lagged predictor matrix `X`
 //'   using the `qr` function from the Armadillo library.
@@ -51,7 +53,8 @@
 //' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
-arma::mat FitVAROLS(const arma::mat& Y, const arma::mat& X)
+arma::mat FitVAROLS(const arma::mat& Y,
+                    const arma::mat& X)
 {
   // Estimate VAR model parameters using QR decomposition
   arma::mat Q, R;

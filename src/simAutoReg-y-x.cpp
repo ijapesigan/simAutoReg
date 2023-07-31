@@ -12,7 +12,8 @@ using namespace Rcpp;
 //'
 //' @param data Numeric matrix.
 //'   The time series data with dimensions `t` by `k`,
-//'   where `t` is the number of observations and `k` is the number of variables.
+//'   where `t` is the number of observations
+//'   and `k` is the number of variables.
 //' @param p Integer.
 //'   The order of the VAR model (number of lags).
 //'
@@ -58,13 +59,15 @@ using namespace Rcpp;
 //' @keywords simAutoReg utils
 //' @export
 // [[Rcpp::export]]
-List YX(const arma::mat& data, int p)
+List YX(const arma::mat& data,
+        int p)
 {
   int t = data.n_rows; // Number of observations
   int k = data.n_cols; // Number of variables
 
   // Create matrices to store lagged variables and the dependent variable
-  arma::mat X(t - p, k * p + 1, arma::fill::zeros); // Add 1 column for the constant
+  arma::mat X(t - p, k * p + 1, arma::fill::zeros); // Add 1 column for the 
+                                                    // constant
   arma::mat Y(t - p, k, arma::fill::zeros);
 
   // Populate the matrices X and Y with lagged data

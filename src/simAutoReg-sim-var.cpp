@@ -15,7 +15,8 @@ using namespace Rcpp;
 //' @param burn_in Integer.
 //'   Number of burn-in observations to exclude before returning the results.
 //' @param constant Numeric vector.
-//'   The constant term vector of length `k`, where `k` is the number of variables.
+//'   The constant term vector of length `k`,
+//'   where `k` is the number of variables.
 //' @param coef Numeric matrix.
 //'   Coefficient matrix with dimensions `k` by `(k * p)`.
 //'   Each `k` by `k` block corresponds to the coefficient matrix
@@ -27,7 +28,8 @@ using namespace Rcpp;
 //'
 //' @return Numeric matrix containing the simulated time series data
 //'   with dimensions `k` by `(time - burn_in)`,
-//'   where `k` is the number of variables and time is the number of observations.
+//'   where `k` is the number of variables and
+//'   time is the number of observations.
 //'
 //' @examples
 //' set.seed(42)
@@ -103,7 +105,11 @@ using namespace Rcpp;
 //' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVAR(int time, int burn_in, const arma::vec& constant, const arma::mat& coef, const arma::mat& chol_cov)
+arma::mat SimVAR(int time,
+                 int burn_in,
+                 const arma::vec& constant,
+                 const arma::mat& coef,
+                 const arma::mat& chol_cov)
 {
   int k = constant.n_elem;    // Number of variables
   int coef_dim = coef.n_cols; // Dimension of the coefficient matrix
@@ -136,43 +142,7 @@ arma::mat SimVAR(int time, int burn_in, const arma::vec& constant, const arma::m
     }
   }
 
-  // Transpose the data matrix and return only the required time period after burn-in
+  // Transpose the data matrix and
+  // return only the required time period after burn-in
   return data.cols(burn_in, time + burn_in - 1).t();
 }
-
-/*** R
-set.seed(42)
-time <- 1000L
-burn_in <- 200
-k <- 3
-p <- 2
-constant <- c(1, 1, 1)
-coef <- matrix(
-  data = c(
-    0.4, 0.0, 0.0, 0.1, 0.0, 0.0,
-    0.0, 0.5, 0.0, 0.0, 0.2, 0.0,
-    0.0, 0.0, 0.6, 0.0, 0.0, 0.3
-  ),
-  nrow = k,
-  byrow = TRUE
-)
-chol_cov <- chol(
-  matrix(
-    data = c(
-      0.1, 0.0, 0.0,
-      0.0, 0.1, 0.0,
-      0.0, 0.0, 0.1
-    ),
-    nrow = k,
-    byrow = TRUE
-  )
-)
-y <- SimVAR(
-  time = time,
-  burn_in = burn_in,
-  constant = constant,
-  coef = coef,
-  chol_cov = chol_cov
-)
-head(y)
-*/

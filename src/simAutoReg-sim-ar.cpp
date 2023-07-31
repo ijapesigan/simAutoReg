@@ -39,7 +39,8 @@ using namespace Rcpp;
 //' A burn-in period is specified to exclude initial data points
 //' from the output.
 //'
-//' The steps in generating the autoregressive time series with burn-in are as follows:
+//' The steps in generating the autoregressive time series with burn-in
+//' are as follows:
 //'
 //' - Set the order of the AR model to `p` based on the length of `coef`.
 //' - Create a vector data of size `time + burn_in`
@@ -62,7 +63,11 @@ using namespace Rcpp;
 //' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
-arma::vec SimAR(int time, int burn_in, const double& constant, const arma::vec& coef, const double& sd)
+arma::vec SimAR(int time,
+                int burn_in,
+                const double& constant,
+                const arma::vec& coef,
+                const double& sd)
 {
   // Order of the AR model
   int p = coef.size();

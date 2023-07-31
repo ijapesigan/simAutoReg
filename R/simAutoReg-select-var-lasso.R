@@ -7,7 +7,8 @@
 #' @param crit Character string.
 #'   Information criteria to use.
 #'   Valid values include `"aic"`, `"bic"`, and `"ebic"`.
-#' @return Returns the Lasso estimates of autoregression and cross regression coefficients.
+#' @return Returns the Lasso estimates
+#' of autoregression and cross regression coefficients.
 #'
 #' @examples
 #' Y_std <- StdMat(VAR_YX$Y)
@@ -22,7 +23,7 @@
 SelectVARLasso <- function(search, crit = "ebic") {
   stopifnot(crit %in% c("aic", "bic", "ebic"))
   info <- search$criteria
-  info <- cbind(info, 1:nrow(info))
+  info <- cbind(info, seq_len(nrow(info)))
   if (crit == "aic") {
     y <- info[order(info[, 2], decreasing = FALSE), ]
   }
