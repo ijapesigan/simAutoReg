@@ -35,10 +35,13 @@
 //' @keywords simAutoReg pb
 //' @export
 // [[Rcpp::export]]
-Rcpp::List PBootVAROLS(const arma::mat& data, int p, int B = 1000,
-                       int burn_in = 200) {
+Rcpp::List PBootVAROLS(const arma::mat& data,
+                       int p,
+                       int B = 1000,
+                       int burn_in = 200)
+{
   // Indices
-  int t = data.n_rows;  // Number of observations
+  int t = data.n_rows; // Number of observations
 
   // YX
   Rcpp::List yx = YX(data, p);

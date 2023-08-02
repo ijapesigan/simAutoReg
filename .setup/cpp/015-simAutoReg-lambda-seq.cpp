@@ -27,9 +27,11 @@
 //' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
-arma::vec LambdaSeq(const arma::mat& Y, const arma::mat& X,
-                    int n_lambdas = 100) {
-  int k = Y.n_cols;  // Number of variables
+arma::vec LambdaSeq(const arma::mat& Y,
+                    const arma::mat& X,
+                    int n_lambdas = 100)
+{
+  int k = Y.n_cols; // Number of variables
 
   arma::mat XtX = trans(X) * X;
   double lambda_max = arma::max(diagvec(XtX)) / (k * 2);
@@ -37,8 +39,7 @@ arma::vec LambdaSeq(const arma::mat& Y, const arma::mat& X,
   // Generate the sequence of lambdas
   double log_lambda_max = std::log10(lambda_max);
   arma::vec lambda_seq(n_lambdas);
-  double log_lambda_step =
-      (std::log10(lambda_max / 1000) - log_lambda_max) / (n_lambdas - 1);
+  double log_lambda_step = (std::log10(lambda_max / 1000) - log_lambda_max) / (n_lambdas - 1);
 
   for (int i = 0; i < n_lambdas; ++i) {
     double log_lambda = log_lambda_max + i * log_lambda_step;

@@ -65,8 +65,12 @@
 //' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
-arma::vec SimAR(int time, int burn_in, const double& constant,
-                const arma::vec& coef, const double& sd) {
+arma::vec SimAR(int time,
+                int burn_in,
+                const double& constant,
+                const arma::vec& coef,
+                const double& sd)
+{
   // Order of the AR model
   int p = coef.size();
   int total_time = time + burn_in;
@@ -76,22 +80,27 @@ arma::vec SimAR(int time, int burn_in, const double& constant,
 
   // Generate random noise from a normal distribution
   arma::vec noise(total_time);
-  for (int i = 0; i < total_time; i++) {
+  for (int i = 0; i < total_time; i++)
+  {
     noise(i) = R::rnorm(0, sd);
   }
 
   // Generate the autoregressive time series with burn-in
-  for (int i = 0; i < total_time; i++) {
+  for (int i = 0; i < total_time; i++)
+  {
     data(i) = constant;
-    for (int lag = 0; lag < p; lag++) {
-      if (i - lag - 1 >= 0) {
+    for (int lag = 0; lag < p; lag++)
+    {
+      if (i - lag - 1 >= 0)
+      {
         data(i) += coef(lag) * data(i - lag - 1) + noise(i);
       }
     }
   }
 
   // Remove the burn-in period
-  if (burn_in > 0) {
+  if (burn_in > 0)
+  {
     data = data(arma::span(burn_in, total_time - 1));
   }
 

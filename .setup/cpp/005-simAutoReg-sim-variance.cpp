@@ -71,9 +71,11 @@
 //' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVariance(int n, const arma::vec& location,
-                      const arma::mat& chol_scale) {
-  int k = location.n_elem;  // Number of variables
+arma::mat SimVariance(int n,
+                      const arma::vec& location,
+                      const arma::mat& chol_scale)
+{
+  int k = location.n_elem; // Number of variables
 
   // Generate multivariate normal random vectors epsilon
   arma::mat epsilon = chol_scale * arma::randn(k, n);

@@ -73,8 +73,10 @@
 //' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
-arma::mat SimMVN(int n, const arma::vec& location,
-                 const arma::mat& chol_scale) {
+arma::mat SimMVN(int n,
+                 const arma::vec& location,
+                 const arma::mat& chol_scale)
+{
   int k = location.n_elem;
 
   // Generate multivariate normal random numbers

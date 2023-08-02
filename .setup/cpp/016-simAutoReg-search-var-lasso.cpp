@@ -47,11 +47,13 @@
 //' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
-Rcpp::List SearchVARLasso(const arma::mat& Ystd, const arma::mat& Xstd,
-                          const arma::vec& lambdas, int max_iter = 10000,
+Rcpp::List SearchVARLasso(const arma::mat& Ystd,
+                          const arma::mat& Xstd,
+                          const arma::vec& lambdas,
+                          int max_iter = 10000,
                           double tol = 1e-5) {
-  int n = Xstd.n_rows;  // Number of observations (rows in X)
-  int q = Xstd.n_cols;  // Number of columns in X (predictors)
+  int n = Xstd.n_rows; // Number of observations (rows in X)
+  int q = Xstd.n_cols; // Number of columns in X (predictors)
 
   // Armadillo matrix to store the lambda, AIC, BIC, and EBIC values
   arma::mat results(lambdas.n_elem, 4, arma::fill::zeros);
@@ -77,8 +79,7 @@ Rcpp::List SearchVARLasso(const arma::mat& Ystd, const arma::mat& Xstd,
     // Compute the AIC, BIC, and EBIC criteria
     double aic = n * std::log(rss / n) + 2.0 * num_params;
     double bic = n * std::log(rss / n) + num_params * std::log(n);
-    double ebic =
-        n * std::log(rss / n) + 2.0 * num_params * std::log(n / double(q));
+    double ebic = n * std::log(rss / n) + 2.0 * num_params * std::log(n / double(q));
 
     // Store the lambda, AIC, BIC, and EBIC values in the results matrix
     results(i, 0) = lambda;
@@ -90,6 +91,5 @@ Rcpp::List SearchVARLasso(const arma::mat& Ystd, const arma::mat& Xstd,
     fit_list[i] = beta;
   }
 
-  return Rcpp::List::create(Rcpp::Named("criteria") = results,
-                            Rcpp::Named("fit") = fit_list);
+  return Rcpp::List::create(Rcpp::Named("criteria") = results, Rcpp::Named("fit") = fit_list);
 }

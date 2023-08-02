@@ -57,7 +57,9 @@
 //' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
-arma::mat FitVAROLS(const arma::mat& Y, const arma::mat& X) {
+arma::mat FitVAROLS(const arma::mat& Y,
+                    const arma::mat& X)
+{
   // Estimate VAR model parameters using QR decomposition
   arma::mat Q, R;
   arma::qr(Q, R, X);
