@@ -59,21 +59,23 @@ Rcpp::List PBootVARLasso(const arma::mat& data, int p, int B = 1000,
   arma::mat pb_std = FitVARLassoSearch(Ystd, Xstd, lambdas);
 
   // Set parameters
-  arma::vec const_vec = ols.col(0);                       // OLS constant vector
-  arma::mat coef_mat = OrigScale(pb_std, Y, X_removed);   // Lasso coefficients
-  arma::mat coef = arma::join_horiz(const_vec, coef_mat); // OLS and Lasso combined
+  arma::vec const_vec = ols.col(0);                      // OLS constant vector
+  arma::mat coef_mat = OrigScale(pb_std, Y, X_removed);  // Lasso coefficients
+  arma::mat coef =
+      arma::join_horiz(const_vec, coef_mat);  // OLS and Lasso combined
 
   // Calculate the residuals
   arma::mat residuals = Y - X * coef.t();
-  //arma::mat residuals_tmp = Y.each_row() - const_vec.t();
-  //arma::mat residuals = residuals_tmp - X_removed * coef_mat.t();
+  // arma::mat residuals_tmp = Y.each_row() - const_vec.t();
+  // arma::mat residuals = residuals_tmp - X_removed * coef_mat.t();
 
   // Calculate the covariance of residuals
   arma::mat cov_residuals = arma::cov(residuals);
   arma::mat chol_cov = arma::chol(cov_residuals);
 
   // Result matrix
-  arma::mat sim = PBootVARLassoSim(B, t, burn_in, const_vec, coef_mat, chol_cov);
+  arma::mat sim =
+      PBootVARLassoSim(B, t, burn_in, const_vec, coef_mat, chol_cov);
 
   // Create a list to store the results
   Rcpp::List result;
