@@ -18,7 +18,9 @@
 //'   Matrix of predictors (X).
 //'
 //' @examples
-//' coef_std <- FitVAROLS(Y = StdMat(vark3p2yx$Y), X = StdMat(vark3p2yx$X[, -1]))
+//' Ystd <- StdMat(vark3p2yx$Y)
+//' Xstd <- StdMat(vark3p2yx$X[, -1])
+//' coef_std <- FitVAROLS(Y = Ystd, X = Xstd)
 //' OrigScale(coef_std = coef_std, Y = vark3p2yx$Y, X = vark3p2yx$X[, -1])
 //' FitVAROLS(Y = vark3p2yx$Y, X = vark3p2yx$X[, -1])
 //'
