@@ -39,14 +39,12 @@
 //' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
-arma::mat FitVARLassoSearch(const arma::mat& Y_std,
-                            const arma::mat& X_std,
+arma::mat FitVARLassoSearch(const arma::mat& Y_std, const arma::mat& X_std,
                             const arma::vec& lambdas,
                             const std::string& crit = "ebic",
-                            int max_iter = 10000,
-                            double tol = 1e-5) {
-  int n = X_std.n_rows; // Number of observations (rows in X)
-  int q = X_std.n_cols; // Number of columns in X (predictors)
+                            int max_iter = 10000, double tol = 1e-5) {
+  int n = X_std.n_rows;  // Number of observations (rows in X)
+  int q = X_std.n_cols;  // Number of columns in X (predictors)
 
   // Variables to track the minimum criterion value
   double min_criterion = std::numeric_limits<double>::infinity();
@@ -70,7 +68,8 @@ arma::mat FitVARLassoSearch(const arma::mat& Y_std,
     // Compute the AIC, BIC, and EBIC criteria
     double aic = n * std::log(rss / n) + 2.0 * num_params;
     double bic = n * std::log(rss / n) + num_params * std::log(n);
-    double ebic = n * std::log(rss / n) + 2.0 * num_params * std::log(n / double(q));
+    double ebic =
+        n * std::log(rss / n) + 2.0 * num_params * std::log(n / double(q));
 
     // Update the minimum criterion and its index if necessary
     double current_criterion = 0.0;
