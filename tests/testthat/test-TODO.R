@@ -41,10 +41,13 @@ lapply(
     )
     SimVariance(n = n, location = location, chol_scale = chol_scale)
     cat("\nTest for PBootCI.\n")
-    pb <- PBootVAROLS(data = vark3p2, p = 2, B = 100)
-    PBootCI(pb)
+    ols <- PBootVAROLS(data = vark3p2, p = 2, B = 10)
+    PBootCI(ols)
+    lasso <- PBootVARLasso(data = vark3p2, p = 2, B = 10)
+    PBootCI(lasso)
     cat("\nTest for PBootSE.\n")
-    PBootSE(pb)
+    PBootSE(ols)
+    PBootSE(lasso)
   },
   text = "test-TODO"
 )

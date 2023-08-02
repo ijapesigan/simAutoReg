@@ -8,7 +8,11 @@
 #' @return A matrix of standard error.
 #'
 #' @examples
-#' pb <- PBootVAROLS(data = vark3p2, p = 2, B = 100)
+#' pb <- PBootVAROLS(data = vark3p2, p = 2, B = 1000)
+#' pb$est
+#' PBootSE(pb)
+#' pb <- PBootVARLasso(data = vark3p2, p = 2, B = 1000)
+#' pb$est
 #' PBootSE(pb)
 #'
 #' @family Simulation of Autoregressive Data Functions

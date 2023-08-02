@@ -11,7 +11,11 @@
 #'   and `ul` for the upper limit.
 #'
 #' @examples
-#' pb <- PBootVAROLS(data = vark3p2, p = 2, B = 100)
+#' pb <- PBootVAROLS(data = vark3p2, p = 2, B = 1000)
+#' pb$est
+#' PBootCI(pb)
+#' pb <- PBootVARLasso(data = vark3p2, p = 2, B = 1000)
+#' pb$est
 #' PBootCI(pb)
 #'
 #' @family Simulation of Autoregressive Data Functions

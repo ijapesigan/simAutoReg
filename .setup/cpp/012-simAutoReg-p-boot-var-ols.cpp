@@ -26,7 +26,7 @@
 //' and bootstrap estimates (`boot`).
 //'
 //' @examples
-//' pb <- PBootVAROLS(data = vark3p2, p = 2, B = 100)
+//' pb <- PBootVAROLS(data = vark3p2, p = 2, B = 10)
 //' str(pb)
 //'
 //' @importFrom Rcpp sourceCpp
