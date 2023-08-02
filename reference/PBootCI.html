@@ -93,6 +93,7 @@ and <code>ul</code> for the upper limit.</p>
 <code><a href="LambdaSeq.html">LambdaSeq</a>()</code>,
 <code><a href="OrigScale.html">OrigScale</a>()</code>,
 <code><a href="PBootSE.html">PBootSE</a>()</code>,
+<code><a href="PBootVARLasso.html">PBootVARLasso</a>()</code>,
 <code><a href="PBootVAROLS.html">PBootVAROLS</a>()</code>,
 <code><a href="SearchVARLasso.html">SearchVARLasso</a>()</code>,
 <code><a href="SelectVARLasso.html">SelectVARLasso</a>()</code>,
@@ -111,23 +112,51 @@ and <code>ul</code> for the upper limit.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">pb</span> <span class="op">&lt;-</span> <span class="fu"><a href="PBootVAROLS.html">PBootVAROLS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">vark3p2</span>, p <span class="op">=</span> <span class="fl">2</span>, B <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">pb</span> <span class="op">&lt;-</span> <span class="fu"><a href="PBootVAROLS.html">PBootVAROLS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">vark3p2</span>, p <span class="op">=</span> <span class="fl">2</span>, B <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pb</span><span class="op">$</span><span class="va">est</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]        [,2]        [,3]        [,4]        [,5]         [,6]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.7899726  0.36836768 0.008539283  0.02231498  0.11338780  0.024505442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.0001995  0.01334496 0.481949237 -0.01730029 -0.03223315  0.234373552</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1.0666814 -0.03022951 0.014945306  0.60741736 -0.01610408 -0.006149189</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             [,7]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.01143384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.01815779</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.29620975</span>
 <span class="r-in"><span><span class="fu">PBootCI</span><span class="op">(</span><span class="va">pb</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ll</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]        [,2]        [,3]        [,4]        [,5]        [,6]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.4168038  0.31531548 -0.05930300 -0.03906045  0.05011455 -0.02788725</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.6361473 -0.05137194  0.44189265 -0.07426910 -0.10805638  0.16869095</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.6875680 -0.09472684 -0.04198385  0.54662891 -0.07589397 -0.06363049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.3831638  0.30744374 -0.05418551 -0.03325757  0.04417980 -0.03447291</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.6189762 -0.04726385  0.41914206 -0.07890249 -0.09600059  0.17221333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.7242917 -0.09412862 -0.04659461  0.54551530 -0.07930339 -0.06823629</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             [,7]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.06875954</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.03959759</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.23345342</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.07290870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.04213191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.22985197</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ul</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]       [,2]       [,3]       [,4]       [,5]       [,6]       [,7]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.169274 0.42688669 0.06208789 0.08461327 0.15852468 0.08855443 0.04958884</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.372253 0.08227703 0.54031773 0.02835124 0.03126643 0.28345000 0.06175373</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1.609256 0.02905355 0.07021983 0.66552207 0.03769595 0.04855517 0.34699565</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.182762 0.42387688 0.06786762 0.08610791 0.16845464 0.08628296 0.04897743</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.457377 0.07664841 0.53903189 0.04222125 0.02364438 0.29058987 0.07815567</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1.598733 0.02907415 0.07701244 0.66484244 0.04422579 0.05481918 0.35228921</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">pb</span> <span class="op">&lt;-</span> <span class="fu"><a href="PBootVARLasso.html">PBootVARLasso</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">vark3p2</span>, p <span class="op">=</span> <span class="fl">2</span>, B <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pb</span><span class="op">$</span><span class="va">est</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]      [,3]      [,4]       [,5]      [,6]      [,7]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.7899726 0.3421906 0.0000000 0.0000000 0.08468105 0.0000000 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.0001995 0.0000000 0.4570574 0.0000000 0.00000000 0.2120659 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1.0666814 0.0000000 0.0000000 0.5880327 0.00000000 0.0000000 0.2736337</span>
+<span class="r-in"><span><span class="fu">PBootCI</span><span class="op">(</span><span class="va">pb</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ll</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]     [,3]      [,4] [,5]      [,6]      [,7]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.4341715 0.2337544 0.000000 0.0000000    0 0.0000000 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.6561046 0.0000000 0.359099 0.0000000    0 0.1146222 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.7678082 0.0000000 0.000000 0.4939929    0 0.0000000 0.1799403</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ul</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.219379 0.3637545 0.0000000 0.0000000 0.1106058 0.0000000 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.397485 0.0000000 0.4875248 0.0000000 0.0000000 0.2348528 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1.516390 0.0000000 0.0000000 0.6199714 0.0000000 0.0000000 0.3031862</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
