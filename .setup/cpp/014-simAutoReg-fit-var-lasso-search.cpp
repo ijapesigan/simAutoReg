@@ -10,9 +10,9 @@
 //'
 //' @author Ivan Jacob Agaloos Pesigan
 //'
-//' @param Y_std Numeric matrix.
+//' @param Ystd Numeric matrix.
 //'   Matrix of standardized dependent variables (Y).
-//' @param X_std Numeric matrix.
+//' @param Xstd Numeric matrix.
 //'   Matrix of standardized predictors (X).
 //' @param lambdas Numeric vector.
 //'   Vector of lambda hyperparameters for Lasso regularization.
@@ -30,21 +30,23 @@
 //' and cross-regression coefficients.
 //'
 //' @examples
-//' Y_std <- StdMat(VAR_YX$Y)
-//' X_std <- StdMat(VAR_YX$X[, -1])
-//' lambdas <- LambdaSeq(Y = Y_std, X = X_std, n_lambdas = 100)
-//' FitVARLassoSearch(Y_std = Y_std, X_std = X_std, lambdas = lambdas)
+//' Ystd <- StdMat(vark3p2yx$Y)
+//' Xstd <- StdMat(vark3p2yx$X[, -1])
+//' lambdas <- LambdaSeq(Y = Ystd, X = Xstd, n_lambdas = 100)
+//' FitVARLassoSearch(Ystd = Ystd, Xstd = Xstd, lambdas = lambdas)
 //'
 //' @family Simulation of Autoregressive Data Functions
 //' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
-arma::mat FitVARLassoSearch(const arma::mat& Y_std, const arma::mat& X_std,
+arma::mat FitVARLassoSearch(const arma::mat& Ystd,
+                            const arma::mat& Xstd,
                             const arma::vec& lambdas,
                             const std::string& crit = "ebic",
-                            int max_iter = 10000, double tol = 1e-5) {
-  int n = X_std.n_rows;  // Number of observations (rows in X)
-  int q = X_std.n_cols;  // Number of columns in X (predictors)
+                            int max_iter = 10000,
+                            double tol = 1e-5) {
+  int n = Xstd.n_rows; // Number of observations (rows in X)
+  int q = Xstd.n_cols; // Number of columns in X (predictors)
 
   // Variables to track the minimum criterion value
   double min_criterion = std::numeric_limits<double>::infinity();
@@ -54,10 +56,10 @@ arma::mat FitVARLassoSearch(const arma::mat& Y_std, const arma::mat& X_std,
     double lambda = lambdas(i);
 
     // Fit the VAR model using Lasso regularization
-    arma::mat beta = FitVARLasso(Y_std, X_std, lambda, max_iter, tol);
+    arma::mat beta = FitVARLasso(Ystd, Xstd, lambda, max_iter, tol);
 
     // Calculate the residuals
-    arma::mat residuals = Y_std - X_std * beta.t();
+    arma::mat residuals = Ystd - Xstd * beta.t();
 
     // Compute the residual sum of squares (RSS)
     double rss = arma::accu(residuals % residuals);
@@ -68,8 +70,7 @@ arma::mat FitVARLassoSearch(const arma::mat& Y_std, const arma::mat& X_std,
     // Compute the AIC, BIC, and EBIC criteria
     double aic = n * std::log(rss / n) + 2.0 * num_params;
     double bic = n * std::log(rss / n) + num_params * std::log(n);
-    double ebic =
-        n * std::log(rss / n) + 2.0 * num_params * std::log(n / double(q));
+    double ebic = n * std::log(rss / n) + 2.0 * num_params * std::log(n / double(q));
 
     // Update the minimum criterion and its index if necessary
     double current_criterion = 0.0;

@@ -14,9 +14,9 @@
 //'
 //' @author Ivan Jacob Agaloos Pesigan
 //'
-//' @param Y_std Numeric matrix.
+//' @param Ystd Numeric matrix.
 //'   Matrix of standardized dependent variables (Y).
-//' @param X_std Numeric matrix.
+//' @param Xstd Numeric matrix.
 //'   Matrix of standardized predictors (X).
 //' @param lambda Lasso hyperparameter.
 //'   The regularization strength controlling the sparsity.
@@ -31,18 +31,18 @@
 //' cross-regression coefficients.
 //'
 //' @examples
-//' Y_std <- StdMat(VAR_YX$Y)
-//' X_std <- StdMat(VAR_YX$X[, -1])
+//' Ystd <- StdMat(vark3p2yx$Y)
+//' Xstd <- StdMat(vark3p2yx$X[, -1])
 //' lambda <- 73.90722
-//' FitVARLasso(Y_std = Y_std, X_std = X_std, lambda = lambda)
+//' FitVARLasso(Ystd = Ystd, Xstd = Xstd, lambda = lambda)
 //'
 //' @details
 //' The [simAutoReg::FitVARLasso()] function estimates the parameters
 //' of a Vector Autoregressive (VAR) model
 //' using the Lasso regularization method.
-//' Given the input matrices `Y_std` and `X_std`,
-//' where `Y_std` is the matrix of standardized dependent variables,
-//' and `X_std` is the matrix of standardized predictors,
+//' Given the input matrices `Ystd` and `Xstd`,
+//' where `Ystd` is the matrix of standardized dependent variables,
+//' and `Xstd` is the matrix of standardized predictors,
 //' the function computes the autoregressive and cross-regression coefficients
 //' of the VAR model with sparsity induced by the Lasso regularization.
 //'
@@ -59,12 +59,12 @@
 //'   The loop iterates `max_iter` times (default is 10000),
 //'   or until convergence is achieved.
 //'   The outer loop iterates over the predictor variables
-//'   (columns of `X_std`),
+//'   (columns of `Xstd`),
 //'   while the inner loop iterates over the outcome variables
-//'   (columns of `Y_std`).
-//' - **Coefficient Update**: For each predictor variable (column of `X_std`),
+//'   (columns of `Ystd`).
+//' - **Coefficient Update**: For each predictor variable (column of `Xstd`),
 //'   the function iteratively updates the corresponding column of `beta`
-//'   using the coordinate descent algorithm with L1 norm regularization
+//'   using the coordinate descent algorithm with L1 norm regularization 
 //'   (Lasso).
 //'   The update involves calculating the soft-thresholded value `c`,
 //'   which encourages sparsity in the coefficients.
@@ -79,7 +79,7 @@
 //'   the algorithm is considered converged, and the loop exits.
 //'
 //' @seealso
-//' The [simAutoReg::FitVAROLS()] function for estimating VAR model parameters
+//' The [simAutoReg::FitVAROLS()] function for estimating VAR model parameters 
 //' using OLS.
 //'
 //' @importFrom Rcpp sourceCpp
@@ -88,43 +88,53 @@
 //' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
-arma::mat FitVARLasso(const arma::mat& Y_std, const arma::mat& X_std,
-                      const double& lambda, int max_iter = 10000,
-                      double tol = 1e-5) {
-  int q =
-      X_std.n_cols;  // Number of predictors (excluding the intercept column)
-  int k = Y_std.n_cols;  // Number of outcomes
+arma::mat FitVARLasso(const arma::mat& Ystd,
+                      const arma::mat& Xstd,
+                      const double& lambda,
+                      int max_iter = 10000,
+                      double tol = 1e-5)
+{
+  int q = Xstd.n_cols; // Number of predictors (excluding the intercept column)
+  int k = Ystd.n_cols; // Number of outcomes
 
   // OLS starting values
   // Estimate VAR model parameters using QR decomposition
   arma::mat Q, R;
-  arma::qr(Q, R, X_std);
-  // Solve the linear system R * beta = Q.t() * Y_std
-  arma::mat beta = arma::solve(R, Q.t() * Y_std);
+  arma::qr(Q, R, Xstd);
+  // Solve the linear system R * beta = Q.t() * Ystd
+  arma::mat beta = arma::solve(R, Q.t() * Ystd);
 
   // Coordinate Descent Loop
-  for (int iter = 0; iter < max_iter; iter++) {
-    arma::mat beta_old = beta;  // Initialize beta_old
-                                // with the current value of beta
+  for (int iter = 0; iter < max_iter; iter++)
+  {
+    arma::mat beta_old = beta; // Initialize beta_old
+                               // with the current value of beta
 
-    // Create a copy of Y_std to use for updating Y_l
-    arma::mat Y_copy = Y_std;
+    // Create a copy of Ystd to use for updating Y_l
+    arma::mat Y_copy = Ystd;
 
     // Update each coefficient for each predictor
     // using cyclical coordinate descent
-    for (int j = 0; j < q; j++) {
-      arma::vec Xj = X_std.col(j);
-      for (int l = 0; l < k; l++) {
+    for (int j = 0; j < q; j++)
+    {
+      arma::vec Xj = Xstd.col(j);
+      for (int l = 0; l < k; l++)
+      {
         arma::vec Y_l = Y_copy.col(l);
-        double rho = dot(Xj, Y_l - X_std * beta.col(l) + beta(j, l) * Xj);
+        double rho = dot(Xj, Y_l - Xstd * beta.col(l) + beta(j, l) * Xj);
         double z = dot(Xj, Xj);
         double c = 0;
 
-        if (rho < -lambda / 2) {
+        if (rho < -lambda / 2)
+        {
           c = (rho + lambda / 2) / z;
-        } else if (rho > lambda / 2) {
+        }
+        else if (rho > lambda / 2)
+        {
           c = (rho - lambda / 2) / z;
-        } else {
+        }
+        else
+        {
           c = 0;
         }
         beta(j, l) = c;
@@ -135,19 +145,22 @@ arma::mat FitVARLasso(const arma::mat& Y_std, const arma::mat& X_std,
     }
 
     // Check convergence
-    if (iter > 0) {
-      if (arma::all(arma::vectorise(arma::abs(beta - beta_old)) < tol)) {
-        break;  // Converged, exit the loop
+    if (iter > 0)
+    {
+      if (arma::all(arma::vectorise(arma::abs(beta - beta_old)) < tol))
+      {
+        break; // Converged, exit the loop
       }
     }
 
     // If the loop reaches the last iteration and has not broken
     // (not converged),
     // emit a warning
-    if (iter == max_iter - 1) {
+    if (iter == max_iter - 1)
+    {
       Rcpp::warning(
-          "The algorithm did not converge within the specified maximum number "
-          "of iterations.");
+        "The algorithm did not converge within the specified maximum number of iterations."
+      );
     }
   }
 

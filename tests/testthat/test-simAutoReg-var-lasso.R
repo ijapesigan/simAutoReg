@@ -20,10 +20,10 @@ lapply(
     )
     dims <- dim(y)
     yx <- YX(y, 2)
-    Y_std <- StdMat(yx$Y)
-    X_std <- StdMat(yx$X[, -1])
+    Ystd <- StdMat(yx$Y)
+    Xstd <- StdMat(yx$X[, -1])
     lambdas <- 10^seq(-5, 5, length.out = 100)
-    search <- SearchVARLasso(Y_std = Y_std, X_std = X_std, lambdas = lambdas)
+    search <- SearchVARLasso(Ystd = Ystd, Xstd = Xstd, lambdas = lambdas)
     lasso <- OrigScale(
       SelectVARLasso(search, crit = "ebic"),
       Y = yx$Y,
@@ -65,11 +65,11 @@ lapply(
     )
     SelectVARLasso(search, crit = "aic")
     SelectVARLasso(search, crit = "bic")
-    lambdas <- LambdaSeq(Y = Y_std, X = X_std, n_lambdas = 100)
+    lambdas <- LambdaSeq(Y = Ystd, X = Xstd, n_lambdas = 100)
     lasso <- OrigScale(
       FitVARLassoSearch(
-        Y_std = Y_std,
-        X_std = X_std,
+        Ystd = Ystd,
+        Xstd = Xstd,
         lambdas = lambdas
       ),
       Y = yx$Y,
@@ -109,8 +109,8 @@ lapply(
         )
       }
     )
-    FitVARLassoSearch(Y_std = Y_std, X_std = X_std, lambdas = lambdas, crit = "aic")
-    FitVARLassoSearch(Y_std = Y_std, X_std = X_std, lambdas = lambdas, crit = "bic")
+    FitVARLassoSearch(Ystd = Ystd, Xstd = Xstd, lambdas = lambdas, crit = "aic")
+    FitVARLassoSearch(Ystd = Ystd, Xstd = Xstd, lambdas = lambdas, crit = "bic")
   },
   time = 1000L,
   burn_in = 200L,

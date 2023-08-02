@@ -23,7 +23,7 @@
 //' and cross-regression coefficients.
 //'
 //' @examples
-//' FitVAROLS(Y = VAR_YX$Y, X = VAR_YX$X)
+//' FitVAROLS(Y = vark3p2yx$Y, X = vark3p2yx$X)
 //'
 //' @details
 //' The [simAutoReg::FitVAROLS()] function estimates the parameters
@@ -57,7 +57,9 @@
 //' @keywords simAutoReg fit
 //' @export
 // [[Rcpp::export]]
-arma::mat FitVAROLS(const arma::mat& Y, const arma::mat& X) {
+arma::mat FitVAROLS(const arma::mat& Y,
+                    const arma::mat& X)
+{
   // Estimate VAR model parameters using QR decomposition
   arma::mat Q, R;
   arma::qr(Q, R, X);

@@ -26,7 +26,7 @@
 //' and bootstrap estimates (`boot`).
 //'
 //' @examples
-//' pb <- PBootVAROLS(data = VAR, p = 2, B = 100)
+//' pb <- PBootVAROLS(data = vark3p2, p = 2, B = 100)
 //' str(pb)
 //'
 //' @importFrom Rcpp sourceCpp
@@ -35,10 +35,13 @@
 //' @keywords simAutoReg pb
 //' @export
 // [[Rcpp::export]]
-Rcpp::List PBootVAROLS(const arma::mat& data, int p, int B = 1000,
-                       int burn_in = 200) {
+Rcpp::List PBootVAROLS(const arma::mat& data,
+                       int p,
+                       int B = 1000,
+                       int burn_in = 200)
+{
   // Indices
-  int t = data.n_rows;  // Number of observations
+  int t = data.n_rows; // Number of observations
 
   // YX
   Rcpp::List yx = YX(data, p);

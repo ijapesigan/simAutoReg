@@ -18,9 +18,9 @@
 //'   Matrix of predictors (X).
 //'
 //' @examples
-//' coef_std <- FitVAROLS(Y = StdMat(VAR_YX$Y), X = StdMat(VAR_YX$X[, -1]))
-//' OrigScale(coef_std = coef_std, Y = VAR_YX$Y, X = VAR_YX$X[, -1])
-//' FitVAROLS(Y = VAR_YX$Y, X = VAR_YX$X[, -1])
+//' coef_std <- FitVAROLS(Y = StdMat(vark3p2yx$Y), X = StdMat(vark3p2yx$X[, -1]))
+//' OrigScale(coef_std = coef_std, Y = vark3p2yx$Y, X = vark3p2yx$X[, -1])
+//' FitVAROLS(Y = vark3p2yx$Y, X = vark3p2yx$X[, -1])
 //'
 //' @importFrom Rcpp sourceCpp
 //'
@@ -28,10 +28,12 @@
 //' @keywords simAutoReg utils
 //' @export
 // [[Rcpp::export]]
-arma::mat OrigScale(const arma::mat& coef_std, const arma::mat& Y,
-                    const arma::mat& X) {
-  int k = coef_std.n_rows;  // Number of outcomes
-  int q = coef_std.n_cols;  // Number of predictors
+arma::mat OrigScale(const arma::mat& coef_std,
+                    const arma::mat& Y,
+                    const arma::mat& X)
+{
+  int k = coef_std.n_rows; // Number of outcomes
+  int q = coef_std.n_cols; // Number of predictors
 
   arma::vec sd_Y(k);
   arma::vec sd_X(q);

@@ -41,7 +41,7 @@ lapply(
     )
     SimVariance(n = n, location = location, chol_scale = chol_scale)
     cat("\nTest for PBootCI.\n")
-    pb <- PBootVAROLS(data = VAR, p = 2, B = 100)
+    pb <- PBootVAROLS(data = vark3p2, p = 2, B = 100)
     PBootCI(pb)
     cat("\nTest for PBootSE.\n")
     PBootSE(pb)

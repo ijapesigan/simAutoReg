@@ -1,6 +1,6 @@
-#' Data Analysis - `data/VAR_YX.rda`
+#' Data Analysis - `data/vark3p2yx.rda`
 #'
-DataAnalysisVAR_YX <- function() {
+DataAnalysisVARYX <- function() {
   rproj <- rprojroot::is_rstudio_project
   data_dir <- rproj$find_file(
     "data"
@@ -26,22 +26,22 @@ DataAnalysisVAR_YX <- function() {
     byrow = TRUE
   )
   chol_cov <- chol(diag(3))
-  VAR <- simAutoReg::SimVAR(
+  vark3p2 <- simAutoReg::SimVAR(
     time = time,
     burn_in = burn_in,
     constant = constant,
     coef = coef,
     chol_cov = chol_cov
   )
-  VAR_YX <- simAutoReg::YX(VAR, p)
+  vark3p2yx <- simAutoReg::YX(vark3p2, p)
   save(
-    VAR_YX,
+    vark3p2yx,
     file = file.path(
       data_dir,
-      "VAR_YX.rda"
+      "vark3p2yx.rda"
     ),
     compress = "xz"
   )
 }
-DataAnalysisVAR_YX()
-rm(DataAnalysisVAR_YX)
+DataAnalysisVARYX()
+rm(DataAnalysisVARYX)

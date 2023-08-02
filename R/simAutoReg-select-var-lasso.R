@@ -11,10 +11,10 @@
 #' of autoregression and cross regression coefficients.
 #'
 #' @examples
-#' Y_std <- StdMat(VAR_YX$Y)
-#' X_std <- StdMat(VAR_YX$X[, -1])
+#' Ystd <- StdMat(vark3p2yx$Y)
+#' Xstd <- StdMat(vark3p2yx$X[, -1])
 #' lambdas <- 10^seq(-5, 5, length.out = 100)
-#' search <- SearchVARLasso(Y_std = Y_std, X_std = X_std, lambdas = lambdas)
+#' search <- SearchVARLasso(Ystd = Ystd, Xstd = Xstd, lambdas = lambdas)
 #' SelectVARLasso(search, crit = "ebic")
 #'
 #' @family Simulation of Autoregressive Data Functions

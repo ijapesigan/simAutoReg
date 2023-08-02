@@ -1,4 +1,4 @@
-#' Data Analysis - `data/VAR.rda`
+#' Data Analysis - `data/vark3p2.rda`
 #'
 DataAnalysisVAR <- function() {
   rproj <- rprojroot::is_rstudio_project
@@ -26,7 +26,7 @@ DataAnalysisVAR <- function() {
     byrow = TRUE
   )
   chol_cov <- chol(diag(3))
-  VAR <- simAutoReg::SimVAR(
+  vark3p2 <- simAutoReg::SimVAR(
     time = time,
     burn_in = burn_in,
     constant = constant,
@@ -34,10 +34,10 @@ DataAnalysisVAR <- function() {
     chol_cov = chol_cov
   )
   save(
-    VAR,
+    vark3p2,
     file = file.path(
       data_dir,
-      "VAR.rda"
+      "vark3p2.rda"
     ),
     compress = "xz"
   )
