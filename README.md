@@ -1,7 +1,7 @@
 simAutoReg
 ================
 Ivan Jacob Agaloos Pesigan
-2023-07-31
+2023-08-02
 
 <!-- README.md is generated from .setup/readme/README.Rmd. Please edit that file -->
 <!-- badges: start -->

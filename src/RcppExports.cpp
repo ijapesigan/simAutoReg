@@ -11,61 +11,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// FitVARLasso
-arma::mat FitVARLasso(const arma::mat& Y_std, const arma::mat& X_std, const double& lambda, int max_iter, double tol);
-RcppExport SEXP _simAutoReg_FitVARLasso(SEXP Y_stdSEXP, SEXP X_stdSEXP, SEXP lambdaSEXP, SEXP max_iterSEXP, SEXP tolSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type Y_std(Y_stdSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type X_std(X_stdSEXP);
-    Rcpp::traits::input_parameter< const double& >::type lambda(lambdaSEXP);
-    Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
-    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
-    rcpp_result_gen = Rcpp::wrap(FitVARLasso(Y_std, X_std, lambda, max_iter, tol));
-    return rcpp_result_gen;
-END_RCPP
-}
-// SearchVARLasso
-Rcpp::List SearchVARLasso(const arma::mat& Y_std, const arma::mat& X_std, const arma::vec& lambdas, int max_iter, double tol);
-RcppExport SEXP _simAutoReg_SearchVARLasso(SEXP Y_stdSEXP, SEXP X_stdSEXP, SEXP lambdasSEXP, SEXP max_iterSEXP, SEXP tolSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type Y_std(Y_stdSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type X_std(X_stdSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type lambdas(lambdasSEXP);
-    Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
-    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
-    rcpp_result_gen = Rcpp::wrap(SearchVARLasso(Y_std, X_std, lambdas, max_iter, tol));
-    return rcpp_result_gen;
-END_RCPP
-}
-// FitVAROLS
-arma::mat FitVAROLS(const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _simAutoReg_FitVAROLS(SEXP YSEXP, SEXP XSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
-    rcpp_result_gen = Rcpp::wrap(FitVAROLS(Y, X));
-    return rcpp_result_gen;
-END_RCPP
-}
-// OrigScale
-arma::mat OrigScale(const arma::mat& coef_std, const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _simAutoReg_OrigScale(SEXP coef_stdSEXP, SEXP YSEXP, SEXP XSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type coef_std(coef_stdSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
-    rcpp_result_gen = Rcpp::wrap(OrigScale(coef_std, Y, X));
-    return rcpp_result_gen;
-END_RCPP
-}
 // SimAR
 arma::vec SimAR(int time, int burn_in, const double& constant, const arma::vec& coef, const double& sd);
 RcppExport SEXP _simAutoReg_SimAR(SEXP timeSEXP, SEXP burn_inSEXP, SEXP constantSEXP, SEXP coefSEXP, SEXP sdSEXP) {
@@ -78,34 +23,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::vec& >::type coef(coefSEXP);
     Rcpp::traits::input_parameter< const double& >::type sd(sdSEXP);
     rcpp_result_gen = Rcpp::wrap(SimAR(time, burn_in, constant, coef, sd));
-    return rcpp_result_gen;
-END_RCPP
-}
-// SimMVN
-arma::mat SimMVN(int n, const arma::vec& location, const arma::mat& chol_scale);
-RcppExport SEXP _simAutoReg_SimMVN(SEXP nSEXP, SEXP locationSEXP, SEXP chol_scaleSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type location(locationSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type chol_scale(chol_scaleSEXP);
-    rcpp_result_gen = Rcpp::wrap(SimMVN(n, location, chol_scale));
-    return rcpp_result_gen;
-END_RCPP
-}
-// SimVARZIP
-arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant, const arma::mat& coef, const arma::mat& chol_cov);
-RcppExport SEXP _simAutoReg_SimVARZIP(SEXP timeSEXP, SEXP burn_inSEXP, SEXP constantSEXP, SEXP coefSEXP, SEXP chol_covSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type time(timeSEXP);
-    Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type constant(constantSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type coef(coefSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type chol_cov(chol_covSEXP);
-    rcpp_result_gen = Rcpp::wrap(SimVARZIP(time, burn_in, constant, coef, chol_cov));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -124,6 +41,34 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// SimVARZIP
+arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant, const arma::mat& coef, const arma::mat& chol_cov);
+RcppExport SEXP _simAutoReg_SimVARZIP(SEXP timeSEXP, SEXP burn_inSEXP, SEXP constantSEXP, SEXP coefSEXP, SEXP chol_covSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type time(timeSEXP);
+    Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type constant(constantSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type coef(coefSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type chol_cov(chol_covSEXP);
+    rcpp_result_gen = Rcpp::wrap(SimVARZIP(time, burn_in, constant, coef, chol_cov));
+    return rcpp_result_gen;
+END_RCPP
+}
+// SimMVN
+arma::mat SimMVN(int n, const arma::vec& location, const arma::mat& chol_scale);
+RcppExport SEXP _simAutoReg_SimMVN(SEXP nSEXP, SEXP locationSEXP, SEXP chol_scaleSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type location(locationSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type chol_scale(chol_scaleSEXP);
+    rcpp_result_gen = Rcpp::wrap(SimMVN(n, location, chol_scale));
+    return rcpp_result_gen;
+END_RCPP
+}
 // SimVariance
 arma::mat SimVariance(int n, const arma::vec& location, const arma::mat& chol_scale);
 RcppExport SEXP _simAutoReg_SimVariance(SEXP nSEXP, SEXP locationSEXP, SEXP chol_scaleSEXP) {
@@ -134,6 +79,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::vec& >::type location(locationSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type chol_scale(chol_scaleSEXP);
     rcpp_result_gen = Rcpp::wrap(SimVariance(n, location, chol_scale));
+    return rcpp_result_gen;
+END_RCPP
+}
+// YX
+Rcpp::List YX(const arma::mat& data, int p);
+RcppExport SEXP _simAutoReg_YX(SEXP dataSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    rcpp_result_gen = Rcpp::wrap(YX(data, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -148,31 +105,120 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// YX
-List YX(const arma::mat& data, int p);
-RcppExport SEXP _simAutoReg_YX(SEXP dataSEXP, SEXP pSEXP) {
+// OrigScale
+arma::mat OrigScale(const arma::mat& coef_std, const arma::mat& Y, const arma::mat& X);
+RcppExport SEXP _simAutoReg_OrigScale(SEXP coef_stdSEXP, SEXP YSEXP, SEXP XSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type coef_std(coef_stdSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    rcpp_result_gen = Rcpp::wrap(OrigScale(coef_std, Y, X));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FitVAROLS
+arma::mat FitVAROLS(const arma::mat& Y, const arma::mat& X);
+RcppExport SEXP _simAutoReg_FitVAROLS(SEXP YSEXP, SEXP XSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    rcpp_result_gen = Rcpp::wrap(FitVAROLS(Y, X));
+    return rcpp_result_gen;
+END_RCPP
+}
+// PBootVAROLS
+Rcpp::List PBootVAROLS(const arma::mat& data, int p, int B, int burn_in);
+RcppExport SEXP _simAutoReg_PBootVAROLS(SEXP dataSEXP, SEXP pSEXP, SEXP BSEXP, SEXP burn_inSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type data(dataSEXP);
     Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(YX(data, p));
+    Rcpp::traits::input_parameter< int >::type B(BSEXP);
+    Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
+    rcpp_result_gen = Rcpp::wrap(PBootVAROLS(data, p, B, burn_in));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FitVARLasso
+arma::mat FitVARLasso(const arma::mat& Y_std, const arma::mat& X_std, const double& lambda, int max_iter, double tol);
+RcppExport SEXP _simAutoReg_FitVARLasso(SEXP Y_stdSEXP, SEXP X_stdSEXP, SEXP lambdaSEXP, SEXP max_iterSEXP, SEXP tolSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y_std(Y_stdSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X_std(X_stdSEXP);
+    Rcpp::traits::input_parameter< const double& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    rcpp_result_gen = Rcpp::wrap(FitVARLasso(Y_std, X_std, lambda, max_iter, tol));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FitVARLassoSearch
+arma::mat FitVARLassoSearch(const arma::mat& Y_std, const arma::mat& X_std, const arma::vec& lambdas, const std::string& crit, int max_iter, double tol);
+RcppExport SEXP _simAutoReg_FitVARLassoSearch(SEXP Y_stdSEXP, SEXP X_stdSEXP, SEXP lambdasSEXP, SEXP critSEXP, SEXP max_iterSEXP, SEXP tolSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y_std(Y_stdSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X_std(X_stdSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambdas(lambdasSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type crit(critSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    rcpp_result_gen = Rcpp::wrap(FitVARLassoSearch(Y_std, X_std, lambdas, crit, max_iter, tol));
+    return rcpp_result_gen;
+END_RCPP
+}
+// LambdaSeq
+arma::vec LambdaSeq(const arma::mat& Y, const arma::mat& X, int n_lambdas);
+RcppExport SEXP _simAutoReg_LambdaSeq(SEXP YSEXP, SEXP XSEXP, SEXP n_lambdasSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< int >::type n_lambdas(n_lambdasSEXP);
+    rcpp_result_gen = Rcpp::wrap(LambdaSeq(Y, X, n_lambdas));
+    return rcpp_result_gen;
+END_RCPP
+}
+// SearchVARLasso
+Rcpp::List SearchVARLasso(const arma::mat& Y_std, const arma::mat& X_std, const arma::vec& lambdas, int max_iter, double tol);
+RcppExport SEXP _simAutoReg_SearchVARLasso(SEXP Y_stdSEXP, SEXP X_stdSEXP, SEXP lambdasSEXP, SEXP max_iterSEXP, SEXP tolSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y_std(Y_stdSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X_std(X_stdSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambdas(lambdasSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    rcpp_result_gen = Rcpp::wrap(SearchVARLasso(Y_std, X_std, lambdas, max_iter, tol));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_simAutoReg_FitVARLasso", (DL_FUNC) &_simAutoReg_FitVARLasso, 5},
-    {"_simAutoReg_SearchVARLasso", (DL_FUNC) &_simAutoReg_SearchVARLasso, 5},
-    {"_simAutoReg_FitVAROLS", (DL_FUNC) &_simAutoReg_FitVAROLS, 2},
-    {"_simAutoReg_OrigScale", (DL_FUNC) &_simAutoReg_OrigScale, 3},
     {"_simAutoReg_SimAR", (DL_FUNC) &_simAutoReg_SimAR, 5},
-    {"_simAutoReg_SimMVN", (DL_FUNC) &_simAutoReg_SimMVN, 3},
-    {"_simAutoReg_SimVARZIP", (DL_FUNC) &_simAutoReg_SimVARZIP, 5},
     {"_simAutoReg_SimVAR", (DL_FUNC) &_simAutoReg_SimVAR, 5},
+    {"_simAutoReg_SimVARZIP", (DL_FUNC) &_simAutoReg_SimVARZIP, 5},
+    {"_simAutoReg_SimMVN", (DL_FUNC) &_simAutoReg_SimMVN, 3},
     {"_simAutoReg_SimVariance", (DL_FUNC) &_simAutoReg_SimVariance, 3},
-    {"_simAutoReg_StdMat", (DL_FUNC) &_simAutoReg_StdMat, 1},
     {"_simAutoReg_YX", (DL_FUNC) &_simAutoReg_YX, 2},
+    {"_simAutoReg_StdMat", (DL_FUNC) &_simAutoReg_StdMat, 1},
+    {"_simAutoReg_OrigScale", (DL_FUNC) &_simAutoReg_OrigScale, 3},
+    {"_simAutoReg_FitVAROLS", (DL_FUNC) &_simAutoReg_FitVAROLS, 2},
+    {"_simAutoReg_PBootVAROLS", (DL_FUNC) &_simAutoReg_PBootVAROLS, 4},
+    {"_simAutoReg_FitVARLasso", (DL_FUNC) &_simAutoReg_FitVARLasso, 5},
+    {"_simAutoReg_FitVARLassoSearch", (DL_FUNC) &_simAutoReg_FitVARLassoSearch, 6},
+    {"_simAutoReg_LambdaSeq", (DL_FUNC) &_simAutoReg_LambdaSeq, 3},
+    {"_simAutoReg_SearchVARLasso", (DL_FUNC) &_simAutoReg_SearchVARLasso, 5},
     {NULL, NULL, 0}
 };
 

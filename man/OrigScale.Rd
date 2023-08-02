@@ -28,8 +28,13 @@ FitVAROLS(Y = VAR_YX$Y, X = VAR_YX$X[, -1])
 }
 \seealso{
 Other Simulation of Autoregressive Data Functions: 
+\code{\link{FitVARLassoSearch}()},
 \code{\link{FitVARLasso}()},
 \code{\link{FitVAROLS}()},
+\code{\link{LambdaSeq}()},
+\code{\link{PBootCI}()},
+\code{\link{PBootSE}()},
+\code{\link{PBootVAROLS}()},
 \code{\link{SearchVARLasso}()},
 \code{\link{SelectVARLasso}()},
 \code{\link{SimAR}()},

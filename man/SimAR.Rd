@@ -67,9 +67,14 @@ SimAR(time = 10, burn_in = 5, constant = 2, coef = c(0.5, -0.3), sd = 0.1)
 }
 \seealso{
 Other Simulation of Autoregressive Data Functions: 
+\code{\link{FitVARLassoSearch}()},
 \code{\link{FitVARLasso}()},
 \code{\link{FitVAROLS}()},
+\code{\link{LambdaSeq}()},
 \code{\link{OrigScale}()},
+\code{\link{PBootCI}()},
+\code{\link{PBootSE}()},
+\code{\link{PBootVAROLS}()},
 \code{\link{SearchVARLasso}()},
 \code{\link{SelectVARLasso}()},
 \code{\link{SimMVN}()},

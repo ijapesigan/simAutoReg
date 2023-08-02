@@ -52,9 +52,14 @@ plot(x = 1:nrow(search$criteria), y = search$criteria[, 4],
 }
 \seealso{
 Other Simulation of Autoregressive Data Functions: 
+\code{\link{FitVARLassoSearch}()},
 \code{\link{FitVARLasso}()},
 \code{\link{FitVAROLS}()},
+\code{\link{LambdaSeq}()},
 \code{\link{OrigScale}()},
+\code{\link{PBootCI}()},
+\code{\link{PBootSE}()},
+\code{\link{PBootVAROLS}()},
 \code{\link{SelectVARLasso}()},
 \code{\link{SimAR}()},
 \code{\link{SimMVN}()},

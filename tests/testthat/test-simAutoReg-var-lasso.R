@@ -24,7 +24,11 @@ lapply(
     X_std <- StdMat(yx$X[, -1])
     lambdas <- 10^seq(-5, 5, length.out = 100)
     search <- SearchVARLasso(Y_std = Y_std, X_std = X_std, lambdas = lambdas)
-    lasso <- OrigScale(SelectVARLasso(search), Y = yx$Y, X = yx$X[, -1])
+    lasso <- OrigScale(
+      SelectVARLasso(search, crit = "ebic"),
+      Y = yx$Y,
+      X = yx$X[, -1]
+    )
     phi <- c(
       lasso[1, 1],
       lasso[2, 2],
@@ -40,7 +44,7 @@ lapply(
     lasso[2, 5] <- 0
     lasso[3, 6] <- 0
     testthat::test_that(
-      paste(text, "sparsity"),
+      paste(text, "SearchVARLasso", "sparsity", "ebic"),
       {
         testthat::expect_true(
           sum(
@@ -50,7 +54,7 @@ lapply(
       }
     )
     testthat::test_that(
-      paste(text, "auto"),
+      paste(text, "SearchVARLasso", "auto", "ebic"),
       {
         testthat::expect_true(
           all(
@@ -59,6 +63,54 @@ lapply(
         )
       }
     )
+    SelectVARLasso(search, crit = "aic")
+    SelectVARLasso(search, crit = "bic")
+    lambdas <- LambdaSeq(Y = Y_std, X = X_std, n_lambdas = 100)
+    lasso <- OrigScale(
+      FitVARLassoSearch(
+        Y_std = Y_std,
+        X_std = X_std,
+        lambdas = lambdas
+      ),
+      Y = yx$Y,
+      X = yx$X[, -1]
+    )
+    phi <- c(
+      lasso[1, 1],
+      lasso[2, 2],
+      lasso[3, 3],
+      lasso[1, 4],
+      lasso[2, 5],
+      lasso[3, 6]
+    )
+    lasso[1, 1] <- 0
+    lasso[2, 2] <- 0
+    lasso[3, 3] <- 0
+    lasso[1, 4] <- 0
+    lasso[2, 5] <- 0
+    lasso[3, 6] <- 0
+    testthat::test_that(
+      paste(text, "FitVARLassoSearch", "sparsity", "ebic"),
+      {
+        testthat::expect_true(
+          sum(
+            lasso
+          ) == 0
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "FitVARLassoSearch", "auto", "ebic"),
+      {
+        testthat::expect_true(
+          all(
+            abs(round(phi, digits = 1) - 0.3) <= tol
+          )
+        )
+      }
+    )
+    FitVARLassoSearch(Y_std = Y_std, X_std = X_std, lambdas = lambdas, crit = "aic")
+    FitVARLassoSearch(Y_std = Y_std, X_std = X_std, lambdas = lambdas, crit = "bic")
   },
   time = 1000L,
   burn_in = 200L,

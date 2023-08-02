@@ -15,6 +15,9 @@ reference:
 - title: Model Fitting Functions
   contents:
   - has_keyword("fit")
+- title: Parametric Bootstrap Functions
+  contents:
+  - has_keyword("pb")
 - title: Utility Functions
   contents:
   - has_keyword("utils")

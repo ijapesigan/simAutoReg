@@ -55,8 +55,13 @@ FitVAROLS(Y = VAR_YX$Y, X = VAR_YX$X)
 The \code{qr} function from the Armadillo library for QR decomposition.
 
 Other Simulation of Autoregressive Data Functions: 
+\code{\link{FitVARLassoSearch}()},
 \code{\link{FitVARLasso}()},
+\code{\link{LambdaSeq}()},
 \code{\link{OrigScale}()},
+\code{\link{PBootCI}()},
+\code{\link{PBootSE}()},
+\code{\link{PBootVAROLS}()},
 \code{\link{SearchVARLasso}()},
 \code{\link{SelectVARLasso}()},
 \code{\link{SimAR}()},

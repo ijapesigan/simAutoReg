@@ -122,9 +122,14 @@ head(y)
 }
 \seealso{
 Other Simulation of Autoregressive Data Functions: 
+\code{\link{FitVARLassoSearch}()},
 \code{\link{FitVARLasso}()},
 \code{\link{FitVAROLS}()},
+\code{\link{LambdaSeq}()},
 \code{\link{OrigScale}()},
+\code{\link{PBootCI}()},
+\code{\link{PBootSE}()},
+\code{\link{PBootVAROLS}()},
 \code{\link{SearchVARLasso}()},
 \code{\link{SelectVARLasso}()},
 \code{\link{SimAR}()},
