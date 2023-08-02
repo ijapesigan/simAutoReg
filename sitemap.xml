@@ -34,10 +34,25 @@
     <loc>https://github.com/ijapesigan/simAutoReg/reference/FitVARLasso.html</loc>
   </url>
   <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/FitVARLassoSearch.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/FitVAROLS.html</loc>
   </url>
   <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/LambdaSeq.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/OrigScale.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/PBootCI.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/PBootSE.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/PBootVAROLS.html</loc>
   </url>
   <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/SearchVARLasso.html</loc>
