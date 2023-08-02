@@ -30,12 +30,10 @@
 //' @keywords simAutoReg utils
 //' @export
 // [[Rcpp::export]]
-arma::mat OrigScale(const arma::mat& coef_std,
-                    const arma::mat& Y,
-                    const arma::mat& X)
-{
-  int k = coef_std.n_rows; // Number of outcomes
-  int q = coef_std.n_cols; // Number of predictors
+arma::mat OrigScale(const arma::mat& coef_std, const arma::mat& Y,
+                    const arma::mat& X) {
+  int k = coef_std.n_rows;  // Number of outcomes
+  int q = coef_std.n_cols;  // Number of predictors
 
   arma::vec sd_Y(k);
   arma::vec sd_X(q);

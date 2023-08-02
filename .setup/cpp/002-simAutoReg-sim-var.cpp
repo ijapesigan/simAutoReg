@@ -107,36 +107,28 @@
 //' @keywords simAutoReg sim
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVAR(int time,
-                 int burn_in,
-                 const arma::vec& constant,
-                 const arma::mat& coef,
-                 const arma::mat& chol_cov)
-{
-  int k = constant.n_elem;    // Number of variables
-  int q = coef.n_cols;        // Dimension of the coefficient matrix
-  int p = q / k;              // Order of the VAR model (number of lags)
+arma::mat SimVAR(int time, int burn_in, const arma::vec& constant,
+                 const arma::mat& coef, const arma::mat& chol_cov) {
+  int k = constant.n_elem;  // Number of variables
+  int q = coef.n_cols;      // Dimension of the coefficient matrix
+  int p = q / k;            // Order of the VAR model (number of lags)
 
   // Matrix to store the generated VAR time series data
   arma::mat data(k, time + burn_in);
 
   // Set initial values using the constant term
-  data.each_col() = constant; // Fill each column with the constant vector
+  data.each_col() = constant;  // Fill each column with the constant vector
 
   // Generate the VAR time series
-  for (int t = p; t < time + burn_in; t++)
-  {
+  for (int t = p; t < time + burn_in; t++) {
     // Generate noise from a multivariate normal distribution
     arma::vec noise = arma::randn(k);
     arma::vec mult_noise = chol_cov * noise;
 
     // Generate eta_t vector
-    for (int j = 0; j < k; j++)
-    {
-      for (int lag = 0; lag < p; lag++)
-      {
-        for (int l = 0; l < k; l++)
-        {
+    for (int j = 0; j < k; j++) {
+      for (int lag = 0; lag < p; lag++) {
+        for (int l = 0; l < k; l++) {
           data(j, t) += coef(j, lag * k + l) * data(l, t - lag - 1);
         }
       }
