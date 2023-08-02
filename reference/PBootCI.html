@@ -111,23 +111,23 @@ and <code>ul</code> for the upper limit.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">pb</span> <span class="op">&lt;-</span> <span class="fu"><a href="PBootVAROLS.html">PBootVAROLS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">VAR</span>, p <span class="op">=</span> <span class="fl">2</span>, B <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">pb</span> <span class="op">&lt;-</span> <span class="fu"><a href="PBootVAROLS.html">PBootVAROLS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">vark3p2</span>, p <span class="op">=</span> <span class="fl">2</span>, B <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">PBootCI</span><span class="op">(</span><span class="va">pb</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ll</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]        [,2]        [,3]        [,4]        [,5]        [,6]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.4245776  0.30806794 -0.03928117 -0.04052272  0.05559921 -0.03772574</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.7113780 -0.04701786  0.41885842 -0.07873768 -0.08885749  0.16187514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.8210638 -0.09923716 -0.04496188  0.54850174 -0.07000559 -0.06639735</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.4173527  0.30027800 -0.04835785 -0.04134309  0.06177238 -0.03737552</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.5787333 -0.04076970  0.42288079 -0.07659620 -0.09225338  0.17319959</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.7625159 -0.09682382 -0.04622537  0.56145250 -0.07425475 -0.06691990</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             [,7]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.06747421</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.04124432</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.24019977</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.07754469</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.03325600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.22915916</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ul</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]       [,2]       [,3]       [,4]       [,5]       [,6]       [,7]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.103039 0.41937276 0.07914663 0.07631084 0.17185037 0.08244286 0.05158694</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.470544 0.07456017 0.53559184 0.04097315 0.02827433 0.28380323 0.07083598</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1.581837 0.02776588 0.08254246 0.64912773 0.05100976 0.04669175 0.35495499</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.217395 0.41285285 0.06726154 0.09083262 0.17704299 0.07798338 0.05058426</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.390751 0.07283786 0.54676209 0.04574567 0.01291604 0.29162184 0.08163102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1.473352 0.02912704 0.07905851 0.65847590 0.05923725 0.04388672 0.35528030</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

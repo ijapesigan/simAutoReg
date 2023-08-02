@@ -79,12 +79,6 @@
     <loc>https://github.com/ijapesigan/simAutoReg/reference/StdMat.html</loc>
   </url>
   <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/VAR.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/VAR_YX.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/YX.html</loc>
   </url>
   <url>
@@ -92,5 +86,11 @@
   </url>
   <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/simAutoReg-package.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/vark3p2.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/vark3p2yx.html</loc>
   </url>
 </urlset>

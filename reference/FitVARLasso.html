@@ -71,17 +71,17 @@ and cross-regression coefficients with sparsity.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">FitVARLasso</span><span class="op">(</span><span class="va">Y_std</span>, <span class="va">X_std</span>, <span class="va">lambda</span>, max_iter <span class="op">=</span> <span class="fl">10000L</span>, tol <span class="op">=</span> <span class="fl">1e-05</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">FitVARLasso</span><span class="op">(</span><span class="va">Ystd</span>, <span class="va">Xstd</span>, <span class="va">lambda</span>, max_iter <span class="op">=</span> <span class="fl">10000L</span>, tol <span class="op">=</span> <span class="fl">1e-05</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>Y_std</dt>
+    <dl><dt>Ystd</dt>
 <dd><p>Numeric matrix.
 Matrix of standardized dependent variables (Y).</p></dd>
 
 
-<dt>X_std</dt>
+<dt>Xstd</dt>
 <dd><p>Numeric matrix.
 Matrix of standardized predictors (X).</p></dd>
 
@@ -115,9 +115,9 @@ cross-regression coefficients.</p>
     <p>The <code>FitVARLasso()</code> function estimates the parameters
 of a Vector Autoregressive (VAR) model
 using the Lasso regularization method.
-Given the input matrices <code>Y_std</code> and <code>X_std</code>,
-where <code>Y_std</code> is the matrix of standardized dependent variables,
-and <code>X_std</code> is the matrix of standardized predictors,
+Given the input matrices <code>Ystd</code> and <code>Xstd</code>,
+where <code>Ystd</code> is the matrix of standardized dependent variables,
+and <code>Xstd</code> is the matrix of standardized predictors,
 the function computes the autoregressive and cross-regression coefficients
 of the VAR model with sparsity induced by the Lasso regularization.</p>
 <p>The steps involved in estimating the VAR model parameters
@@ -131,10 +131,10 @@ to estimate the coefficients iteratively.
 The loop iterates <code>max_iter</code> times (default is 10000),
 or until convergence is achieved.
 The outer loop iterates over the predictor variables
-(columns of <code>X_std</code>),
+(columns of <code>Xstd</code>),
 while the inner loop iterates over the outcome variables
-(columns of <code>Y_std</code>).</p></li>
-<li><p><strong>Coefficient Update</strong>: For each predictor variable (column of <code>X_std</code>),
+(columns of <code>Ystd</code>).</p></li>
+<li><p><strong>Coefficient Update</strong>: For each predictor variable (column of <code>Xstd</code>),
 the function iteratively updates the corresponding column of <code>beta</code>
 using the coordinate descent algorithm with L1 norm regularization
 (Lasso).
@@ -179,10 +179,10 @@ using OLS.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">Y_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="StdMat.html">StdMat</a></span><span class="op">(</span><span class="va">VAR_YX</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">X_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="StdMat.html">StdMat</a></span><span class="op">(</span><span class="va">VAR_YX</span><span class="op">$</span><span class="va">X</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">Ystd</span> <span class="op">&lt;-</span> <span class="fu"><a href="StdMat.html">StdMat</a></span><span class="op">(</span><span class="va">vark3p2yx</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Xstd</span> <span class="op">&lt;-</span> <span class="fu"><a href="StdMat.html">StdMat</a></span><span class="op">(</span><span class="va">vark3p2yx</span><span class="op">$</span><span class="va">X</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">73.90722</span></span></span>
-<span class="r-in"><span><span class="fu">FitVARLasso</span><span class="op">(</span>Y_std <span class="op">=</span> <span class="va">Y_std</span>, X_std <span class="op">=</span> <span class="va">X_std</span>, lambda <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">FitVARLasso</span><span class="op">(</span>Ystd <span class="op">=</span> <span class="va">Ystd</span>, Xstd <span class="op">=</span> <span class="va">Xstd</span>, lambda <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]      [,3]       [,4]      [,5]      [,6]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.3440823 0.0000000 0.0000000 0.08601767 0.0000000 0.0000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.0000000 0.4580172 0.0000000 0.00000000 0.2130337 0.0000000</span>
