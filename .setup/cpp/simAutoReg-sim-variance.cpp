@@ -32,7 +32,7 @@
 //'   for each sample.
 //'
 //' @details
-//' The [simAutoReg::SimVariance()] function generates random data
+//' The [SimVariance()] function generates random data
 //' for the variance vector
 //' based on the exponential of a multivariate normal distribution.
 //' Given the number of samples `n`,

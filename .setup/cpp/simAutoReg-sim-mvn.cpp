@@ -37,7 +37,7 @@
 //' var(y)
 //'
 //' @details
-//' The [simAutoReg::SimMVN()] function generates
+//' The [SimMVN()] function generates
 //' multivariate normal random numbers
 //' using the Cholesky decomposition method.
 //' Given the number of samples `n`, the mean vector `location` of length `k`

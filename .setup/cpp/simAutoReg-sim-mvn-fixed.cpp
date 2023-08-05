@@ -39,7 +39,7 @@
 //' var(y)
 //'
 //' @details
-//' The [simAutoReg::SimMVNFixed()] function first identifies the indices
+//' The [SimMVNFixed()] function first identifies the indices
 //' of non-constant variables (i.e., variables with variance not equal to 0)
 //' in the covariance matrix.
 //' It then extracts the non-constant elements from the mean vector

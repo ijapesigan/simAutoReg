@@ -31,7 +31,7 @@
 //' SimAR(time = 10, burn_in = 5, constant = 2, coef = c(0.5, -0.3), sd = 0.1)
 //'
 //' @details
-//' The [simAutoReg::SimAR()] function generates synthetic time series data
+//' The [SimAR()] function generates synthetic time series data
 //' from an autoregressive (AR) model.
 //' The generated data follows the AR(p) model,
 //' where `p` is the number of coefficients specified in `coef`.

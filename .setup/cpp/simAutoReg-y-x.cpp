@@ -51,7 +51,7 @@
 //' str(yx)
 //'
 //' @details
-//' The [simAutoReg::YX()] function creates the `Y` and `X` matrices
+//' The [YX()] function creates the `Y` and `X` matrices
 //' required for fitting a Vector Autoregressive (VAR) model.
 //' Given the input `data` matrix with dimensions `t` by `k`,
 //' where `t` is the number of observations and `k` is the number of variables,
@@ -75,7 +75,7 @@
 //'   of the VAR model parameters.
 //'
 //' @seealso
-//' The [simAutoReg::SimVAR()] function for simulating time series data
+//' The [SimVAR()] function for simulating time series data
 //' from a VAR model.
 //'
 //' @family Simulation of Autoregressive Data Functions

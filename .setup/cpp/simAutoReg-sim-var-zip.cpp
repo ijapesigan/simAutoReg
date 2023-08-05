@@ -61,10 +61,10 @@
 //' head(y)
 //'
 //' @details
-//' The [simAutoReg::SimVARZIP()] function generates synthetic time series data
+//' The [SimVARZIP()] function generates synthetic time series data
 //' from a Vector Autoregressive (VAR)
 //' with Zero-Inflated Poisson (ZIP) model for the first observed variable.
-//' See [simAutoReg::SimVAR()] for more details on generating data for VAR(p).
+//' See [SimVAR()] for more details on generating data for VAR(p).
 //' The `SimVARZIP` function goes further by using the generated values
 //' for the first variable to generate data from the ZIP model.
 //' The exponential of the values from the first variable

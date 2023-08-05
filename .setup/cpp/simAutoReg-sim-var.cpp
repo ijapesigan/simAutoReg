@@ -60,7 +60,7 @@
 //' head(y)
 //'
 //' @details
-//' The [simAutoReg::SimVAR()] function generates synthetic time series data
+//' The [SimVAR()] function generates synthetic time series data
 //' from a Vector Autoregressive (VAR) model.
 //' The VAR model is defined by the constant term `constant`,
 //' the coefficient matrix `coef`,
