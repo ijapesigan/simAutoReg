@@ -28,26 +28,28 @@ lapply(
       coef = coef,
       chol_cov = chol_cov
     )
-    cat("\nTest for SimVariance.\n")
-    set.seed(42)
-    n <- 100
-    location <- c(0.5, -0.2, 0.1)
-    chol_scale <- chol(
-      matrix(
-        data = c(1.0, 0.3, 0.3, 0.3, 1.0, 0.2, 0.3, 0.2, 1.0),
-        nrow = 3,
-        byrow = TRUE
-      )
+    exo_mat <- SimMVN(
+      n = time + burn_in,
+      location = c(0, 0, 0),
+      chol_scale = chol(diag(3))
     )
-    SimVariance(n = n, location = location, chol_scale = chol_scale)
-    cat("\nTest for PBootCI.\n")
-    ols <- PBootVAROLS(data = vark3p2, p = 2, B = 10)
-    PBootCI(ols)
-    lasso <- PBootVARLasso(data = vark3p2, p = 2, B = 10)
-    PBootCI(lasso)
-    cat("\nTest for PBootSE.\n")
-    PBootSE(ols)
-    PBootSE(lasso)
+    exo_coef <- matrix(
+      data = c(
+        0.5, 0.0, 0.0,
+        0.0, 0.5, 0.0,
+        0.0, 0.0, 0.5
+      ),
+      nrow = 3
+    )
+    SimVARZIPExo(
+      time = time,
+      burn_in = burn_in,
+      constant = constant,
+      coef = coef,
+      chol_cov = chol_cov,
+      exo_mat = exo_mat,
+      exo_coef = exo_coef
+    )
   },
   text = "test-TODO"
 )

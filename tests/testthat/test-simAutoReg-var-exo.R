@@ -1,4 +1,4 @@
-## ---- test-simAutoReg-var
+## ---- test-simAutoReg-var-exo
 lapply(
   X = 1,
   FUN = function(i,
@@ -7,21 +7,37 @@ lapply(
                  constant,
                  coef,
                  chol_cov,
+                 exo_coef,
                  tol,
                  text) {
     message(text)
     set.seed(42)
-    y <- SimVAR(
+    p <- ncol(coef) / length(constant)
+    exo_mat <- SimMVN(
+      n = time + burn_in,
+      location = c(0, 0, 0),
+      chol_scale = chol(diag(3))
+    )
+    y <- SimVARExo(
       time = time,
       burn_in = burn_in,
       constant = constant,
       coef = coef,
-      chol_cov = chol_cov
+      chol_cov = chol_cov,
+      exo_mat = exo_mat,
+      exo_coef = exo_coef
     )
     dims <- dim(y)
-    yx <- YX(y, p = 2)
-    coef_est <- .FitVAROLS(Y = yx$Y, X = yx$X)
+    yx <- YX(
+      data = y,
+      p = p,
+      exo_mat = exo_mat[(burn_in + 1):(burn_in + time), , drop = FALSE]
+    )
+    Y <- yx$Y
+    X <- yx$X
+    coef_est <- .FitVAROLS(Y = Y, X = X)
     coef_est[, 1] <- round(coef_est[, 1], digits = 0)
+    coef_est[, -1] <- round(coef_est[, -1], digits = 1)
     testthat::test_that(
       paste(text, "time"),
       {
@@ -35,14 +51,15 @@ lapply(
       }
     )
     testthat::test_that(
-      paste(text, "constant and coef"),
+      paste(text, "constant, coef, exo_coef"),
       {
         testthat::expect_true(
           all(
             abs(
               cbind(
                 constant,
-                coef
+                coef,
+                exo_coef
               ) - coef_est
             ) <= tol
           )
@@ -65,6 +82,14 @@ lapply(
   chol_cov = chol(
     diag(3)
   ),
+  exo_coef = matrix(
+    data = c(
+      0.5, 0.0, 0.0,
+      0.0, 0.5, 0.0,
+      0.0, 0.0, 0.5
+    ),
+    nrow = 3
+  ),
   tol = 0.05,
-  text = "test-simAutoReg-var"
+  text = "test-simAutoReg-var-exo"
 )

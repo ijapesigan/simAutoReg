@@ -1,5 +1,5 @@
 ---
-title: "simAutoReg: simAutoRegression"
+title: "simAutoReg: Simulate Data from Autoregressive Models"
 author: "Ivan Jacob Agaloos Pesigan"
 output: rmarkdown::html_vignette
 bibliography: "vignettes.bib"
@@ -7,7 +7,7 @@ csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa
 nocite: |
   @*
 vignette: >
-  %\VignetteIndexEntry{simAutoReg: simAutoRegression}
+  %\VignetteIndexEntry{simAutoReg: Simulate Data from Autoregressive Models}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -55,3 +55,5 @@ for package documentation.
 See
 [Quarto Pub](https://ijapesigan.quarto.pub/simAutoReg)
 for package wiki and other resources.
+
+## References

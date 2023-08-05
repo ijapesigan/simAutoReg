@@ -50,3 +50,5 @@ remotes::install_github("ijapesigan/simAutoReg")
 See
 [GitHub Pages](https://ijapesigan.github.io/simAutoReg)
 for package documentation.
+
+## References

@@ -25,5 +25,5 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
-    testthat
-RoxygenNote: 7.2.3
+    testthat,
+    microbenchmark

@@ -11,48 +11,37 @@ lapply(
                  text) {
     message(text)
     set.seed(42)
-    data <- as.vector(
-      SimAR(
-        time = time,
-        burn_in = burn_in,
-        constant = constant,
-        coef = coef,
-        sd = sd
-      )
+    data <- SimAR(
+      time = time,
+      burn_in = burn_in,
+      constant = constant,
+      coef = coef,
+      sd = sd
     )
+    yx <- YX(data = data, p = length(coef))
+    coef_est <- simAutoReg:::.FitVAROLS(Y = yx$Y, X = yx$X)
     testthat::test_that(
       paste(text, "time"),
       {
         testthat::expect_true(
-          all(
-            abs(
-              time - length(data)
-            ) <= tol
-          )
+          time - dim(data)[1] == 0
         )
       }
     )
     testthat::test_that(
-      paste(text, "coef"),
+      paste(text, "constant and coef"),
       {
         testthat::expect_true(
           all(
             abs(
-              coef - coef(
-                stats::ar(
-                  data,
-                  aic = FALSE,
-                  order.max = length(coef),
-                  method = "ols"
-                )
-              )
+              c(constant, coef) - coef_est
             ) <= tol
           )
         )
       }
     )
   },
-  time = 1000L,
+  time = 10000L,
   burn_in = 200L,
   constant = 2,
   coef = c(0.5, -0.3),

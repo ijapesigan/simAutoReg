@@ -8,7 +8,14 @@ lapply(
     message(text)
     set.seed(42)
     location <- c(1, 1, 1)
-    scale <- diag(3)
+    scale <- matrix(
+      c(
+        2.0, 0.5, 0.3,
+        0.5, 1.5, 0.7,
+        0.3, 0.7, 1.0
+      ),
+      nrow = 3
+    )
     chol_scale <- chol(scale)
     y <- SimMVN(
       n = n,
@@ -16,7 +23,7 @@ lapply(
       chol_scale = chol_scale
     )
     location_est <- round(colMeans(y), digits = 0)
-    scale_est <- round(var(y), digits = 0)
+    scale_est <- stats::var(y)
     chol_scale_est <- chol(scale_est)
     testthat::test_that(
       paste(text, "location"),
@@ -55,7 +62,7 @@ lapply(
       }
     )
   },
-  n = 1000L,
+  n = 10000L,
   tol = 0.05,
   text = "test-simAutoReg-mvn"
 )

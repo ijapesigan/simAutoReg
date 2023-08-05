@@ -16,7 +16,7 @@ vignette: >
 #| include = FALSE
 knitr::opts_chunk$set(
   collapse = TRUE,
-  fig.path = "fig-vignettes-",
+  fig.path = "fig-vignettes-var-",
   fig.cap = "",
   fig.width = 11,
   fig.height = 8,
@@ -73,7 +73,7 @@ y <- SimVAR(
 
 ```{r}
 yx <- YX(data = y, p = p)
-FitVAROLS(Y = yx$Y, X = yx$X)
+simAutoReg:::.FitVAROLS(Y = yx$Y, X = yx$X)
 ```
 
 ### Plots
@@ -97,7 +97,6 @@ y <- SimVARZIP(
   coef = coef,
   chol_cov = chol_cov
 )
-hist(y[, 1])
 ```
 
 ##  Model Fitting
@@ -106,7 +105,7 @@ hist(y[, 1])
 
 ```{r}
 yx <- YX(data = y, p = p)
-FitVAROLS(Y = yx$Y, X = yx$X)
+simAutoReg:::.FitVAROLS(Y = yx$Y, X = yx$X)
 ```
 
 ### Plots
