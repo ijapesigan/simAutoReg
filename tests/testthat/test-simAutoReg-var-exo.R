@@ -28,7 +28,7 @@ lapply(
       exo_coef = exo_coef
     )
     dims <- dim(y)
-    yx <- YX(
+    yx <- YXExo(
       data = y,
       p = p,
       exo_mat = exo_mat[(burn_in + 1):(burn_in + time), , drop = FALSE]
