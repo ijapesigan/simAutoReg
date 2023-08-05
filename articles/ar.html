@@ -90,30 +90,62 @@ Agaloos Pesigan</h4>
 
     
     
+<div class="section level2">
+<h2 id="load-package">Load package<a class="anchor" aria-label="anchor" href="#load-package"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ijapesigan/simAutoReg">simAutoReg</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SimAR.html">SimAR</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">1000L</span>, burn_in <span class="op">=</span> <span class="fl">200L</span>, constant <span class="op">=</span> <span class="fl">2</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.3</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">y</span>, type <span class="op">=</span> <span class="st">"b"</span>, xlab <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="fig-vignettes-unnamed-chunk-2-1.png" width="3300"></p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ijapesigan/simAutoReg">simAutoReg</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="set-arguments">Set arguments<a class="anchor" aria-label="anchor" href="#set-arguments"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar</a></span><span class="op">(</span><span class="va">y</span>, aic <span class="op">=</span> <span class="cn">FALSE</span>, order.max <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; stats::ar(x = y, aic = FALSE, order.max = 2)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;       1        2  </span></span>
-<span><span class="co">#&gt;  0.5136  -0.3226  </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Order selected 2  sigma^2 estimated as  0.04063</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">time</span> <span class="op">&lt;-</span> <span class="fl">1000L</span></span>
+<span><span class="va">burn_in</span> <span class="op">&lt;-</span> <span class="fl">200L</span></span>
+<span><span class="va">constant</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">coef</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.3</span><span class="op">)</span></span>
+<span><span class="va">sd</span> <span class="op">&lt;-</span> <span class="fl">0.1</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">coef</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="generate-data">Generate data<a class="anchor" aria-label="anchor" href="#generate-data"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SimAR.html">SimAR</a></span><span class="op">(</span></span>
+<span>  time <span class="op">=</span> <span class="va">time</span>,</span>
+<span>  burn_in <span class="op">=</span> <span class="va">burn_in</span>,</span>
+<span>  constant <span class="op">=</span> <span class="va">constant</span>,</span>
+<span>  coef <span class="op">=</span> <span class="va">coef</span>,</span>
+<span>  sd <span class="op">=</span> <span class="va">sd</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="plot">Plot<a class="anchor" aria-label="anchor" href="#plot"></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">time</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"b"</span>, xlab <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="fig-vignettes-ar-unnamed-chunk-5-1.png" width="3300"></p>
+</div>
+<div class="section level2">
+<h2 id="estimate-parameters">Estimate parameters<a class="anchor" aria-label="anchor" href="#estimate-parameters"></a>
+</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">yx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/YX.html">YX</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">y</span>, p <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
+<span><span class="va">Y</span> <span class="op">=</span> <span class="va">yx</span><span class="op">$</span><span class="va">Y</span></span>
+<span><span class="va">X</span> <span class="op">=</span> <span class="va">yx</span><span class="op">$</span><span class="va">X</span></span>
+<span><span class="fu">simAutoReg</span><span class="fu">:::</span><span class="fu">.FitVAROLS</span><span class="op">(</span>Y <span class="op">=</span> <span class="va">Y</span>, X <span class="op">=</span> <span class="va">X</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          [,1]      [,2]       [,3]</span></span>
+<span><span class="co">#&gt; [1,] 2.016592 0.5143625 -0.3232389</span></span></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-RCoreTeam-2023" class="csl-entry">
 R Core Team. (2023). <em><span>R</span>: A language and environment for
 statistical computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>
 </div>
 </div>
-  </main>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

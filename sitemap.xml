@@ -31,69 +31,39 @@
     <loc>https://github.com/ijapesigan/simAutoReg/news/index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/FitVARLasso.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/FitVARLassoSearch.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/FitVAROLS.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/LambdaSeq.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/OrigScale.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/PBootCI.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/PBootSE.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/PBootVARLasso.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/PBootVAROLS.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/SearchVARLasso.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/SelectVARLasso.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/SimAR.html</loc>
   </url>
   <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/SimMVN.html</loc>
   </url>
   <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimMVNFixed.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVAR.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARExo.html</loc>
   </url>
   <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARZIP.html</loc>
   </url>
   <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARZIPExo.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVariance.html</loc>
   </url>
   <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/StdMat.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/YX.html</loc>
   </url>
   <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/YX.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/YXExo.html</loc>
   </url>
   <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/index.html</loc>
   </url>
   <url>
     <loc>https://github.com/ijapesigan/simAutoReg/reference/simAutoReg-package.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/vark3p2.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/ijapesigan/simAutoReg/reference/vark3p2yx.html</loc>
   </url>
 </urlset>
