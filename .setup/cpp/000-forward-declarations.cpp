@@ -1,11 +1,9 @@
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
-arma::mat SimMVN(int n, const arma::vec& location,
-                 const arma::mat& chol_scale);
+arma::mat SimMVN(int n, const arma::vec& location, const arma::mat& chol_scale);
 
-arma::mat SimMVNFixed(int n, const arma::vec& location,
-                      const arma::mat& scale);
+arma::mat SimMVNFixed(int n, const arma::vec& location, const arma::mat& scale);
 
 arma::vec SimAR(int time, int burn_in, const double& constant,
                 const arma::vec& coef, const double& sd);
