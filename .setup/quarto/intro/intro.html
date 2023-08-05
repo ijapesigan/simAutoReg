@@ -303,7 +303,8 @@ and <code class="reqn">noise_t</code> is the random noise at time <code class="r
 
 <h3 class="anchored">Value</h3>
 
-<p>Numeric vector containing the simulated time series data.
+<p>Numeric vector (column matrix) containing the simulated
+time series data.
 </p>
 
 
@@ -316,22 +317,14 @@ and <code class="reqn">noise_t</code> is the random noise at time <code class="r
 <h3 class="anchored">See Also</h3>
 
 <p>Other Simulation of Autoregressive Data Functions: 
-<code>FitVARLassoSearch()</code>,
-<code>FitVARLasso()</code>,
-<code>FitVAROLS()</code>,
-<code>LambdaSeq()</code>,
-<code>OrigScale()</code>,
-<code>PBootCI()</code>,
-<code>PBootSE()</code>,
-<code>PBootVARLasso()</code>,
-<code>PBootVAROLS()</code>,
-<code>SearchVARLasso()</code>,
-<code>SelectVARLasso()</code>,
+<code>SimMVNFixed()</code>,
 <code>SimMVN()</code>,
+<code>SimVARExo()</code>,
+<code>SimVARZIPExo()</code>,
 <code>SimVARZIP()</code>,
 <code>SimVAR()</code>,
 <code>SimVariance()</code>,
-<code>StdMat()</code>,
+<code>YXExo()</code>,
 <code>YX()</code>
 </p>
 
@@ -471,9 +464,9 @@ which is from column <code>burn_in</code> to column <code>time + burn_in - 1</co
 <h3 class="anchored">Value</h3>
 
 <p>Numeric matrix containing the simulated time series data
-with dimensions <code>k</code> by <code>(time - burn_in)</code>,
+with dimensions <code>k</code> by <code>time</code>,
 where <code>k</code> is the number of variables and
-time is the number of observations.
+<code>time</code> is the number of observations.
 </p>
 
 
@@ -486,22 +479,14 @@ time is the number of observations.
 <h3 class="anchored">See Also</h3>
 
 <p>Other Simulation of Autoregressive Data Functions: 
-<code>FitVARLassoSearch()</code>,
-<code>FitVARLasso()</code>,
-<code>FitVAROLS()</code>,
-<code>LambdaSeq()</code>,
-<code>OrigScale()</code>,
-<code>PBootCI()</code>,
-<code>PBootSE()</code>,
-<code>PBootVARLasso()</code>,
-<code>PBootVAROLS()</code>,
-<code>SearchVARLasso()</code>,
-<code>SelectVARLasso()</code>,
 <code>SimAR()</code>,
+<code>SimMVNFixed()</code>,
 <code>SimMVN()</code>,
+<code>SimVARExo()</code>,
+<code>SimVARZIPExo()</code>,
 <code>SimVARZIP()</code>,
 <code>SimVariance()</code>,
-<code>StdMat()</code>,
+<code>YXExo()</code>,
 <code>YX()</code>
 </p>
 
