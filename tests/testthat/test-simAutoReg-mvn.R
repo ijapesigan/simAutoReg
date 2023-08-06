@@ -1,32 +1,35 @@
 ## ---- test-simAutoReg-mvn
 lapply(
-  X = 1,
-  FUN = function(i,
+  X = 1:5,
+  FUN = function(p,
                  n,
                  tol,
                  text) {
     message(text)
     set.seed(42)
-    location <- c(1, 1, 1)
-    scale <- matrix(
-      c(
-        2.0, 0.5, 0.3,
-        0.5, 1.5, 0.7,
-        0.3, 0.7, 1.0
-      ),
-      nrow = 3
+    location <- round(
+      x = stats::rnorm(n = p),
+      digits = 2
     )
-    chol_scale <- chol(scale)
+    scale <- round(
+      x = SimPD(p = p),
+      digits = 2
+    )
     y <- SimMVN(
       n = n,
       location = location,
-      chol_scale = chol_scale
+      chol_scale = chol(scale)
     )
-    location_est <- round(colMeans(y), digits = 0)
-    scale_est <- stats::var(y)
-    chol_scale_est <- chol(scale_est)
+    location_est <- round(
+      x = colMeans(y),
+      digits = 2
+    )
+    scale_est <- round(
+      x = stats::var(y),
+      digits = 2
+    )
     testthat::test_that(
-      paste(text, "location"),
+      paste(text, p, "location"),
       {
         testthat::expect_true(
           all(
@@ -38,7 +41,7 @@ lapply(
       }
     )
     testthat::test_that(
-      paste(text, "scale"),
+      paste(text, p, "scale"),
       {
         testthat::expect_true(
           all(
@@ -49,20 +52,8 @@ lapply(
         )
       }
     )
-    testthat::test_that(
-      paste(text, "chol"),
-      {
-        testthat::expect_true(
-          all(
-            abs(
-              chol_scale - chol_scale_est
-            ) <= tol
-          )
-        )
-      }
-    )
   },
-  n = 10000L,
+  n = 1000000L,
   tol = 0.05,
   text = "test-simAutoReg-mvn"
 )

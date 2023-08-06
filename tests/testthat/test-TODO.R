@@ -28,6 +28,7 @@ lapply(
       coef = coef,
       chol_cov = chol_cov
     )
+    cat("\nTest for SimVARZIPExo.\n")
     exo_mat <- SimMVN(
       n = time + burn_in,
       location = c(0, 0, 0),

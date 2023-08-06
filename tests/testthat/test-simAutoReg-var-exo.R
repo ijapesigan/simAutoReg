@@ -31,7 +31,10 @@ lapply(
     yx <- YXExo(
       data = y,
       p = p,
-      exo_mat = exo_mat[(burn_in + 1):(burn_in + time), , drop = FALSE]
+      exo_mat = exo_mat[
+        (burn_in + 1):(burn_in + time), ,
+        drop = FALSE
+      ]
     )
     Y <- yx$Y
     X <- yx$X
@@ -68,7 +71,7 @@ lapply(
     )
   },
   time = 10000L,
-  burn_in = 200L,
+  burn_in = 10L,
   constant <- c(1, 1, 1),
   coef = matrix(
     data = c(
@@ -90,6 +93,6 @@ lapply(
     ),
     nrow = 3
   ),
-  tol = 0.05,
+  tol = 0.01,
   text = "test-simAutoReg-var-exo"
 )

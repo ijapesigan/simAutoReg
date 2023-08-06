@@ -6,7 +6,7 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 
 //' Simulate Data from a Vector Autoregressive (VAR) Model with Exogenous
-// Variables
+//' Variables
 //'
 //' This function generates synthetic time series data
 //' from a Vector Autoregressive (VAR) model with exogenous variables.

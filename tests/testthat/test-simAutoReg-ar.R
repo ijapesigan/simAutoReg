@@ -1,16 +1,33 @@
 ## ---- test-simAutoReg-ar
 lapply(
-  X = 1,
-  FUN = function(i,
+  X = 1:5,
+  FUN = function(p,
                  time,
                  burn_in,
-                 constant,
-                 coef,
-                 sd,
                  tol,
                  text) {
     message(text)
     set.seed(42)
+    constant <- round(
+      x = stats::runif(
+        n = 1,
+        min = 0,
+        max = 0.8
+      ),
+      digits = 2
+    )
+    coef <- round(
+      x = as.vector(SimARCoef(p = p)),
+      digits = 2
+    )
+    sd <- round(
+      x = stats::runif(
+        n = 1,
+        min = 0.01,
+        max = 0.10
+      ),
+      digits = 2
+    )
     data <- SimAR(
       time = time,
       burn_in = burn_in,
@@ -18,10 +35,18 @@ lapply(
       coef = coef,
       sd = sd
     )
-    yx <- YX(data = data, p = length(coef))
-    coef_est <- simAutoReg:::.FitVAROLS(Y = yx$Y, X = yx$X)
+    yx <- YX(data = data, p = p)
+    coef_est <- round(
+      x = as.vector(
+        simAutoReg:::.FitVAROLS(
+          Y = yx$Y,
+          X = yx$X
+        )
+      ),
+      digits = 2
+    )
     testthat::test_that(
-      paste(text, "time"),
+      paste(text, p, "time"),
       {
         testthat::expect_true(
           time - dim(data)[1] == 0
@@ -29,7 +54,7 @@ lapply(
       }
     )
     testthat::test_that(
-      paste(text, "constant and coef"),
+      paste(text, p, "constant and coef"),
       {
         testthat::expect_true(
           all(
@@ -41,11 +66,8 @@ lapply(
       }
     )
   },
-  time = 10000L,
-  burn_in = 200L,
-  constant = 2,
-  coef = c(0.5, -0.3),
-  sd = 0.1,
+  time = 1000000L,
+  burn_in = 10L,
   tol = 0.05,
   text = "test-simAutoReg-ar"
 )

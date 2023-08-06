@@ -1,23 +1,35 @@
 ## ---- test-simAutoReg-variance
 lapply(
-  X = 1,
-  FUN = function(i,
+  X = 1:5,
+  FUN = function(p,
                  n,
-                 location,
-                 scale,
                  tol,
                  text) {
     message(text)
     set.seed(42)
+    location <- round(
+      x = stats::rnorm(n = p),
+      digits = 2
+    )
+    scale <- round(
+      x = SimPD(p = p),
+      digits = 2
+    )
     y <- SimVariance(
       n = n,
       location = location,
       chol_scale = chol(scale)
     )
-    location_est <- colMeans(log(y))
-    scale_est <- stats::var(log(y))
+    location_est <- round(
+      x = colMeans(log(y)),
+      digits = 2
+    )
+    scale_est <- round(
+      x = stats::var(log(y)),
+      digits = 2
+    )
     testthat::test_that(
-      paste(text, "location"),
+      paste(text, p, "location"),
       {
         testthat::expect_true(
           all(
@@ -29,25 +41,19 @@ lapply(
       }
     )
     testthat::test_that(
-      paste(text, "scale"),
+      paste(text, p, "scale"),
       {
         testthat::expect_true(
           all(
             abs(
-              scale - round(scale_est, digits = 1)
+              scale - scale_est
             ) <= tol
           )
         )
       }
     )
   },
-  n = 10000L,
-  location <- c(0.5, -0.2, 0.1),
-  scale = matrix(
-    data = c(0.5, 0.3, 0.3, 0.3, 0.5, 0.2, 0.3, 0.2, 0.5),
-    nrow = 3,
-    byrow = TRUE
-  ),
+  n = 1000000L,
   tol = 0.05,
   text = "test-simAutoReg-variance"
 )
