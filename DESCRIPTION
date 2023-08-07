@@ -27,3 +27,4 @@ Suggests:
     rmarkdown,
     testthat,
     microbenchmark
+RoxygenNote: 7.2.3
