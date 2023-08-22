@@ -5,7 +5,8 @@ output: rmarkdown::html_vignette
 bibliography: "vignettes.bib"
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 nocite: |
-  @*
+  @RCoreTeam-2023
+  @Eddelbuettel-Sanderson-2014
 vignette: >
   %\VignetteIndexEntry{simAutoReg: Simulate Data from Autoregressive Models}
   %\VignetteEngine{knitr::rmarkdown}
