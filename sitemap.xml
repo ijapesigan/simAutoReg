@@ -1,75 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/articles/ar.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/articles/ar.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/session/session.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/articles/session/session.html</loc>
   </url>
   <url>
-    <loc>/articles/simAutoReg.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/articles/simAutoReg.html</loc>
   </url>
   <url>
-    <loc>/articles/var.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/articles/var.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/SimAR.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/CheckARCoef.html</loc>
   </url>
   <url>
-    <loc>/reference/SimARCoef.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/CheckVARCoef.html</loc>
   </url>
   <url>
-    <loc>/reference/SimMVN.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimAR.html</loc>
   </url>
   <url>
-    <loc>/reference/SimPD.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimARCoef.html</loc>
   </url>
   <url>
-    <loc>/reference/SimVAR.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimMVN.html</loc>
   </url>
   <url>
-    <loc>/reference/SimVARCoef.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimPD.html</loc>
   </url>
   <url>
-    <loc>/reference/SimVARExo.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVAR.html</loc>
   </url>
   <url>
-    <loc>/reference/SimVARZIP.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVAR2.html</loc>
   </url>
   <url>
-    <loc>/reference/SimVARZIPExo.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARCoef.html</loc>
   </url>
   <url>
-    <loc>/reference/SimVariance.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARExo.html</loc>
   </url>
   <url>
-    <loc>/reference/YX.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARExo2.html</loc>
   </url>
   <url>
-    <loc>/reference/YXExo.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARZIP.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARZIP2.html</loc>
   </url>
   <url>
-    <loc>/reference/simAutoReg-package.html</loc>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARZIPExo.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVARZIPExo2.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/SimVariance.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/YX.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/YXExo.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/ijapesigan/simAutoReg/reference/simAutoReg-package.html</loc>
   </url>
 </urlset>
