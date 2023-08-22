@@ -113,7 +113,7 @@
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVARZIP2(int time, int burn_in, const arma::vec& constant,
-                    const arma::mat& coef, const arma::mat& chol_cov) {
+                     const arma::mat& coef, const arma::mat& chol_cov) {
   int k = constant.n_elem;  // Number of variables
   int p = coef.n_cols / k;  // Order of the VAR model (number of lags)
 
@@ -148,7 +148,6 @@ arma::mat SimVARZIP2(int time, int burn_in, const arma::vec& constant,
       // Sample from the Poisson distribution (count process)
       data(0, t) = R::rpois(intensity);
     }
-
   }
 
   // Remove the burn-in period
