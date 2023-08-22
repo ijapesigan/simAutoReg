@@ -26,7 +26,6 @@ knitr::opts_chunk$set(
 [![test-coverage](https://github.com/ijapesigan/simAutoReg/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/ijapesigan/simAutoReg/actions/workflows/test-coverage.yml)
 [![lint](https://github.com/ijapesigan/simAutoReg/actions/workflows/lint.yml/badge.svg)](https://github.com/ijapesigan/simAutoReg/actions/workflows/lint.yml)
 [![pkgdown](https://github.com/ijapesigan/simAutoReg/actions/workflows/pkgdown-gh-pages.yml/badge.svg)](https://github.com/ijapesigan/simAutoReg/actions/workflows/pkgdown-gh-pages.yml)
-[![quarto (Quarto Pub)](https://github.com/ijapesigan/simAutoReg/actions/workflows/quarto-quarto-pub.yml/badge.svg)](https://github.com/ijapesigan/simAutoReg/actions/workflows/quarto-quarto-pub.yml)
 [![codecov](https://codecov.io/gh/ijapesigan/simAutoReg/branch/main/graph/badge.svg)](https://codecov.io/gh/ijapesigan/simAutoReg)
 <!-- badges: end -->
 
