@@ -9,6 +9,12 @@ template:
     code_font: {google: "JetBrains Mono"}
 
 articles:
+- title: AR
+  contents:
   - ar
+- title: VAR
+  contents:
   - var
+- title: Session Information
+  contents:
   - session/session

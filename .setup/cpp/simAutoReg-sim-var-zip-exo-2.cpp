@@ -46,8 +46,8 @@
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVARZIPExo2(int time, int burn_in, const arma::vec& constant,
-                        const arma::mat& coef, const arma::mat& chol_cov,
-                        const arma::mat& exo_mat, const arma::mat& exo_coef) {
+                       const arma::mat& coef, const arma::mat& chol_cov,
+                       const arma::mat& exo_mat, const arma::mat& exo_coef) {
   int k = constant.n_elem;  // Number of variables
   int p = coef.n_cols / k;  // Order of the VAR model (number of lags)
 
@@ -72,8 +72,7 @@ arma::mat SimVARZIPExo2(int time, int burn_in, const arma::vec& constant,
     for (int j = 0; j < k; j++) {
       // Compute autoregressive terms using matrix operations
       for (int lag = 0; lag < p; lag++) {
-        data.row(j).subvec(t, t) +=
-            coef.submat(j, lag * k, j, lag * k + k - 1) * data.col(t - lag - 1);
+        data.row(j).subvec(t, t) += coef.submat(j, lag * k, j, lag * k + k - 1) * data.col(t - lag - 1);
       }
 
       // Add exogenous variables' impact on autoregression variables
@@ -92,6 +91,7 @@ arma::mat SimVARZIPExo2(int time, int burn_in, const arma::vec& constant,
       // Sample from the Poisson distribution (count process)
       data(0, t) = R::rpois(intensity);
     }
+
   }
 
   // Remove the burn-in period

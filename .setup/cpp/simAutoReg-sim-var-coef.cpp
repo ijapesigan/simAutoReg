@@ -50,3 +50,4 @@ arma::mat SimVARCoef(int k, int p) {
 
   return var_coefficients;
 }
+
