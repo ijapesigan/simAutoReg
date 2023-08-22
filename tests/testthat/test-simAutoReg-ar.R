@@ -20,6 +20,7 @@ lapply(
       x = as.vector(SimARCoef(p = p)),
       digits = 2
     )
+    CheckARCoef(coef)
     sd <- round(
       x = stats::runif(
         n = 1,

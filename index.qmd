@@ -1,9 +1,0 @@
----
-title: Preface
-nocite: |
-  @*
----
-
-## Wiki
-
-This website contains resources related to the R [@RCoreTeam-2023] package [simAutoReg](https://github.com/ijapesigan/simAutoReg) outside the [pkgdown](https://ijapesigan.github.io/simAutoReg) documentation.

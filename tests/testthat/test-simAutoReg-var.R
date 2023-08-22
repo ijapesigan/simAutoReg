@@ -11,7 +11,6 @@ lapply(
     lapply(
       X = 2:3,
       FUN = function(k) {
-        print(paste(p, k))
         constant <- round(
           x = stats::runif(
             n = k,
@@ -24,6 +23,7 @@ lapply(
           x = SimVARCoef(k = k, p = p),
           digits = 2
         )
+        CheckVARCoef(coef)
         cov <- diag(k)
         diag(cov) <- 0.1
         chol_cov <- chol(cov)

@@ -2,10 +2,6 @@
 title: "simAutoReg: Vector Autoregressive Model - VAR(p)"
 author: "Ivan Jacob Agaloos Pesigan"
 output: rmarkdown::html_vignette
-bibliography: "vignettes.bib"
-csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
-nocite: |
-  @*
 vignette: >
   %\VignetteIndexEntry{simAutoReg: Vector Autoregressive Model - VAR(p)}
   %\VignetteEngine{knitr::rmarkdown}

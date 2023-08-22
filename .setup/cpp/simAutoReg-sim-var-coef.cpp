@@ -15,6 +15,10 @@
 //' @param k Positive integer. Number of autoregressive variables.
 //' @param p Positive integer. Number of lags.
 //'
+//' @examples
+//' set.seed(42)
+//' SimVARCoef(k = 3, p = 2)
+//'
 //' @family Simulation of Autoregressive Data Functions
 //' @keywords simAutoReg sim
 //' @export
@@ -47,25 +51,3 @@ arma::mat SimVARCoef(int k, int p) {
   return var_coefficients;
 }
 
-// Check VAR(p) coefficients for stationarity
-bool SimVARCoef(arma::mat coef) {
-  int p = coef.n_rows;
-  int k = coef.n_cols / p;
-
-  bool is_stationary = false;
-
-  // Check if the eigenvalues of the companion matrix have moduli less than 1
-  arma::mat companion_matrix(k * p, k * p, arma::fill::zeros);
-  companion_matrix.submat(0, k, k - 1, k * p - 1) = arma::eye(k, k);
-  for (int lag = 0; lag < p; lag++) {
-    companion_matrix.submat(k * lag, 0, k * (lag + 1) - 1, k - 1) =
-        coef.cols(lag * k, (lag + 1) * k - 1);
-  }
-
-  arma::cx_vec eigenvalues = arma::eig_gen(companion_matrix);
-  if (arma::all(arma::abs(eigenvalues) < 1)) {
-    is_stationary = true;
-  }
-
-  return is_stationary;
-}

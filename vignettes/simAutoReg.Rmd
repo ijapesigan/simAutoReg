@@ -32,7 +32,7 @@ knitr::opts_chunk$set(
 
 ## Description
 
-Simulate data from autoregressive models.
+Simulate data from autoregressive models using `RcppArmadillo`.
 
 ## Installation
 

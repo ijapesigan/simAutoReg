@@ -17,6 +17,7 @@ book:
     - index.qmd
     - .setup/quarto/intro/intro.qmd
     - .setup/quarto/references/references.qmd
+    - .setup/quarto/tags/tags.qmd
   appendices:
     - .setup/quarto/session/session.qmd
 bibliography: .setup/quarto/bib/quarto.bib

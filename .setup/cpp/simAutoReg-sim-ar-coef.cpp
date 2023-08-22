@@ -14,6 +14,10 @@
 //'
 //' @param p Positive integer. Number of lags.
 //'
+//' @examples
+//' set.seed(42)
+//' SimARCoef(p = 2)
+//'
 //' @family Simulation of Autoregressive Data Functions
 //' @keywords simAutoReg sim
 //' @export
@@ -38,15 +42,3 @@ arma::vec SimARCoef(int p) {
   return ar_coefficients;
 }
 
-// Check AR(p) coefficients for stationarity
-bool SimARCoefCheck(arma::vec coef) {
-  bool is_stationary = false;
-
-  // Check if the roots lie inside the unit circle
-  arma::cx_vec roots = arma::roots(arma::join_cols(arma::vec{1}, -coef));
-  if (arma::all(arma::abs(roots) < 1)) {
-    is_stationary = true;
-  }
-
-  return is_stationary;
-}

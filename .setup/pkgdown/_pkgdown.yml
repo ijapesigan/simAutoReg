@@ -1,0 +1,14 @@
+destination: pkgdown
+url: https://github.com/ijapesigan/simAutoReg/
+
+template:
+  bootstrap: 5
+  bslib:
+    base_font: {google: "Roboto"}
+    heading_font: {google: "Roboto Slab"}
+    code_font: {google: "JetBrains Mono"}
+
+articles:
+  - ar
+  - var
+  - session/session
