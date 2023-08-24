@@ -30,7 +30,7 @@ pkg_ver <- c()
 
 ver <- c()
 
-ignore <- NULL
+ignore <- "^vignettes$"
 
 license <- "gpl3"
 
