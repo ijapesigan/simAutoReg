@@ -8,6 +8,7 @@ lapply(
                  text) {
     message(text)
     set.seed(42)
+    p <- 2
     m <- 3
     constant <- c(1, 1, 1)
     k <- length(constant)
