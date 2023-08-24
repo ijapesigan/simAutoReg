@@ -33,6 +33,11 @@ lapply(
           location = rep(x = 0, times = m),
           chol_scale = chol(diag(m))
         )
+        exo_coef <- diag(
+          x = 0.01,
+          nrow = k,
+          ncol = m
+        )
         y <- SimVARExo(
           time = time,
           burn_in = burn_in,
@@ -40,11 +45,7 @@ lapply(
           coef = coef,
           chol_cov = chol_cov,
           exo_mat = exo_mat,
-          exo_coef = diag(
-            x = 0.01,
-            nrow = k,
-            ncol = m
-          )
+          exo_coef = exo_coef
         )
         dims <- dim(y)
         yx <- YXExo(
@@ -71,14 +72,15 @@ lapply(
           }
         )
         testthat::test_that(
-          paste(text, p, k, "constant and coef"),
+          paste(text, p, k, "constant, coef, and exo_coef"),
           {
             testthat::expect_true(
               all(
                 abs(
                   cbind(
                     constant,
-                    coef
+                    coef,
+                    exo_coef
                   ) - coef_est
                 ) <= tol
               )
