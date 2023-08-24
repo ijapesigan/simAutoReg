@@ -62,7 +62,7 @@ lapply(
     )
     Y <- yx$Y
     X <- yx$X
-    coef_est <- FitVAROLS(Y = Y, X = X)
+    coef_est <- .FitVAROLS(Y = Y, X = X)
     coef_est[, 1] <- round(coef_est[, 1], digits = 0)
     coef_est[, -1] <- round(coef_est[, -1], digits = 2)
     testthat::test_that(
