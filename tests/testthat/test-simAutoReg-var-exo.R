@@ -27,7 +27,7 @@ lapply(
         cov <- diag(k)
         diag(cov) <- 0.1
         chol_cov <- chol(cov)
-        m <- 2
+        m <- 3
         exo_mat <- SimMVN(
           n = time + burn_in,
           location = rep(x = 0, times = m),
@@ -40,8 +40,8 @@ lapply(
           coef = coef,
           chol_cov = chol_cov,
           exo_mat = exo_mat,
-          exo_coef = matrix(
-            data = 0.01,
+          exo_coef = diag(
+            x = 0.01,
             nrow = k,
             ncol = m
           )
