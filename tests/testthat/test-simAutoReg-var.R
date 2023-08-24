@@ -24,8 +24,11 @@ lapply(
           digits = 2
         )
         CheckVARCoef(coef)
-        cov <- diag(k)
-        diag(cov) <- 0.1
+       cov <- diag(
+          x = 0.1,
+          nrow = k,
+          ncol = k
+        )
         chol_cov <- chol(cov)
         y <- SimVAR(
           time = time,
