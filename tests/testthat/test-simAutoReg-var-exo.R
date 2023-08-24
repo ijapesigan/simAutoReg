@@ -19,10 +19,26 @@ lapply(
           ),
           digits = 2
         )
-        coef <- round(
-          x = SimVARCoef(k = k, p = p),
-          digits = 2
-        )
+        for (i in seq_len(p)) {
+          coef_tmp <- diag(
+            round(
+              x = stats::runif(
+                n = k,
+                min = 0,
+                max = 0.8
+              ),
+              digits = 2
+            )
+          )
+          if (i > 1) {
+            coef <- cbind(
+              coef,
+              coef_tmp
+            )
+          } else {
+            coef <- coef_tmp
+          }
+        }
         CheckVARCoef(coef)
         cov <- diag(k)
         diag(cov) <- 0.1
