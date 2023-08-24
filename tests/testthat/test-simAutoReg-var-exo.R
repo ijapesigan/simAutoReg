@@ -8,7 +8,9 @@ lapply(
                  text) {
     message(text)
     set.seed(42)
+    m <- 3
     constant <- c(1, 1, 1)
+    k <- length(constant)
     coef <- matrix(
       data = c(
         0.4, 0.0, 0.0, 0.1, 0.0, 0.0,
@@ -18,13 +20,10 @@ lapply(
       nrow = 3,
       byrow = TRUE
     )
-    exo_coef <- matrix(
-      data = c(
-        0.5, 0.0, 0.0,
-        0.0, 0.5, 0.0,
-        0.0, 0.0, 0.5
-      ),
-      nrow = 3
+    exo_coef <- diag(
+      x = 0.5,
+      nrow = k,
+      ncol = m
     )
     cov <- diag(
       x = 0.1,
@@ -32,7 +31,6 @@ lapply(
       ncol = k
     )
     chol_cov <- chol(cov)
-    m <- 3
     exo_mat <- SimMVN(
       n = time + burn_in,
       location = rep(x = 0, times = m),
