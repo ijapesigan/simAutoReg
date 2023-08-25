@@ -23,7 +23,7 @@
 #' @keywords simAutoReg sim
 #' @export
 CheckARCoef <- function(coef) {
-    .Call('_simAutoReg_CheckARCoef', PACKAGE = 'simAutoReg', coef)
+    .Call(`_simAutoReg_CheckARCoef`, coef)
 }
 
 #' Check VAR(p) Coefficients for Stationarity
@@ -51,7 +51,7 @@ CheckARCoef <- function(coef) {
 #' @keywords simAutoReg sim
 #' @export
 CheckVARCoef <- function(coef) {
-    .Call('_simAutoReg_CheckVARCoef', PACKAGE = 'simAutoReg', coef)
+    .Call(`_simAutoReg_CheckVARCoef`, coef)
 }
 
 #' Simulate Random Autoregressive Coefficients for a Stationary AR(p) Model
@@ -71,7 +71,7 @@ CheckVARCoef <- function(coef) {
 #' @keywords simAutoReg sim
 #' @export
 SimARCoef <- function(p) {
-    .Call('_simAutoReg_SimARCoef', PACKAGE = 'simAutoReg', p)
+    .Call(`_simAutoReg_SimARCoef`, p)
 }
 
 #' Simulate Data from an Autoregressive Model with Constant Term
@@ -133,7 +133,7 @@ SimARCoef <- function(p) {
 #' @keywords simAutoReg sim
 #' @export
 SimAR <- function(time, burn_in, constant, coef, sd) {
-    .Call('_simAutoReg_SimAR', PACKAGE = 'simAutoReg', time, burn_in, constant, coef, sd)
+    .Call(`_simAutoReg_SimAR`, time, burn_in, constant, coef, sd)
 }
 
 #' Simulate Multivariate Normal Random Numbers
@@ -202,7 +202,7 @@ SimAR <- function(time, burn_in, constant, coef, sd) {
 #' @keywords simAutoReg sim
 #' @export
 SimMVN <- function(n, location, chol_scale) {
-    .Call('_simAutoReg_SimMVN', PACKAGE = 'simAutoReg', n, location, chol_scale)
+    .Call(`_simAutoReg_SimMVN`, n, location, chol_scale)
 }
 
 #' Simulate Random Symmetric Positive Definite Matrix
@@ -222,7 +222,7 @@ SimMVN <- function(n, location, chol_scale) {
 #' @keywords simAutoReg sim
 #' @export
 SimPD <- function(p) {
-    .Call('_simAutoReg_SimPD', PACKAGE = 'simAutoReg', p)
+    .Call(`_simAutoReg_SimPD`, p)
 }
 
 #' Simulate Random Vector Autoregressive Coefficients
@@ -243,7 +243,7 @@ SimPD <- function(p) {
 #' @keywords simAutoReg sim
 #' @export
 SimVARCoef <- function(k, p) {
-    .Call('_simAutoReg_SimVARCoef', PACKAGE = 'simAutoReg', k, p)
+    .Call(`_simAutoReg_SimVARCoef`, k, p)
 }
 
 #' Simulate Data from a Vector Autoregressive (VAR) Model with Exogenous
@@ -285,7 +285,7 @@ SimVARCoef <- function(k, p) {
 #' @keywords simAutoReg sim
 #' @export
 SimVARExo <- function(time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef) {
-    .Call('_simAutoReg_SimVARExo', PACKAGE = 'simAutoReg', time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef)
+    .Call(`_simAutoReg_SimVARExo`, time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef)
 }
 
 #' Simulate Data from a Vector Autoregressive Zero-Inflated Poisson (VARZIP)
@@ -328,7 +328,7 @@ SimVARExo <- function(time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef
 #' @keywords simAutoReg sim
 #' @export
 SimVARZIPExo <- function(time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef) {
-    .Call('_simAutoReg_SimVARZIPExo', PACKAGE = 'simAutoReg', time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef)
+    .Call(`_simAutoReg_SimVARZIPExo`, time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef)
 }
 
 #' Simulate Data from a Vector Autoregressive Zero-Inflated Poisson (VARZIP)
@@ -438,7 +438,7 @@ SimVARZIPExo <- function(time, burn_in, constant, coef, chol_cov, exo_mat, exo_c
 #' @keywords simAutoReg sim
 #' @export
 SimVARZIP <- function(time, burn_in, constant, coef, chol_cov) {
-    .Call('_simAutoReg_SimVARZIP', PACKAGE = 'simAutoReg', time, burn_in, constant, coef, chol_cov)
+    .Call(`_simAutoReg_SimVARZIP`, time, burn_in, constant, coef, chol_cov)
 }
 
 #' Simulate Data from a Vector Autoregressive (VAR) Model
@@ -541,7 +541,7 @@ SimVARZIP <- function(time, burn_in, constant, coef, chol_cov) {
 #' @keywords simAutoReg sim
 #' @export
 SimVAR <- function(time, burn_in, constant, coef, chol_cov) {
-    .Call('_simAutoReg_SimVAR', PACKAGE = 'simAutoReg', time, burn_in, constant, coef, chol_cov)
+    .Call(`_simAutoReg_SimVAR`, time, burn_in, constant, coef, chol_cov)
 }
 
 #' Generate Random Data for the Variance Vector
@@ -608,7 +608,7 @@ SimVAR <- function(time, burn_in, constant, coef, chol_cov) {
 #' @keywords simAutoReg sim
 #' @export
 SimVariance <- function(n, location, chol_scale) {
-    .Call('_simAutoReg_SimVariance', PACKAGE = 'simAutoReg', n, location, chol_scale)
+    .Call(`_simAutoReg_SimVariance`, n, location, chol_scale)
 }
 
 #' Create Y and X Matrices with Exogenous Variables
@@ -663,7 +663,7 @@ SimVariance <- function(n, location, chol_scale) {
 #' @keywords simAutoReg utils
 #' @export
 YXExo <- function(data, p, exo_mat) {
-    .Call('_simAutoReg_YXExo', PACKAGE = 'simAutoReg', data, p, exo_mat)
+    .Call(`_simAutoReg_YXExo`, data, p, exo_mat)
 }
 
 #' Create Y and X Matrices
@@ -743,6 +743,6 @@ YXExo <- function(data, p, exo_mat) {
 #' @keywords simAutoReg utils
 #' @export
 YX <- function(data, p) {
-    .Call('_simAutoReg_YX', PACKAGE = 'simAutoReg', data, p)
+    .Call(`_simAutoReg_YX`, data, p)
 }
 

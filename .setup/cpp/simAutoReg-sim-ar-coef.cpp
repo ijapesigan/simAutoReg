@@ -41,4 +41,3 @@ arma::vec SimARCoef(int p) {
 
   return ar_coefficients;
 }
-

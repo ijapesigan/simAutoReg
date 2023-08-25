@@ -112,8 +112,8 @@ bool CheckVARCoef(const arma::mat& coef) {
     companion.submat(i * k, i * k, (i + 1) * k - 1, (i + 1) * k - 1) =
         coef.cols(i * k, (i + 1) * k - 1);
     if (i > 0) {
-      companion.submat(i * k, (i - 1) * k, (i + 1) * k - 1,
-                              i * k - 1) = arma::eye(k, k);
+      companion.submat(i * k, (i - 1) * k, (i + 1) * k - 1, i * k - 1) =
+          arma::eye(k, k);
     }
   }
 
@@ -163,7 +163,6 @@ arma::vec SimARCoef(int p) {
 
   return ar_coefficients;
 }
-
 // -----------------------------------------------------------------------------
 // edit simAutoReg/.setup/cpp/simAutoReg-sim-ar.cpp
 // -----------------------------------------------------------------------------
@@ -428,7 +427,6 @@ arma::mat SimVARCoef(int k, int p) {
 
   return var_coefficients;
 }
-
 // -----------------------------------------------------------------------------
 // edit simAutoReg/.setup/cpp/simAutoReg-sim-var-exo.cpp
 // -----------------------------------------------------------------------------
