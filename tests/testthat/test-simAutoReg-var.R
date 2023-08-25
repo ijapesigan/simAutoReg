@@ -24,7 +24,7 @@ lapply(
           digits = 2
         )
         CheckVARCoef(coef)
-        cov <- diag(
+       cov <- diag(
           x = 0.1,
           nrow = k,
           ncol = k
