@@ -86,16 +86,18 @@
 //'     with mean 0 and covariance matrix `chol_cov`.
 //'   * Generate the VAR time series values for each variable `j` at time `t`
 //'     using the formula:
-//'     \deqn{Y_{tj} = \text{constant}_j +
-//'     \sum_{l = 1}^{p} \sum_{m = 1}^{k} (\text{coef}_{jm} * Y_{im}) +
-//'     \text{noise}_{j}}
+//'     \deqn{
+//'       Y_{tj} = \mathrm{constant}_j +
+//'       \sum_{l = 1}^{p} \sum_{m = 1}^{k} (\mathrm{coef}_{jm} * Y_{im}) +
+//'       \mathrm{noise}_{j}
+//'     }
 //'     where \eqn{Y_{tj}} is the value of variable `j` at time `t`,
-//'     \eqn{constant_j} is the constant term for variable `j`,
-//'     \eqn{coef_{jm}} are the coefficients for variable `j`
+//'     \eqn{\mathrm{constant}_j} is the constant term for variable `j`,
+//'     \eqn{\mathrm{coef}_{jm}} are the coefficients for variable `j`
 //'     from lagged variables up to order `p`,
 //'     \eqn{Y_{tm}} are the lagged values of variable `m`
 //'     up to order `p` at time `t`,
-//'     and \eqn{noise_{j}} is the element `j`
+//'     and \eqn{\mathrm{noise}_{j}} is the element `j`
 //'     from the generated vector of random process noise.
 //' - Transpose the matrix `data` and return only
 //'   the required time period after the burn-in period,

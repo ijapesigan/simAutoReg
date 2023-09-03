@@ -52,12 +52,16 @@
 //'   from a normal distribution with mean 0
 //'   and standard deviation `sd`.
 //' - Generate the autoregressive time series with burn-in using the formula:
-//'   \deqn{Y_t = constant + \sum_{i=1}^{p} (coef[i] * Y_{t-i}) + noise_t}
-//'   where \eqn{Y_t} is the time series data at time \eqn{t}, \eqn{constant}
-//'   is the constant term,
-//'   \eqn{coef[i]} are the autoregressive coefficients,
-//'   \eqn{Y_{t-i}} are the lagged data points up to order `p`,
-//'   and \eqn{noise_t} is the random noise at time \eqn{t}.
+//'   \deqn{
+//'     Y_t = \mathrm{constant} +
+//'     \sum_{i = 1}^{p} \left( \mathrm{coef}_i * Y_{t - i} \right) +
+//'     \mathrm{noise}_t
+//'   }
+//'   where \eqn{Y_t} is the time series data at time \eqn{t},
+//'   \eqn{\mathrm{constant}} is the constant term,
+//'   \eqn{\mathrm{coef}_i} are the autoregressive coefficients,
+//'   \eqn{Y_{t - i}} are the lagged data points up to order `p`,
+//'   and \eqn{\mathrm{noise}_t} is the random noise at time \eqn{t}.
 //' - Remove the burn-in period from the generated time series data.
 //'
 //' @family Simulation of Autoregressive Data Functions

@@ -9,7 +9,7 @@
 //'
 //' This function generates random data for the variance vector given by
 //' \deqn{
-//'   \boldsymbol{\sigma^{2}} =
+//'   \boldsymbol{\sigma}^{2} =
 //'   \exp \left( \boldsymbol{\mu} + \boldsymbol{\varepsilon} \right)
 //'   \quad
 //'   \text{with}
@@ -41,8 +41,8 @@
 //' and the Cholesky decomposition matrix \eqn{\boldsymbol{\Sigma}}
 //' for the multivariate normal random error \eqn{\boldsymbol{\varepsilon}},
 //' the function simulates \eqn{n} independent samples
-//' of the variance vector \eqn{\boldsymbol{\sigma^{2}}}.
-//' Each sample of the variance vector \eqn{\boldsymbol{\sigma^{2}}}
+//' of the variance vector \eqn{\boldsymbol{\sigma}^{2}}.
+//' Each sample of the variance vector \eqn{\boldsymbol{\sigma}^{2}}
 //' is obtained by
 //' calculating the exponential of random variations
 //' to the mean vector \eqn{\boldsymbol{\mu}}.
@@ -54,7 +54,7 @@
 //'
 //' @examples
 //' set.seed(42)
-//' n <- 100
+//' n <- 10L
 //' location <- c(0.5, -0.2, 0.1)
 //' chol_scale <- chol(
 //'   matrix(
@@ -78,6 +78,7 @@ arma::mat SimVariance(int n, const arma::vec& location,
   arma::mat variance = arma::exp(mvn);
 
   return variance;
+
 }
 
 // Dependencies

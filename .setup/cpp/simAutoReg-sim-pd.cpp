@@ -19,9 +19,16 @@
 //' @export
 // [[Rcpp::export]]
 arma::mat SimPD(int p) {
-  arma::mat L(p, p,
-              arma::fill::randn);  // Generate a random lower triangular matrix
-  arma::mat A = L * L.t();         // Compute the product of the matrix and its
-                                   // transpose to make it positive definite
+  // Create a p x p matrix filled with zeros
+  arma::mat L(p, p, arma::fill::zeros);
+
+  // Fill the lower triangular part with random values
+  L.submat(arma::trimatu(L)) = arma::randn(p, p);
+
+  // Compute the product of the matrix and its
+  // transpose to make it positive definite
+  arma::mat A = L * L.t();
+
   return A;
+
 }
