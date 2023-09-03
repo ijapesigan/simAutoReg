@@ -66,18 +66,20 @@
 //' SimVariance(n = n, location = location, chol_scale = chol_scale)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim variance
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVariance(int n, const arma::vec& location,
                       const arma::mat& chol_scale) {
-  // Generate multivariate normal random numbers
-  arma::mat mvn = SimMVN(n, location, chol_scale);
+  // Step 1: Simulate multivariate normal data
+  arma::mat data = SimMVN(n, location, chol_scale);
 
-  // Compute the variance vector for each sample
-  arma::mat variance = arma::exp(mvn);
+  // Step 2: Transform the simulated data
+  //         by taking the exponential of each element
+  data = arma::exp(data);
 
-  return variance;
+  // Step 3: Return the transformed data
+  return data;
 }
 
 // Dependencies

@@ -15,18 +15,19 @@
 //' SimPD(p = 3)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim cov
 //' @export
 // [[Rcpp::export]]
 arma::mat SimPD(int p) {
-  // Create a p x p matrix filled with random values
-  arma::mat L(p, p, arma::fill::randn);
+  // Step 1: Generate a p x p matrix filled with random values
+  arma::mat data(p, p, arma::fill::randn);
 
-  // Compute the product of the matrix and its
-  // transpose to make it symmetric
-  arma::mat A = L * L.t();
+  // Step 2: Make the matrix symmetric by multiplying it with its transpose
+  data = data * data.t();
 
-  A += 0.001 * arma::eye<arma::mat>(p, p);
+  // Step 3: Add a small positive diagonal to ensure positive definiteness
+  data += 0.001 * arma::eye<arma::mat>(p, p);
 
-  return A;
+  // Step 4: Return the positive definite matrix
+  return data;
 }

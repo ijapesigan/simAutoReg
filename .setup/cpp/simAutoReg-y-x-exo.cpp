@@ -58,33 +58,48 @@
 //' @export
 // [[Rcpp::export]]
 Rcpp::List YXExo(const arma::mat& data, int p, const arma::mat& exo_mat) {
-  int t = data.n_rows;     // Number of observations
-  int k = data.n_cols;     // Number of variables
-  int m = exo_mat.n_cols;  // Number of exogenous variables
+  // Step 1: Calculate the dimensions of the 'data' and 'exo_mat' matrices
+  // Number of time steps (rows) in 'data'
+  int time = data.n_rows;
+  // Number of outcome variables (columns) in 'data'
+  int num_outcome_vars = data.n_cols;
+  // Number of exogenous variables (columns) in 'exo_mat'
+  int num_exo_vars = exo_mat.n_cols;
 
-  // Create matrices to store lagged variables and exogenous variables
-  arma::mat X(t - p, k * p + m + 1,
-              arma::fill::ones);  // Add m columns for the exogenous variables
-                                  // and 1 column for the constant
-  arma::mat Y(t - p, k, arma::fill::zeros);
+  // Step 2: Create matrices 'X' and 'Y'
+  //         to store transformed data 'X' matrix with ones
+  arma::mat X(time - p, num_outcome_vars * p + num_exo_vars + 1,
+              arma::fill::ones);
+  // 'Y' matrix with zeros
+  arma::mat Y(time - p, num_outcome_vars, arma::fill::zeros);
 
-  // Populate the matrices X and Y with lagged data and exogenous data
-  for (int i = 0; i < (t - p); i++) {
+  // Step 3: Loop through the data and populate 'X' and 'Y'
+  for (int time_index = 0; time_index < (time - p); time_index++) {
+    // Initialize the column index for 'X'
     int index = 1;
-    // Arrange predictors from smallest lag to biggest
+
+    // Nested loop to populate 'X' with lagged values
     for (int lag = p - 1; lag >= 0; lag--) {
-      X(i, arma::span(index, index + k - 1)) = data.row(i + lag);
-      index += k;
+      // Update 'X' by assigning a subvector of 'data' to a subvector of 'X'
+      X.row(time_index).subvec(index, index + num_outcome_vars - 1) =
+          data.row(time_index + lag);
+      // Move to the next set of columns in 'X'
+      index += num_outcome_vars;
     }
-    // Append the exogenous variables to X
-    X(i, arma::span(index, index + m - 1)) = exo_mat.row(i + p);
-    Y.row(i) = data.row(i + p);
+
+    // Update 'X' with the exogenous variables
+    X.row(time_index).subvec(index, index + num_exo_vars - 1) =
+        exo_mat.row(time_index + p);
+
+    // Update 'Y' with the target values
+    Y.row(time_index) = data.row(time_index + p);
   }
 
-  // Create a list to store Y and X
+  // Step 4: Create an Rcpp List 'result' and assign 'Y' and 'X' matrices to it
   Rcpp::List result;
   result["Y"] = Y;
   result["X"] = X;
 
+  // Step 5: Return the 'result' List containing the transformed data
   return result;
 }

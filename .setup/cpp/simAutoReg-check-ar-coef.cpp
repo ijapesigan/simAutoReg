@@ -21,14 +21,18 @@
 //'
 //' @examples
 //' set.seed(42)
-//' CheckARCoef(SimARCoef(p = 2))
+//' (coef <- SimARCoef(p = 2))
+//' CheckARCoef(coef = coef)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg check ar
 //' @export
 // [[Rcpp::export]]
 bool CheckARCoef(const arma::vec& coef) {
-  // Check if the roots lie inside the unit circle
+  // Step 1: Compute the roots of the characteristic polynomial
   arma::cx_vec roots = arma::roots(arma::join_cols(arma::vec{1}, -coef));
+
+  // Step 2: Check if all roots have magnitudes less than 1
+  //         (stability condition)
   return arma::all(arma::abs(roots) < 1);
 }

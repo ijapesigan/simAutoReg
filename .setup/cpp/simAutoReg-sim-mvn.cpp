@@ -68,17 +68,24 @@
 //' of a covariance matrix.
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim data mvn
 //' @export
 // [[Rcpp::export]]
 arma::mat SimMVN(int n, const arma::vec& location,
                  const arma::mat& chol_scale) {
-  int k = location.n_elem;
+  // Step 1: Determine the number of variables
+  int num_variables = location.n_elem;
 
-  // Generate multivariate normal random numbers
-  arma::mat random_data = arma::randn(n, k);
-  arma::mat data = random_data * chol_scale + arma::repmat(location.t(), n, 1);
+  // Step 2: Generate a matrix of random standard normal variates
+  arma::mat data = arma::randn(n, num_variables);
 
+  // Step 3: Transform the random values to follow
+  //         a multivariate normal distribution
+  //         by scaling with the Cholesky decomposition
+  //         and adding the location vector
+  data = data * chol_scale + arma::repmat(location.t(), n, 1);
+
+  // Step 4: Return the simulated multivariate normal data
   return data;
 }
 

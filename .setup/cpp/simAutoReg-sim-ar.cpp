@@ -65,39 +65,44 @@
 //' - Remove the burn-in period from the generated time series data.
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim data ar
 //' @export
 // [[Rcpp::export]]
 arma::vec SimAR(int time, int burn_in, const double& constant,
                 const arma::vec& coef, const double& sd) {
-  // Order of the AR model
-  int p = coef.size();
+  // Step 1: Determine the number of lags and total time
+  // Number of lags in the autoregressive model
+  int num_lags = coef.size();
+  // Total number of time steps
   int total_time = burn_in + time;
 
-  // Vector to store the generated time series data
-  arma::vec data(total_time);
+  // Step 2: Create a vector to store simulated autoregressive data
+  // Initialize with ones to represent a constant term
+  arma::vec data(total_time, arma::fill::ones);
 
-  // Generate random noise from a normal distribution
-  arma::vec noise(total_time);
-  for (int i = 0; i < total_time; i++) {
-    noise(i) = R::rnorm(0, sd);
-  }
+  // Step 3: Set the initial values of the data vector using the constant term
+  data *= constant;
 
-  // Generate the autoregressive time series
-  for (int i = 0; i < total_time; i++) {
-    data(i) = constant;
-    for (int lag = 0; lag < p; lag++) {
-      if (i - lag - 1 >= 0) {
-        data(i) += coef(lag) * data(i - lag - 1) + noise(i);
+  // Step 4: Generate a vector of random noise
+  arma::vec noise = arma::randn(total_time);
+
+  // Step 5: Simulate autoregressive data using a loop
+  for (int time_index = 0; time_index < total_time; time_index++) {
+    // Step 5.1: Iterate over lags and apply the autoregressive formula
+    for (int lag = 0; lag < num_lags; lag++) {
+      if (time_index - lag - 1 >= 0) {
+        data(time_index) +=
+            coef(lag) * data(time_index - lag - 1) + noise(time_index);
       }
     }
   }
 
-  // Remove the burn-in period
+  // Step 6: If there is a burn-in period, remove it
   if (burn_in > 0) {
     data = data(arma::span(burn_in, total_time - 1));
   }
 
+  // Step 7: Return the simulated autoregressive data
   return data;
 }
 

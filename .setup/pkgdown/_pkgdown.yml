@@ -8,6 +8,26 @@ template:
     heading_font: {google: "Roboto Slab"}
     code_font: {google: "JetBrains Mono"}
 
+reference:
+- title: Simulation Functions
+  contents:
+  - has_keyword("sim")
+- title: Check Functions
+  contents:
+  - has_keyword("check")
+- title: Autoregression Functions
+  contents:
+  - has_keyword("ar")
+- title: Vector Autoregression Functions
+  contents:
+  - has_keyword("var")
+- title: Utility Functions
+  contents:
+  - has_keyword("utils")
+- title: All
+  contents:
+  - has_keyword("simAutoReg")
+
 articles:
 - title: AR
   contents:

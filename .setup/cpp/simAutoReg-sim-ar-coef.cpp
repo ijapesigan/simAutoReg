@@ -19,25 +19,33 @@
 //' SimARCoef(p = 2)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim coef ar
 //' @export
 // [[Rcpp::export]]
 arma::vec SimARCoef(int p) {
-  bool is_stationary = false;
-  arma::vec ar_coefficients(p);
+  // Step 1: Initialize a vector to store the generated stable
+  //         autoregressive coefficients
+  arma::vec coefs(p);
 
-  while (!is_stationary) {
-    // Generate random coefficients between -0.9 and 0.9
-    arma::vec random_coeffs = arma::randu<arma::vec>(p);
-    ar_coefficients = -0.9 + 1.8 * random_coeffs;
+  // Step 2: Enter an infinite loop for coefficient generation
+  //         and stability check
+  while (true) {
+    // Step 2.1: Generate random coefficients between -0.9 and 0.9
+    arma::vec coefs = -0.9 + 1.8 * arma::randu<arma::vec>(p);
 
-    // Check if the roots lie inside the unit circle
-    arma::cx_vec roots =
-        arma::roots(arma::join_cols(arma::vec{1}, -ar_coefficients));
+    // Step 2.2: Compute the roots of the characteristic polynomial
+    //           of the autoregressive model
+    arma::cx_vec roots = arma::roots(arma::join_cols(arma::vec{1}, -coefs));
+
+    // Step 2.3: Check if all roots have magnitudes less than 1
+    //           (stability condition)
     if (arma::all(arma::abs(roots) < 1)) {
-      is_stationary = true;
+      // Step 2.4: If the coefficients lead to a stable autoregressive model,
+      //           exit the loop
+      break;
     }
   }
 
-  return ar_coefficients;
+  // Step 3: Return the generated stable autoregressive coefficients
+  return coefs;
 }
