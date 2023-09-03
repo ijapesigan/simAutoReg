@@ -29,5 +29,4 @@ arma::mat SimPD(int p) {
   A += 0.001 * arma::eye<arma::mat>(p, p);
 
   return A;
-
 }

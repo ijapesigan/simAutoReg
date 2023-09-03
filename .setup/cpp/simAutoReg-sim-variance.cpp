@@ -78,7 +78,6 @@ arma::mat SimVariance(int n, const arma::vec& location,
   arma::mat variance = arma::exp(mvn);
 
   return variance;
-
 }
 
 // Dependencies
