@@ -1,3 +1,8 @@
+// -----------------------------------------------------------------------------
+// edit .setup/cpp/000-forward-declarations.cpp
+// Ivan Jacob Agaloos Pesigan
+// -----------------------------------------------------------------------------
+
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
@@ -41,7 +46,8 @@ Rcpp::List YX(const arma::mat& data, int p);
 
 Rcpp::List YXExo(const arma::mat& data, int p, const arma::mat& exo_mat);
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-check-ar-coef.cpp
+// edit .setup/cpp/simAutoReg-check-ar-coef.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -78,6 +84,11 @@ bool CheckARCoef(const arma::vec& coef) {
   //         (stability condition)
   return arma::all(arma::abs(roots) < 1);
 }
+// -----------------------------------------------------------------------------
+// edit .setup/cpp/simAutoReg-check-var-coef.cpp
+// Ivan Jacob Agaloos Pesigan
+// -----------------------------------------------------------------------------
+
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
@@ -144,7 +155,8 @@ bool CheckVARCoef(const arma::mat& coef) {
   return arma::all(arma::abs(eigenvalues) < 1);
 }
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-ar-coef.cpp
+// edit .setup/cpp/simAutoReg-sim-ar-coef.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -195,7 +207,8 @@ arma::vec SimARCoef(int p) {
   return coefs;
 }
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-ar.cpp
+// edit .setup/cpp/simAutoReg-sim-ar.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -304,7 +317,8 @@ arma::vec SimAR(int time, int burn_in, const double& constant,
 
 // Dependencies
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-mvn.cpp
+// edit .setup/cpp/simAutoReg-sim-mvn.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -395,6 +409,11 @@ arma::mat SimMVN(int n, const arma::vec& location,
 }
 
 // Dependencies
+// -----------------------------------------------------------------------------
+// edit .setup/cpp/simAutoReg-sim-pd.cpp
+// Ivan Jacob Agaloos Pesigan
+// -----------------------------------------------------------------------------
+
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
@@ -429,7 +448,8 @@ arma::mat SimPD(int p) {
   return data;
 }
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-var-coef.cpp
+// edit .setup/cpp/simAutoReg-sim-var-coef.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -497,7 +517,8 @@ arma::mat SimVARCoef(int k, int p) {
   return coefs;
 }
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-var-exo.cpp
+// edit .setup/cpp/simAutoReg-sim-var-exo.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -533,6 +554,47 @@ arma::mat SimVARCoef(int k, int p) {
 //'   Coefficient matrix with dimensions `k` by `x`
 //'   associated with the exogenous covariates.
 //'
+//' @examples
+//' set.seed(42)
+//' time <- 1000L
+//' burn_in <- 200
+//' k <- 3
+//' p <- 2
+//' constant <- c(1, 1, 1)
+//' coef <- matrix(
+//'   data = c(
+//'     0.4, 0.0, 0.0, 0.1, 0.0, 0.0,
+//'     0.0, 0.5, 0.0, 0.0, 0.2, 0.0,
+//'     0.0, 0.0, 0.6, 0.0, 0.0, 0.3
+//'   ),
+//'   nrow = k,
+//'   byrow = TRUE
+//' )
+//' chol_cov <- chol(diag(3))
+//' exo_mat <- MASS::mvrnorm(
+//'   n = time + burn_in,
+//'   mu = c(0, 0, 0),
+//'   Sigma = diag(3)
+//' )
+//' exo_coef <- matrix(
+//'   data = c(
+//'     0.5, 0.0, 0.0,
+//'     0.0, 0.5, 0.0,
+//'     0.0, 0.0, 0.5
+//'   ),
+//'   nrow = 3
+//' )
+//' y <- SimVARExo(
+//'   time = time,
+//'   burn_in = burn_in,
+//'   constant = constant,
+//'   coef = coef,
+//'   chol_cov = chol_cov,
+//'   exo_mat = exo_mat,
+//'   exo_coef = exo_coef
+//' )
+//' str(y)
+//'
 //' @return Numeric matrix containing the simulated time series data
 //'   with dimensions `k` by `time`,
 //'   where `k` is the number of variables and
@@ -556,8 +618,8 @@ arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
   // Step 2: Create a matrix to store simulated data
   arma::mat data(num_outcome_vars, total_time);
 
-  // Step 3: Initialize the data matrix with constant values for each outcome
-  // variable
+  // Step 3: Initialize the data matrix with constant values
+  //         for each outcome variable
   data.each_col() = constant;
 
   // Step 4: Transpose the exogenous matrix for efficient column access
@@ -604,7 +666,8 @@ arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
   return data.t();
 }
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-var-zip-exo.cpp
+// edit .setup/cpp/simAutoReg-sim-var-zip-exo.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -727,7 +790,8 @@ arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant,
 
 // Dependencies
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-var-zip.cpp
+// edit .setup/cpp/simAutoReg-sim-var-zip.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -907,7 +971,8 @@ arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant,
 
 // Dependencies
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-var.cpp
+// edit .setup/cpp/simAutoReg-sim-var.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -1069,7 +1134,8 @@ arma::mat SimVAR(int time, int burn_in, const arma::vec& constant,
 
 // Dependencies
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-variance.cpp
+// edit .setup/cpp/simAutoReg-sim-variance.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -1155,7 +1221,8 @@ arma::mat SimVariance(int n, const arma::vec& location,
 // Dependencies
 // simAutoReg-sim-mvn.cpp
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-y-x.cpp
+// edit .setup/cpp/simAutoReg-y-x.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>
@@ -1260,7 +1327,8 @@ Rcpp::List YXExo(const arma::mat& data, int p, const arma::mat& exo_mat) {
   return result;
 }
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-y-x.cpp
+// edit .setup/cpp/simAutoReg-y-x.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>

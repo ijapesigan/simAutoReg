@@ -18,10 +18,10 @@ VignetteBuilder: knitr
 Depends: R (>= 3.0.0)
 LinkingTo: Rcpp, RcppArmadillo
 Imports: Rcpp
-Suggests: knitr, rmarkdown, testthat, microbenchmark
+Suggests: knitr, rmarkdown, testthat, MASS
 RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2023-09-03 09:00:00 UTC; root
+Packaged: 2023-09-03 23:55:55 UTC; root
 Author: Ivan Jacob Agaloos Pesigan [aut, cre, cph]
     (<https://orcid.org/0000-0003-4818-8420>)
 Maintainer: Ivan Jacob Agaloos Pesigan <r.ijapesigan@gmail.com>
