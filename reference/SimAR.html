@@ -117,12 +117,16 @@ to store the generated AR time series data.</p></li>
 from a normal distribution with mean 0
 and standard deviation <code>sd</code>.</p></li>
 <li><p>Generate the autoregressive time series with burn-in using the formula:
-$$Y_t = constant + \sum_{i=1}^{p} (coef[i] * Y_{t-i}) + noise_t$$
-where \(Y_t\) is the time series data at time \(t\), \(constant\)
-is the constant term,
-\(coef[i]\) are the autoregressive coefficients,
-\(Y_{t-i}\) are the lagged data points up to order <code>p</code>,
-and \(noise_t\) is the random noise at time \(t\).</p></li>
+$$
+    Y_t = \mathrm{constant} +
+    \sum_{i = 1}^{p} \left( \mathrm{coef}_i * Y_{t - i} \right) +
+    \mathrm{noise}_t
+  $$
+where \(Y_t\) is the time series data at time \(t\),
+\(\mathrm{constant}\) is the constant term,
+\(\mathrm{coef}_i\) are the autoregressive coefficients,
+\(Y_{t - i}\) are the lagged data points up to order <code>p</code>,
+and \(\mathrm{noise}_t\) is the random noise at time \(t\).</p></li>
 <li><p>Remove the burn-in period from the generated time series data.</p></li>
 </ul></div>
     <div class="section level2">
