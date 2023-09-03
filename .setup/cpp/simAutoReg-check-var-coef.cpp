@@ -1,3 +1,8 @@
+// -----------------------------------------------------------------------------
+// edit .setup/cpp/simAutoReg-check-var-coef.cpp
+// Ivan Jacob Agaloos Pesigan
+// -----------------------------------------------------------------------------
+
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 

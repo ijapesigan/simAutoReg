@@ -1,5 +1,6 @@
 // -----------------------------------------------------------------------------
-// edit simAutoReg/.setup/cpp/simAutoReg-sim-var-zip-exo.cpp
+// edit .setup/cpp/simAutoReg-sim-var-zip-exo.cpp
+// Ivan Jacob Agaloos Pesigan
 // -----------------------------------------------------------------------------
 
 #include <RcppArmadillo.h>

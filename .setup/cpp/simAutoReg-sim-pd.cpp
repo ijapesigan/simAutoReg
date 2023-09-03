@@ -1,3 +1,8 @@
+// -----------------------------------------------------------------------------
+// edit .setup/cpp/simAutoReg-sim-pd.cpp
+// Ivan Jacob Agaloos Pesigan
+// -----------------------------------------------------------------------------
+
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
