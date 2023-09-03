@@ -121,12 +121,16 @@ SimARCoef <- function(p) {
 #'   from a normal distribution with mean 0
 #'   and standard deviation `sd`.
 #' - Generate the autoregressive time series with burn-in using the formula:
-#'   \deqn{Y_t = constant + \sum_{i=1}^{p} (coef[i] * Y_{t-i}) + noise_t}
-#'   where \eqn{Y_t} is the time series data at time \eqn{t}, \eqn{constant}
-#'   is the constant term,
-#'   \eqn{coef[i]} are the autoregressive coefficients,
-#'   \eqn{Y_{t-i}} are the lagged data points up to order `p`,
-#'   and \eqn{noise_t} is the random noise at time \eqn{t}.
+#'   \deqn{
+#'     Y_t = \mathrm{constant} +
+#'     \sum_{i = 1}^{p} \left( \mathrm{coef}_i * Y_{t - i} \right) +
+#'     \mathrm{noise}_t
+#'   }
+#'   where \eqn{Y_t} is the time series data at time \eqn{t},
+#'   \eqn{\mathrm{constant}} is the constant term,
+#'   \eqn{\mathrm{coef}_i} are the autoregressive coefficients,
+#'   \eqn{Y_{t - i}} are the lagged data points up to order `p`,
+#'   and \eqn{\mathrm{noise}_t} is the random noise at time \eqn{t}.
 #' - Remove the burn-in period from the generated time series data.
 #'
 #' @family Simulation of Autoregressive Data Functions
@@ -522,16 +526,18 @@ SimVARZIP <- function(time, burn_in, constant, coef, chol_cov) {
 #'     with mean 0 and covariance matrix `chol_cov`.
 #'   * Generate the VAR time series values for each variable `j` at time `t`
 #'     using the formula:
-#'     \deqn{Y_{tj} = \text{constant}_j +
-#'     \sum_{l = 1}^{p} \sum_{m = 1}^{k} (\text{coef}_{jm} * Y_{im}) +
-#'     \text{noise}_{j}}
+#'     \deqn{
+#'       Y_{tj} = \mathrm{constant}_j +
+#'       \sum_{l = 1}^{p} \sum_{m = 1}^{k} (\mathrm{coef}_{jm} * Y_{im}) +
+#'       \mathrm{noise}_{j}
+#'     }
 #'     where \eqn{Y_{tj}} is the value of variable `j` at time `t`,
-#'     \eqn{constant_j} is the constant term for variable `j`,
-#'     \eqn{coef_{jm}} are the coefficients for variable `j`
+#'     \eqn{\mathrm{constant}_j} is the constant term for variable `j`,
+#'     \eqn{\mathrm{coef}_{jm}} are the coefficients for variable `j`
 #'     from lagged variables up to order `p`,
 #'     \eqn{Y_{tm}} are the lagged values of variable `m`
 #'     up to order `p` at time `t`,
-#'     and \eqn{noise_{j}} is the element `j`
+#'     and \eqn{\mathrm{noise}_{j}} is the element `j`
 #'     from the generated vector of random process noise.
 #' - Transpose the matrix `data` and return only
 #'   the required time period after the burn-in period,
@@ -548,7 +554,7 @@ SimVAR <- function(time, burn_in, constant, coef, chol_cov) {
 #'
 #' This function generates random data for the variance vector given by
 #' \deqn{
-#'   \boldsymbol{\sigma^{2}} =
+#'   \boldsymbol{\sigma}^{2} =
 #'   \exp \left( \boldsymbol{\mu} + \boldsymbol{\varepsilon} \right)
 #'   \quad
 #'   \text{with}
@@ -580,8 +586,8 @@ SimVAR <- function(time, burn_in, constant, coef, chol_cov) {
 #' and the Cholesky decomposition matrix \eqn{\boldsymbol{\Sigma}}
 #' for the multivariate normal random error \eqn{\boldsymbol{\varepsilon}},
 #' the function simulates \eqn{n} independent samples
-#' of the variance vector \eqn{\boldsymbol{\sigma^{2}}}.
-#' Each sample of the variance vector \eqn{\boldsymbol{\sigma^{2}}}
+#' of the variance vector \eqn{\boldsymbol{\sigma}^{2}}.
+#' Each sample of the variance vector \eqn{\boldsymbol{\sigma}^{2}}
 #' is obtained by
 #' calculating the exponential of random variations
 #' to the mean vector \eqn{\boldsymbol{\mu}}.
@@ -593,7 +599,7 @@ SimVAR <- function(time, burn_in, constant, coef, chol_cov) {
 #'
 #' @examples
 #' set.seed(42)
-#' n <- 100
+#' n <- 10L
 #' location <- c(0.5, -0.2, 0.1)
 #' chol_scale <- chol(
 #'   matrix(
