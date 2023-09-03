@@ -8,9 +8,11 @@ for a Stationary VAR(p) Model}
 SimVARCoef(k, p)
 }
 \arguments{
-\item{k}{Positive integer. Number of autoregressive variables.}
+\item{k}{Positive integer.
+Number of autoregressive variables.}
 
-\item{p}{Positive integer. Number of lags.}
+\item{p}{Positive integer.
+Number of lags.}
 }
 \description{
 This function generates stationary VAR(P) coefficients.
@@ -40,5 +42,7 @@ Other Simulation of Autoregressive Data Functions:
 Ivan Jacob Agaloos Pesigan
 }
 \concept{Simulation of Autoregressive Data Functions}
+\keyword{coef}
 \keyword{sim}
 \keyword{simAutoReg}
+\keyword{var}

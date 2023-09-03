@@ -131,5 +131,7 @@ Other Simulation of Autoregressive Data Functions:
 Ivan Jacob Agaloos Pesigan
 }
 \concept{Simulation of Autoregressive Data Functions}
+\keyword{data}
 \keyword{sim}
 \keyword{simAutoReg}
+\keyword{var}

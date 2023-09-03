@@ -90,3 +90,4 @@ Ivan Jacob Agaloos Pesigan
 \concept{Simulation of Autoregressive Data Functions}
 \keyword{sim}
 \keyword{simAutoReg}
+\keyword{variance}

@@ -63,15 +63,19 @@ Rcpp::List YXExo(const arma::mat& data, int p, const arma::mat& exo_mat);
 //'
 //' @examples
 //' set.seed(42)
-//' CheckARCoef(SimARCoef(p = 2))
+//' (coef <- SimARCoef(p = 2))
+//' CheckARCoef(coef = coef)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg check ar
 //' @export
 // [[Rcpp::export]]
 bool CheckARCoef(const arma::vec& coef) {
-  // Check if the roots lie inside the unit circle
+  // Step 1: Compute the roots of the characteristic polynomial
   arma::cx_vec roots = arma::roots(arma::join_cols(arma::vec{1}, -coef));
+
+  // Step 2: Check if all roots have magnitudes less than 1
+  //         (stability condition)
   return arma::all(arma::abs(roots) < 1);
 }
 #include <RcppArmadillo.h>
@@ -96,28 +100,47 @@ bool CheckARCoef(const arma::vec& coef) {
 //'
 //' @examples
 //' set.seed(42)
-//' CheckVARCoef(SimVARCoef(k = 3, p = 2))
+//' (coef <- SimVARCoef(k = 3, p = 2))
+//' CheckVARCoef(coef = coef)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg check var
 //' @export
 // [[Rcpp::export]]
 bool CheckVARCoef(const arma::mat& coef) {
-  int k = coef.n_rows;      // Number of variables
-  int p = coef.n_cols / k;  // Order of the VAR model (number of lags)
+  // Step 1: Determine the number of outcome variables and lags
+  // Number of outcome variables
+  int num_outcome_vars = coef.n_rows;
+  // Number of lags in the VAR model
+  int num_lags = coef.n_cols / num_outcome_vars;
 
-  // Check if the eigenvalues of the companion matrix have moduli less than 1
-  arma::mat companion(k * p, k * p, arma::fill::zeros);
-  for (int i = 0; i < p; i++) {
-    companion.submat(i * k, i * k, (i + 1) * k - 1, (i + 1) * k - 1) =
-        coef.cols(i * k, (i + 1) * k - 1);
+  // Step 2: Create a companion matrix for the VAR coefficients
+  arma::mat companion_matrix(num_outcome_vars * num_lags,
+                             num_outcome_vars * num_lags, arma::fill::zeros);
+
+  // Step 3: Fill the companion matrix using VAR coefficients
+  for (int i = 0; i < num_lags; i++) {
+    // Step 3.1: Fill the diagonal block of the companion matrix
+    //           with VAR coefficients
+    companion_matrix.submat(i * num_outcome_vars, i * num_outcome_vars,
+                            (i + 1) * num_outcome_vars - 1,
+                            (i + 1) * num_outcome_vars - 1) =
+        coef.cols(i * num_outcome_vars, (i + 1) * num_outcome_vars - 1);
+
+    // Step 3.2: Fill the sub-diagonal block with identity matrices (lags > 0)
     if (i > 0) {
-      companion.submat(i * k, (i - 1) * k, (i + 1) * k - 1, i * k - 1) =
-          arma::eye(k, k);
+      companion_matrix.submat(i * num_outcome_vars, (i - 1) * num_outcome_vars,
+                              (i + 1) * num_outcome_vars - 1,
+                              i * num_outcome_vars - 1) =
+          arma::eye(num_outcome_vars, num_outcome_vars);
     }
   }
 
-  arma::cx_vec eigenvalues = arma::eig_gen(companion);
+  // Step 4: Compute the eigenvalues of the companion matrix
+  arma::cx_vec eigenvalues = arma::eig_gen(companion_matrix);
+
+  // Step 5: Check if all eigenvalues have magnitudes less than 1
+  //         (stability condition)
   return arma::all(arma::abs(eigenvalues) < 1);
 }
 // -----------------------------------------------------------------------------
@@ -141,27 +164,35 @@ bool CheckVARCoef(const arma::mat& coef) {
 //' SimARCoef(p = 2)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim coef ar
 //' @export
 // [[Rcpp::export]]
 arma::vec SimARCoef(int p) {
-  bool is_stationary = false;
-  arma::vec ar_coefficients(p);
+  // Step 1: Initialize a vector to store the generated stable
+  //         autoregressive coefficients
+  arma::vec coefs(p);
 
-  while (!is_stationary) {
-    // Generate random coefficients between -0.9 and 0.9
-    arma::vec random_coeffs = arma::randu<arma::vec>(p);
-    ar_coefficients = -0.9 + 1.8 * random_coeffs;
+  // Step 2: Enter an infinite loop for coefficient generation
+  //         and stability check
+  while (true) {
+    // Step 2.1: Generate random coefficients between -0.9 and 0.9
+    arma::vec coefs = -0.9 + 1.8 * arma::randu<arma::vec>(p);
 
-    // Check if the roots lie inside the unit circle
-    arma::cx_vec roots =
-        arma::roots(arma::join_cols(arma::vec{1}, -ar_coefficients));
+    // Step 2.2: Compute the roots of the characteristic polynomial
+    //           of the autoregressive model
+    arma::cx_vec roots = arma::roots(arma::join_cols(arma::vec{1}, -coefs));
+
+    // Step 2.3: Check if all roots have magnitudes less than 1
+    //           (stability condition)
     if (arma::all(arma::abs(roots) < 1)) {
-      is_stationary = true;
+      // Step 2.4: If the coefficients lead to a stable autoregressive model,
+      //           exit the loop
+      break;
     }
   }
 
-  return ar_coefficients;
+  // Step 3: Return the generated stable autoregressive coefficients
+  return coefs;
 }
 // -----------------------------------------------------------------------------
 // edit simAutoReg/.setup/cpp/simAutoReg-sim-ar.cpp
@@ -230,39 +261,44 @@ arma::vec SimARCoef(int p) {
 //' - Remove the burn-in period from the generated time series data.
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim data ar
 //' @export
 // [[Rcpp::export]]
 arma::vec SimAR(int time, int burn_in, const double& constant,
                 const arma::vec& coef, const double& sd) {
-  // Order of the AR model
-  int p = coef.size();
+  // Step 1: Determine the number of lags and total time
+  // Number of lags in the autoregressive model
+  int num_lags = coef.size();
+  // Total number of time steps
   int total_time = burn_in + time;
 
-  // Vector to store the generated time series data
-  arma::vec data(total_time);
+  // Step 2: Create a vector to store simulated autoregressive data
+  // Initialize with ones to represent a constant term
+  arma::vec data(total_time, arma::fill::ones);
 
-  // Generate random noise from a normal distribution
-  arma::vec noise(total_time);
-  for (int i = 0; i < total_time; i++) {
-    noise(i) = R::rnorm(0, sd);
-  }
+  // Step 3: Set the initial values of the data vector using the constant term
+  data *= constant;
 
-  // Generate the autoregressive time series
-  for (int i = 0; i < total_time; i++) {
-    data(i) = constant;
-    for (int lag = 0; lag < p; lag++) {
-      if (i - lag - 1 >= 0) {
-        data(i) += coef(lag) * data(i - lag - 1) + noise(i);
+  // Step 4: Generate a vector of random noise
+  arma::vec noise = arma::randn(total_time);
+
+  // Step 5: Simulate autoregressive data using a loop
+  for (int time_index = 0; time_index < total_time; time_index++) {
+    // Step 5.1: Iterate over lags and apply the autoregressive formula
+    for (int lag = 0; lag < num_lags; lag++) {
+      if (time_index - lag - 1 >= 0) {
+        data(time_index) +=
+            coef(lag) * data(time_index - lag - 1) + noise(time_index);
       }
     }
   }
 
-  // Remove the burn-in period
+  // Step 6: If there is a burn-in period, remove it
   if (burn_in > 0) {
     data = data(arma::span(burn_in, total_time - 1));
   }
 
+  // Step 7: Return the simulated autoregressive data
   return data;
 }
 
@@ -337,17 +373,24 @@ arma::vec SimAR(int time, int burn_in, const double& constant,
 //' of a covariance matrix.
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim data mvn
 //' @export
 // [[Rcpp::export]]
 arma::mat SimMVN(int n, const arma::vec& location,
                  const arma::mat& chol_scale) {
-  int k = location.n_elem;
+  // Step 1: Determine the number of variables
+  int num_variables = location.n_elem;
 
-  // Generate multivariate normal random numbers
-  arma::mat random_data = arma::randn(n, k);
-  arma::mat data = random_data * chol_scale + arma::repmat(location.t(), n, 1);
+  // Step 2: Generate a matrix of random standard normal variates
+  arma::mat data = arma::randn(n, num_variables);
 
+  // Step 3: Transform the random values to follow
+  //         a multivariate normal distribution
+  //         by scaling with the Cholesky decomposition
+  //         and adding the location vector
+  data = data * chol_scale + arma::repmat(location.t(), n, 1);
+
+  // Step 4: Return the simulated multivariate normal data
   return data;
 }
 
@@ -369,20 +412,21 @@ arma::mat SimMVN(int n, const arma::vec& location,
 //' SimPD(p = 3)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim cov
 //' @export
 // [[Rcpp::export]]
 arma::mat SimPD(int p) {
-  // Create a p x p matrix filled with random values
-  arma::mat L(p, p, arma::fill::randn);
+  // Step 1: Generate a p x p matrix filled with random values
+  arma::mat data(p, p, arma::fill::randn);
 
-  // Compute the product of the matrix and its
-  // transpose to make it symmetric
-  arma::mat A = L * L.t();
+  // Step 2: Make the matrix symmetric by multiplying it with its transpose
+  data = data * data.t();
 
-  A += 0.001 * arma::eye<arma::mat>(p, p);
+  // Step 3: Add a small positive diagonal to ensure positive definiteness
+  data += 0.001 * arma::eye<arma::mat>(p, p);
 
-  return A;
+  // Step 4: Return the positive definite matrix
+  return data;
 }
 // -----------------------------------------------------------------------------
 // edit simAutoReg/.setup/cpp/simAutoReg-sim-var-coef.cpp
@@ -398,43 +442,59 @@ arma::mat SimPD(int p) {
 //'
 //' @author Ivan Jacob Agaloos Pesigan
 //'
-//' @param k Positive integer. Number of autoregressive variables.
-//' @param p Positive integer. Number of lags.
+//' @param k Positive integer.
+//'   Number of autoregressive variables.
+//' @param p Positive integer.
+//'   Number of lags.
 //'
 //' @examples
 //' set.seed(42)
 //' SimVARCoef(k = 3, p = 2)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim coef var
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVARCoef(int k, int p) {
-  arma::mat var_coefficients(k, k * p);
+  // Step 1: Create a matrix to store VAR coefficients
+  arma::mat coefs(k, k * p);
 
+  // Step 2: Generate random coefficients between -0.9 and 0.9
   while (true) {
-    // Generate random coefficients between -0.9 and 0.9
-    var_coefficients.randu();
-    var_coefficients = -0.9 + 1.8 * var_coefficients;
+    // Generate random values in [0, 1]
+    coefs.randu();
+    // Scale and shift values to [-0.9, 0.9]
+    coefs = -0.9 + 1.8 * coefs;
 
-    // Check if the eigenvalues of the companion matrix have moduli less than 1
+    // Step 3: Create a companion matrix from VAR coefficients
     arma::mat companion_matrix(k * p, k * p, arma::fill::zeros);
+
+    // Step 4: Fill the companion matrix using VAR coefficients
     for (int i = 0; i < p; i++) {
+      // Fill the diagonal block of the companion matrix with VAR coefficients
       companion_matrix.submat(i * k, i * k, (i + 1) * k - 1, (i + 1) * k - 1) =
-          var_coefficients.cols(i * k, (i + 1) * k - 1);
+          coefs.cols(i * k, (i + 1) * k - 1);
+
+      // Fill the sub-diagonal block of the companion matrix
+      // with identity matrices
       if (i > 0) {
         companion_matrix.submat(i * k, (i - 1) * k, (i + 1) * k - 1,
                                 i * k - 1) = arma::eye(k, k);
       }
     }
 
+    // Step 5: Compute the eigenvalues of the companion matrix
     arma::cx_vec eigenvalues = arma::eig_gen(companion_matrix);
+
+    // Step 6: Check if all eigenvalues are inside the unit circle
     if (arma::all(arma::abs(eigenvalues) < 1)) {
+      // Exit the loop if all eigenvalues satisfy the condition
       break;
     }
   }
 
-  return var_coefficients;
+  // Step 7: Return the generated VAR coefficients
+  return coefs;
 }
 // -----------------------------------------------------------------------------
 // edit simAutoReg/.setup/cpp/simAutoReg-sim-var-exo.cpp
@@ -479,54 +539,68 @@ arma::mat SimVARCoef(int k, int p) {
 //'   `time` is the number of observations.
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim data var
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
                     const arma::mat& coef, const arma::mat& chol_cov,
                     const arma::mat& exo_mat, const arma::mat& exo_coef) {
-  int k = constant.n_elem;  // Number of variables
-  int p = coef.n_cols / k;  // Order of the VAR model (number of lags)
-
+  // Step 1: Determine dimensions and total time
+  // Number of outcome variables
+  int num_outcome_vars = constant.n_elem;
+  // Number of lags in the VAR model
+  int num_lags = coef.n_cols / num_outcome_vars;
+  // Total number of time steps
   int total_time = burn_in + time;
 
-  // Matrix to store the generated VAR time series data
-  arma::mat data(k, total_time);
+  // Step 2: Create a matrix to store simulated data
+  arma::mat data(num_outcome_vars, total_time);
 
-  // Set initial values using the constant term
-  data.each_col() = constant;  // Fill each column with the constant vector
+  // Step 3: Initialize the data matrix with constant values for each outcome
+  // variable
+  data.each_col() = constant;
 
-  // Transpose exo_mat
+  // Step 4: Transpose the exogenous matrix for efficient column access
   arma::mat exo_mat_t = exo_mat.t();
 
-  // Generate the VAR time series
-  for (int t = p; t < total_time; t++) {
-    // Generate noise from a multivariate normal distribution
-    arma::vec noise = arma::randn(k);
+  // Step 5: Simulate VAR-Exo data using a loop
+  for (int t = num_lags; t < total_time; t++) {
+    // Step 5.1: Generate random noise vector
+    arma::vec noise = arma::randn(num_outcome_vars);
+
+    // Step 5.2: Multiply the noise vector by the Cholesky decomposition of the
+    // covariance matrix
     arma::vec mult_noise = chol_cov * noise;
 
-    // Generate eta_t vector
-    for (int j = 0; j < k; j++) {
-      for (int lag = 0; lag < p; lag++) {
-        for (int l = 0; l < k; l++) {
-          data(j, t) += coef(j, lag * k + l) * data(l, t - lag - 1);
+    // Step 5.3: Iterate over outcome variables
+    for (int j = 0; j < num_outcome_vars; j++) {
+      // Step 5.4: Iterate over lags
+      for (int lag = 0; lag < num_lags; lag++) {
+        // Step 5.5: Iterate over outcome variables again
+        for (int l = 0; l < num_outcome_vars; l++) {
+          // Update data by applying VAR coefficients and lagged data
+          data(j, t) +=
+              coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
         }
       }
 
-      // Add exogenous variables' impact on autoregression variables
+      // Step 5.6: Iterate over exogenous variables
       for (arma::uword x = 0; x < exo_mat_t.n_rows; x++) {
+        // Update data with exogenous variables and their coefficients
         data(j, t) += exo_mat_t(x, t) * exo_coef(j, x);
       }
 
+      // Step 5.7: Add the corresponding element from the noise vector
       data(j, t) += mult_noise(j);
     }
   }
 
-  // Remove the burn-in period
+  // Step 6: If there is a burn-in period, remove it
   if (burn_in > 0) {
     data = data.cols(burn_in, total_time - 1);
   }
 
+  // Step 7: Return the transposed data matrix
   return data.t();
 }
 // -----------------------------------------------------------------------------
@@ -573,64 +647,81 @@ arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
 //'   and `time` is the number of observations.
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim data var
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant,
                        const arma::mat& coef, const arma::mat& chol_cov,
                        const arma::mat& exo_mat, const arma::mat& exo_coef) {
-  int k = constant.n_elem;  // Number of variables
-  int p = coef.n_cols / k;  // Order of the VAR model (number of lags)
-
+  // Step 1: Determine dimensions and total time
+  // Number of outcome variables
+  int num_outcome_vars = constant.n_elem;
+  // Number of lags in the VAR model
+  int num_lags = coef.n_cols / num_outcome_vars;
+  // Total number of time steps
   int total_time = burn_in + time;
 
-  // Matrix to store the generated VAR time series data
-  arma::mat data(k, total_time);
+  // Step 2: Create a matrix to store simulated data
+  arma::mat data(num_outcome_vars, total_time);
 
-  // Set initial values using the constant term
-  data.each_col() = constant;  // Fill each column with the constant vector
+  // Step 3: Initialize the data matrix with constant values for each outcome
+  // variable
+  data.each_col() = constant;
 
-  // Transpose exo_mat
+  // Step 4: Transpose the exogenous matrix for efficient column access
   arma::mat exo_mat_t = exo_mat.t();
 
-  // Generate the VAR time series
-  for (int t = p; t < total_time; t++) {
-    // Generate noise from a multivariate normal distribution
-    arma::vec noise = arma::randn(k);
+  // Step 5: Simulate VAR-ZIP-Exo data using a loop
+  for (int t = num_lags; t < total_time; t++) {
+    // Step 5.1: Generate random noise vector
+    arma::vec noise = arma::randn(num_outcome_vars);
+
+    // Step 5.2: Multiply the noise vector by the Cholesky decomposition of the
+    // covariance matrix
     arma::vec mult_noise = chol_cov * noise;
 
-    // Generate eta_t vector
-    for (int j = 0; j < k; j++) {
-      for (int lag = 0; lag < p; lag++) {
-        for (int l = 0; l < k; l++) {
-          data(j, t) += coef(j, lag * k + l) * data(l, t - lag - 1);
+    // Step 5.3: Iterate over outcome variables
+    for (int j = 0; j < num_outcome_vars; j++) {
+      // Step 5.4: Iterate over lags
+      for (int lag = 0; lag < num_lags; lag++) {
+        // Step 5.5: Iterate over outcome variables again
+        for (int l = 0; l < num_outcome_vars; l++) {
+          // Update data by applying VAR coefficients and lagged data
+          data(j, t) +=
+              coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
         }
       }
 
-      // Add exogenous variables' impact on autoregression variables
+      // Step 5.6: Iterate over exogenous variables
       for (arma::uword x = 0; x < exo_mat_t.n_rows; x++) {
+        // Update data with exogenous variables and their coefficients
         data(j, t) += exo_mat_t(x, t) * exo_coef(j, x);
       }
 
+      // Step 5.7: Add the corresponding element from the noise vector
       data(j, t) += mult_noise(j);
-    }
 
-    // Use ZIP model for the first variable
-    double intensity = std::exp(data(0, t));
-    if (R::runif(0, 1) < intensity / (1 + intensity)) {
-      // Sample from the point mass at zero (inflation)
-      data(0, t) = 0;
-    } else {
-      // Sample from the Poisson distribution (count process)
-      data(0, t) = R::rpois(intensity);
+      // Step 5.8: Calculate the intensity for the zero-inflated Poisson
+      // distribution
+      double intensity = std::exp(data(0, t));
+
+      // Step 5.9: Simulate a zero-inflated Poisson random variable
+      if (R::runif(0, 1) < intensity / (1 + intensity)) {
+        // Set to zero with probability 1 - intensity
+        data(0, t) = 0;
+      } else {
+        // Simulate Poisson count with intensity
+        data(0, t) = R::rpois(intensity);
+      }
     }
   }
 
-  // Remove the burn-in period
+  // Step 6: If there is a burn-in period, remove it
   if (burn_in > 0) {
     data = data.cols(burn_in, total_time - 1);
   }
 
+  // Step 7: Return the transposed data matrix
   return data.t();
 }
 
@@ -746,55 +837,71 @@ arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant,
 //'   the required time period after burn-in as a numeric matrix.
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim data var
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant,
                     const arma::mat& coef, const arma::mat& chol_cov) {
-  int k = constant.n_elem;  // Number of variables
-  int p = coef.n_cols / k;  // Order of the VAR model (number of lags)
-
+  // Step 1: Determine dimensions and total time
+  // Number of outcome variables
+  int num_outcome_vars = constant.n_elem;
+  // Number of lags in the VAR model
+  int num_lags = coef.n_cols / num_outcome_vars;
+  // Total number of time steps
   int total_time = burn_in + time;
 
-  // Matrix to store the generated VAR time series data
-  arma::mat data(k, total_time);
+  // Step 2: Create a matrix to store simulated data
+  arma::mat data(num_outcome_vars, total_time);
 
-  // Set initial values using the constant term
-  data.each_col() = constant;  // Fill each column with the constant vector
+  // Step 3: Initialize the data matrix with constant values for each outcome
+  // variable
+  data.each_col() = constant;
 
-  // Generate the VAR time series
-  for (int t = p; t < total_time; t++) {
-    // Generate noise from a multivariate normal distribution
-    arma::vec noise = arma::randn(k);
+  // Step 4: Simulate VAR-ZIP data using a loop
+  for (int t = num_lags; t < total_time; t++) {
+    // Step 4.1: Generate random noise vector
+    arma::vec noise = arma::randn(num_outcome_vars);
+
+    // Step 4.2: Multiply the noise vector
+    //           by the Cholesky decomposition of the covariance matrix
     arma::vec mult_noise = chol_cov * noise;
 
-    // Generate eta_t vector
-    for (int j = 0; j < k; j++) {
-      for (int lag = 0; lag < p; lag++) {
-        for (int l = 0; l < k; l++) {
-          data(j, t) += coef(j, lag * k + l) * data(l, t - lag - 1);
+    // Step 4.3: Iterate over outcome variables
+    for (int j = 0; j < num_outcome_vars; j++) {
+      // Step 4.4: Iterate over lags
+      for (int lag = 0; lag < num_lags; lag++) {
+        // Step 4.5: Iterate over outcome variables again
+        for (int l = 0; l < num_outcome_vars; l++) {
+          // Update data by applying VAR coefficients and lagged data
+          data(j, t) +=
+              coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
         }
       }
 
+      // Step 4.6: Add the corresponding element from the noise vector
       data(j, t) += mult_noise(j);
-    }
 
-    // Use ZIP model for the first variable
-    double intensity = std::exp(data(0, t));
-    if (R::runif(0, 1) < intensity / (1 + intensity)) {
-      // Sample from the point mass at zero (inflation)
-      data(0, t) = 0;
-    } else {
-      // Sample from the Poisson distribution (count process)
-      data(0, t) = R::rpois(intensity);
+      // Step 4.7: Calculate the intensity
+      //           for the zero-inflated Poisson distribution
+      double intensity = std::exp(data(0, t));
+
+      // Step 4.8: Simulate a zero-inflated Poisson random variable
+      if (R::runif(0, 1) < intensity / (1 + intensity)) {
+        // Set to zero with probability 1 - intensity
+        data(0, t) = 0;
+      } else {
+        // Simulate Poisson count with intensity
+        data(0, t) = R::rpois(intensity);
+      }
     }
   }
 
-  // Remove the burn-in period
+  // Step 5: If there is a burn-in period, remove it
   if (burn_in > 0) {
     data = data.cols(burn_in, total_time - 1);
   }
 
+  // Step 6: Return the transposed data matrix
   return data.t();
 }
 
@@ -905,45 +1012,58 @@ arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant,
 //'   which is from column `burn_in` to column `time + burn_in - 1`.
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim data var
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVAR(int time, int burn_in, const arma::vec& constant,
                  const arma::mat& coef, const arma::mat& chol_cov) {
-  int k = constant.n_elem;  // Number of variables
-  int p = coef.n_cols / k;  // Order of the VAR model (number of lags)
-
+  // Step 1: Determine dimensions and total time
+  // Number of outcome variables
+  int num_outcome_vars = constant.n_elem;
+  // Number of lags in the VAR model
+  int num_lags = coef.n_cols / num_outcome_vars;
+  // Total number of time steps
   int total_time = burn_in + time;
 
-  // Matrix to store the generated VAR time series data
-  arma::mat data(k, total_time);
+  // Step 2: Create a matrix to store simulated data
+  arma::mat data(num_outcome_vars, total_time);
 
-  // Set initial values using the constant term
-  data.each_col() = constant;  // Fill each column with the constant vector
+  // Step 3: Initialize the data matrix with constant values for each outcome
+  // variable
+  data.each_col() = constant;
 
-  // Generate the VAR time series
-  for (int t = p; t < total_time; t++) {
-    // Generate noise from a multivariate normal distribution
-    arma::vec noise = arma::randn(k);
+  // Step 4: Simulate VAR data using a loop
+  for (int t = num_lags; t < total_time; t++) {
+    // Step 4.1: Generate random noise vector
+    arma::vec noise = arma::randn(num_outcome_vars);
+
+    // Step 4.2: Multiply the noise vector
+    //           by the Cholesky decomposition of the covariance matrix
     arma::vec mult_noise = chol_cov * noise;
 
-    // Generate eta_t vector
-    for (int j = 0; j < k; j++) {
-      for (int lag = 0; lag < p; lag++) {
-        for (int l = 0; l < k; l++) {
-          data(j, t) += coef(j, lag * k + l) * data(l, t - lag - 1);
+    // Step 4.3: Iterate over outcome variables
+    for (int j = 0; j < num_outcome_vars; j++) {
+      // Step 4.4: Iterate over lags
+      for (int lag = 0; lag < num_lags; lag++) {
+        // Step 4.5: Iterate over outcome variables again
+        for (int l = 0; l < num_outcome_vars; l++) {
+          // Update data by applying VAR coefficients and lagged data
+          data(j, t) +=
+              coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
         }
       }
 
+      // Step 4.6: Add the corresponding element from the noise vector
       data(j, t) += mult_noise(j);
     }
   }
 
-  // Remove the burn-in period
+  // Step 5: If there is a burn-in period, remove it
   if (burn_in > 0) {
     data = data.cols(burn_in, total_time - 1);
   }
 
+  // Step 6: Return the transposed data matrix
   return data.t();
 }
 
@@ -1016,18 +1136,20 @@ arma::mat SimVAR(int time, int burn_in, const arma::vec& constant,
 //' SimVariance(n = n, location = location, chol_scale = chol_scale)
 //'
 //' @family Simulation of Autoregressive Data Functions
-//' @keywords simAutoReg sim
+//' @keywords simAutoReg sim variance
 //' @export
 // [[Rcpp::export]]
 arma::mat SimVariance(int n, const arma::vec& location,
                       const arma::mat& chol_scale) {
-  // Generate multivariate normal random numbers
-  arma::mat mvn = SimMVN(n, location, chol_scale);
+  // Step 1: Simulate multivariate normal data
+  arma::mat data = SimMVN(n, location, chol_scale);
 
-  // Compute the variance vector for each sample
-  arma::mat variance = arma::exp(mvn);
+  // Step 2: Transform the simulated data
+  //         by taking the exponential of each element
+  data = arma::exp(data);
 
-  return variance;
+  // Step 3: Return the transformed data
+  return data;
 }
 
 // Dependencies
@@ -1092,34 +1214,49 @@ arma::mat SimVariance(int n, const arma::vec& location,
 //' @export
 // [[Rcpp::export]]
 Rcpp::List YXExo(const arma::mat& data, int p, const arma::mat& exo_mat) {
-  int t = data.n_rows;     // Number of observations
-  int k = data.n_cols;     // Number of variables
-  int m = exo_mat.n_cols;  // Number of exogenous variables
+  // Step 1: Calculate the dimensions of the 'data' and 'exo_mat' matrices
+  // Number of time steps (rows) in 'data'
+  int time = data.n_rows;
+  // Number of outcome variables (columns) in 'data'
+  int num_outcome_vars = data.n_cols;
+  // Number of exogenous variables (columns) in 'exo_mat'
+  int num_exo_vars = exo_mat.n_cols;
 
-  // Create matrices to store lagged variables and exogenous variables
-  arma::mat X(t - p, k * p + m + 1,
-              arma::fill::ones);  // Add m columns for the exogenous variables
-                                  // and 1 column for the constant
-  arma::mat Y(t - p, k, arma::fill::zeros);
+  // Step 2: Create matrices 'X' and 'Y'
+  //         to store transformed data 'X' matrix with ones
+  arma::mat X(time - p, num_outcome_vars * p + num_exo_vars + 1,
+              arma::fill::ones);
+  // 'Y' matrix with zeros
+  arma::mat Y(time - p, num_outcome_vars, arma::fill::zeros);
 
-  // Populate the matrices X and Y with lagged data and exogenous data
-  for (int i = 0; i < (t - p); i++) {
+  // Step 3: Loop through the data and populate 'X' and 'Y'
+  for (int time_index = 0; time_index < (time - p); time_index++) {
+    // Initialize the column index for 'X'
     int index = 1;
-    // Arrange predictors from smallest lag to biggest
+
+    // Nested loop to populate 'X' with lagged values
     for (int lag = p - 1; lag >= 0; lag--) {
-      X(i, arma::span(index, index + k - 1)) = data.row(i + lag);
-      index += k;
+      // Update 'X' by assigning a subvector of 'data' to a subvector of 'X'
+      X.row(time_index).subvec(index, index + num_outcome_vars - 1) =
+          data.row(time_index + lag);
+      // Move to the next set of columns in 'X'
+      index += num_outcome_vars;
     }
-    // Append the exogenous variables to X
-    X(i, arma::span(index, index + m - 1)) = exo_mat.row(i + p);
-    Y.row(i) = data.row(i + p);
+
+    // Update 'X' with the exogenous variables
+    X.row(time_index).subvec(index, index + num_exo_vars - 1) =
+        exo_mat.row(time_index + p);
+
+    // Update 'Y' with the target values
+    Y.row(time_index) = data.row(time_index + p);
   }
 
-  // Create a list to store Y and X
+  // Step 4: Create an Rcpp List 'result' and assign 'Y' and 'X' matrices to it
   Rcpp::List result;
   result["Y"] = Y;
   result["X"] = X;
 
+  // Step 5: Return the 'result' List containing the transformed data
   return result;
 }
 // -----------------------------------------------------------------------------
@@ -1207,31 +1344,42 @@ Rcpp::List YXExo(const arma::mat& data, int p, const arma::mat& exo_mat) {
 //' @export
 // [[Rcpp::export]]
 Rcpp::List YX(const arma::mat& data, int p) {
-  int t = data.n_rows;  // Number of observations
-  int k = data.n_cols;  // Number of variables
+  // Step 1: Calculate the dimensions of the 'data' matrix
+  // Number of time steps (rows)
+  int time = data.n_rows;
+  // Number of outcome variables (columns)
+  int num_outcome_vars = data.n_cols;
 
-  // Create matrices to store lagged variables and the dependent variable
-  arma::mat X(t - p, k * p + 1, arma::fill::zeros);  // Add 1 column for the
-                                                     // constant
-  arma::mat Y(t - p, k, arma::fill::zeros);
+  // Step 2: Create matrices 'X' and 'Y'
+  //         to store transformed data 'X' matrix with ones
+  arma::mat X(time - p, num_outcome_vars * p + 1, arma::fill::ones);
+  // 'Y' matrix with zeros
+  arma::mat Y(time - p, num_outcome_vars, arma::fill::zeros);
 
-  // Populate the matrices X and Y with lagged data
-  for (int i = 0; i < (t - p); i++) {
-    X(i, 0) = 1;  // Set the first column to 1 for the constant term
+  // Step 3: Loop through the data and populate 'X' and 'Y'
+  for (int time_index = 0; time_index < (time - p); time_index++) {
+    // Initialize the column index for 'X'
     int index = 1;
-    // Arrange predictors from smallest lag to biggest
+
+    // Nested loop to populate 'X' with lagged values
     for (int lag = p - 1; lag >= 0; lag--) {
-      X.row(i).subvec(index, index + k - 1) = data.row(i + lag);
-      index += k;
+      // Update 'X' by assigning a subvector of 'data' to a subvector of 'X'
+      X.row(time_index).subvec(index, index + num_outcome_vars - 1) =
+          data.row(time_index + lag);
+      // Move to the next set of columns in 'X'
+      index += num_outcome_vars;
     }
-    Y.row(i) = data.row(i + p);
+
+    // Update 'Y' with the target values
+    Y.row(time_index) = data.row(time_index + p);
   }
 
-  // Create a list to store X, Y
+  // Step 4: Create an Rcpp List 'result' and assign 'X' and 'Y' matrices to it
   Rcpp::List result;
   result["X"] = X;
   result["Y"] = Y;
 
+  // Step 5: Return the 'result' List containing the transformed data
   return result;
 }
 

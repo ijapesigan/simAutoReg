@@ -23,7 +23,8 @@ therefore, non-stationary.
 }
 \examples{
 set.seed(42)
-CheckVARCoef(SimVARCoef(k = 3, p = 2))
+(coef <- SimVARCoef(k = 3, p = 2))
+CheckVARCoef(coef = coef)
 
 }
 \seealso{
@@ -46,5 +47,6 @@ Other Simulation of Autoregressive Data Functions:
 Ivan Jacob Agaloos Pesigan
 }
 \concept{Simulation of Autoregressive Data Functions}
-\keyword{sim}
+\keyword{check}
 \keyword{simAutoReg}
+\keyword{var}

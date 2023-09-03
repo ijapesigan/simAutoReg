@@ -90,5 +90,7 @@ Other Simulation of Autoregressive Data Functions:
 Ivan Jacob Agaloos Pesigan
 }
 \concept{Simulation of Autoregressive Data Functions}
+\keyword{data}
+\keyword{mvn}
 \keyword{sim}
 \keyword{simAutoReg}

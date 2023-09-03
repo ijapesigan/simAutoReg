@@ -20,7 +20,8 @@ must lie inside the unit circle in the complex plane.
 }
 \examples{
 set.seed(42)
-CheckARCoef(SimARCoef(p = 2))
+(coef <- SimARCoef(p = 2))
+CheckARCoef(coef = coef)
 
 }
 \seealso{
@@ -43,5 +44,6 @@ Other Simulation of Autoregressive Data Functions:
 Ivan Jacob Agaloos Pesigan
 }
 \concept{Simulation of Autoregressive Data Functions}
-\keyword{sim}
+\keyword{ar}
+\keyword{check}
 \keyword{simAutoReg}

@@ -17,10 +17,11 @@
 #'
 #' @examples
 #' set.seed(42)
-#' CheckARCoef(SimARCoef(p = 2))
+#' (coef <- SimARCoef(p = 2))
+#' CheckARCoef(coef = coef)
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg check ar
 #' @export
 CheckARCoef <- function(coef) {
     .Call(`_simAutoReg_CheckARCoef`, coef)
@@ -45,10 +46,11 @@ CheckARCoef <- function(coef) {
 #'
 #' @examples
 #' set.seed(42)
-#' CheckVARCoef(SimVARCoef(k = 3, p = 2))
+#' (coef <- SimVARCoef(k = 3, p = 2))
+#' CheckVARCoef(coef = coef)
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg check var
 #' @export
 CheckVARCoef <- function(coef) {
     .Call(`_simAutoReg_CheckVARCoef`, coef)
@@ -68,7 +70,7 @@ CheckVARCoef <- function(coef) {
 #' SimARCoef(p = 2)
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim coef ar
 #' @export
 SimARCoef <- function(p) {
     .Call(`_simAutoReg_SimARCoef`, p)
@@ -134,7 +136,7 @@ SimARCoef <- function(p) {
 #' - Remove the burn-in period from the generated time series data.
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim data ar
 #' @export
 SimAR <- function(time, burn_in, constant, coef, sd) {
     .Call(`_simAutoReg_SimAR`, time, burn_in, constant, coef, sd)
@@ -203,7 +205,7 @@ SimAR <- function(time, burn_in, constant, coef, sd) {
 #' of a covariance matrix.
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim data mvn
 #' @export
 SimMVN <- function(n, location, chol_scale) {
     .Call(`_simAutoReg_SimMVN`, n, location, chol_scale)
@@ -223,7 +225,7 @@ SimMVN <- function(n, location, chol_scale) {
 #' SimPD(p = 3)
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim cov
 #' @export
 SimPD <- function(p) {
     .Call(`_simAutoReg_SimPD`, p)
@@ -236,15 +238,17 @@ SimPD <- function(p) {
 #'
 #' @author Ivan Jacob Agaloos Pesigan
 #'
-#' @param k Positive integer. Number of autoregressive variables.
-#' @param p Positive integer. Number of lags.
+#' @param k Positive integer.
+#'   Number of autoregressive variables.
+#' @param p Positive integer.
+#'   Number of lags.
 #'
 #' @examples
 #' set.seed(42)
 #' SimVARCoef(k = 3, p = 2)
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim coef var
 #' @export
 SimVARCoef <- function(k, p) {
     .Call(`_simAutoReg_SimVARCoef`, k, p)
@@ -286,7 +290,7 @@ SimVARCoef <- function(k, p) {
 #'   `time` is the number of observations.
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim data var
 #' @export
 SimVARExo <- function(time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef) {
     .Call(`_simAutoReg_SimVARExo`, time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef)
@@ -329,7 +333,7 @@ SimVARExo <- function(time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef
 #'   and `time` is the number of observations.
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim data var
 #' @export
 SimVARZIPExo <- function(time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef) {
     .Call(`_simAutoReg_SimVARZIPExo`, time, burn_in, constant, coef, chol_cov, exo_mat, exo_coef)
@@ -439,7 +443,7 @@ SimVARZIPExo <- function(time, burn_in, constant, coef, chol_cov, exo_mat, exo_c
 #'   the required time period after burn-in as a numeric matrix.
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim data var
 #' @export
 SimVARZIP <- function(time, burn_in, constant, coef, chol_cov) {
     .Call(`_simAutoReg_SimVARZIP`, time, burn_in, constant, coef, chol_cov)
@@ -544,7 +548,7 @@ SimVARZIP <- function(time, burn_in, constant, coef, chol_cov) {
 #'   which is from column `burn_in` to column `time + burn_in - 1`.
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim data var
 #' @export
 SimVAR <- function(time, burn_in, constant, coef, chol_cov) {
     .Call(`_simAutoReg_SimVAR`, time, burn_in, constant, coef, chol_cov)
@@ -611,7 +615,7 @@ SimVAR <- function(time, burn_in, constant, coef, chol_cov) {
 #' SimVariance(n = n, location = location, chol_scale = chol_scale)
 #'
 #' @family Simulation of Autoregressive Data Functions
-#' @keywords simAutoReg sim
+#' @keywords simAutoReg sim variance
 #' @export
 SimVariance <- function(n, location, chol_scale) {
     .Call(`_simAutoReg_SimVariance`, n, location, chol_scale)
