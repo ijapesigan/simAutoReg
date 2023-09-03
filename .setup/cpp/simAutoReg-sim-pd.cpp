@@ -19,15 +19,14 @@
 //' @export
 // [[Rcpp::export]]
 arma::mat SimPD(int p) {
-  // Create a p x p matrix filled with zeros
-  arma::mat L(p, p, arma::fill::zeros);
-
-  // Fill the lower triangular part with random values
-  L.submat(arma::trimatu(L)) = arma::randn(p, p);
+  // Create a p x p matrix filled with random values
+  arma::mat L(p, p, arma::fill::randn);
 
   // Compute the product of the matrix and its
-  // transpose to make it positive definite
+  // transpose to make it symmetric
   arma::mat A = L * L.t();
+
+  A += 0.001 * arma::eye<arma::mat>(p, p);
 
   return A;
 
