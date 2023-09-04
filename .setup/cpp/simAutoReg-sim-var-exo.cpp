@@ -86,9 +86,7 @@
 //' @keywords simAutoReg sim data var
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
-                    const arma::mat& coef, const arma::mat& chol_cov,
-                    const arma::mat& exo_mat, const arma::mat& exo_coef) {
+arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant, const arma::mat& coef, const arma::mat& chol_cov, const arma::mat& exo_mat, const arma::mat& exo_coef) {
   // Step 1: Determine dimensions and total time
   // Number of outcome variables
   int num_outcome_vars = constant.n_elem;
@@ -112,8 +110,8 @@ arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
     // Step 5.1: Generate random noise vector
     arma::vec noise = arma::randn(num_outcome_vars);
 
-    // Step 5.2: Multiply the noise vector by the Cholesky decomposition of the
-    // covariance matrix
+    // Step 5.2: Multiply the noise vector by the Cholesky decomposition
+    //           of the covariance matrix
     arma::vec mult_noise = chol_cov * noise;
 
     // Step 5.3: Iterate over outcome variables
@@ -123,8 +121,7 @@ arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
         // Step 5.5: Iterate over outcome variables again
         for (int l = 0; l < num_outcome_vars; l++) {
           // Update data by applying VAR coefficients and lagged data
-          data(j, t) +=
-              coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
+          data(j, t) += coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
         }
       }
 

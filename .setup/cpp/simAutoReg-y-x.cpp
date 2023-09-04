@@ -104,8 +104,7 @@ Rcpp::List YX(const arma::mat& data, int p) {
     // Nested loop to populate 'X' with lagged values
     for (int lag = p - 1; lag >= 0; lag--) {
       // Update 'X' by assigning a subvector of 'data' to a subvector of 'X'
-      X.row(time_index).subvec(index, index + num_outcome_vars - 1) =
-          data.row(time_index + lag);
+      X.row(time_index).subvec(index, index + num_outcome_vars - 1) = data.row(time_index + lag);
       // Move to the next set of columns in 'X'
       index += num_outcome_vars;
     }

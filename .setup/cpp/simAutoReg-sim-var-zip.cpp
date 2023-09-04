@@ -113,8 +113,7 @@
 //' @keywords simAutoReg sim data var
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant,
-                    const arma::mat& coef, const arma::mat& chol_cov) {
+arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant, const arma::mat& coef, const arma::mat& chol_cov) {
   // Step 1: Determine dimensions and total time
   // Number of outcome variables
   int num_outcome_vars = constant.n_elem;
@@ -126,8 +125,8 @@ arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant,
   // Step 2: Create a matrix to store simulated data
   arma::mat data(num_outcome_vars, total_time);
 
-  // Step 3: Initialize the data matrix with constant values for each outcome
-  // variable
+  // Step 3: Initialize the data matrix with constant values
+  //         for each outcome variable
   data.each_col() = constant;
 
   // Step 4: Simulate VAR-ZIP data using a loop
@@ -146,8 +145,7 @@ arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant,
         // Step 4.5: Iterate over outcome variables again
         for (int l = 0; l < num_outcome_vars; l++) {
           // Update data by applying VAR coefficients and lagged data
-          data(j, t) +=
-              coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
+          data(j, t) += coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
         }
       }
 

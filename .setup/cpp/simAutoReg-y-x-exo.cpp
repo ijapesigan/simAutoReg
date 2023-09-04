@@ -89,8 +89,7 @@ Rcpp::List YXExo(const arma::mat& data, int p, const arma::mat& exo_mat) {
     }
 
     // Update 'X' with the exogenous variables
-    X.row(time_index).subvec(index, index + num_exo_vars - 1) =
-        exo_mat.row(time_index + p);
+    X.row(time_index).subvec(index, index + num_exo_vars - 1) = exo_mat.row(time_index + p);
 
     // Update 'Y' with the target values
     Y.row(time_index) = data.row(time_index + p);
