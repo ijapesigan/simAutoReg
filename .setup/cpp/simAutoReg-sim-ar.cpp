@@ -92,7 +92,8 @@ arma::vec SimAR(int time, int burn_in, const double& constant,
     // Step 5.1: Iterate over lags and apply the autoregressive formula
     for (int lag = 0; lag < num_lags; lag++) {
       if (time_index - lag - 1 >= 0) {
-        data(time_index) += coef(lag) * data(time_index - lag - 1) + noise(time_index);
+        data(time_index) +=
+            coef(lag) * data(time_index - lag - 1) + noise(time_index);
       }
     }
   }

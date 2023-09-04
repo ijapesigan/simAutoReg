@@ -46,7 +46,9 @@
 //' @keywords simAutoReg sim data var
 //' @export
 // [[Rcpp::export]]
-arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant, const arma::mat& coef, const arma::mat& chol_cov, const arma::mat& exo_mat, const arma::mat& exo_coef) {
+arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant,
+                       const arma::mat& coef, const arma::mat& chol_cov,
+                       const arma::mat& exo_mat, const arma::mat& exo_coef) {
   // Step 1: Determine dimensions and total time
   // Number of outcome variables
   int num_outcome_vars = constant.n_elem;
@@ -81,7 +83,8 @@ arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant, const a
         // Step 5.5: Iterate over outcome variables again
         for (int l = 0; l < num_outcome_vars; l++) {
           // Update data by applying VAR coefficients and lagged data
-          data(j, t) += coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
+          data(j, t) +=
+              coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
         }
       }
 

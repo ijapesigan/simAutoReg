@@ -43,12 +43,14 @@ arma::mat SimVARCoef(int k, int p) {
     // Step 4: Fill the companion matrix using VAR coefficients
     for (int i = 0; i < p; i++) {
       // Fill the diagonal block of the companion matrix with VAR coefficients
-      companion_matrix.submat(i * k, i * k, (i + 1) * k - 1, (i + 1) * k - 1) = coefs.cols(i * k, (i + 1) * k - 1);
+      companion_matrix.submat(i * k, i * k, (i + 1) * k - 1, (i + 1) * k - 1) =
+          coefs.cols(i * k, (i + 1) * k - 1);
 
       // Fill the sub-diagonal block of the companion matrix
       // with identity matrices
       if (i > 0) {
-        companion_matrix.submat(i * k, (i - 1) * k, (i + 1) * k - 1, i * k - 1) = arma::eye(k, k);
+        companion_matrix.submat(i * k, (i - 1) * k, (i + 1) * k - 1,
+                                i * k - 1) = arma::eye(k, k);
       }
     }
 

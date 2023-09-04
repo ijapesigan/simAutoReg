@@ -72,7 +72,8 @@
 //' @keywords simAutoReg sim data mvn
 //' @export
 // [[Rcpp::export]]
-arma::mat SimMVN(int n, const arma::vec& location, const arma::mat& chol_scale) {
+arma::mat SimMVN(int n, const arma::vec& location,
+                 const arma::mat& chol_scale) {
   // Step 1: Determine the number of variables
   int num_variables = location.n_elem;
 

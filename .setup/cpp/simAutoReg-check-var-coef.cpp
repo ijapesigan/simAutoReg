@@ -40,17 +40,24 @@ bool CheckVARCoef(const arma::mat& coef) {
   int num_lags = coef.n_cols / num_outcome_vars;
 
   // Step 2: Create a companion matrix for the VAR coefficients
-  arma::mat companion_matrix(num_outcome_vars * num_lags, num_outcome_vars * num_lags, arma::fill::zeros);
+  arma::mat companion_matrix(num_outcome_vars * num_lags,
+                             num_outcome_vars * num_lags, arma::fill::zeros);
 
   // Step 3: Fill the companion matrix using VAR coefficients
   for (int i = 0; i < num_lags; i++) {
     // Step 3.1: Fill the diagonal block of the companion matrix
     //           with VAR coefficients
-    companion_matrix.submat(i * num_outcome_vars, i * num_outcome_vars, (i + 1) * num_outcome_vars - 1, (i + 1) * num_outcome_vars - 1) = coef.cols(i * num_outcome_vars, (i + 1) * num_outcome_vars - 1);
+    companion_matrix.submat(i * num_outcome_vars, i * num_outcome_vars,
+                            (i + 1) * num_outcome_vars - 1,
+                            (i + 1) * num_outcome_vars - 1) =
+        coef.cols(i * num_outcome_vars, (i + 1) * num_outcome_vars - 1);
 
     // Step 3.2: Fill the sub-diagonal block with identity matrices (lags > 0)
     if (i > 0) {
-      companion_matrix.submat(i * num_outcome_vars, (i - 1) * num_outcome_vars, (i + 1) * num_outcome_vars - 1, i * num_outcome_vars - 1) = arma::eye(num_outcome_vars, num_outcome_vars);
+      companion_matrix.submat(i * num_outcome_vars, (i - 1) * num_outcome_vars,
+                              (i + 1) * num_outcome_vars - 1,
+                              i * num_outcome_vars - 1) =
+          arma::eye(num_outcome_vars, num_outcome_vars);
     }
   }
 

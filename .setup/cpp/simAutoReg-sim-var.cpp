@@ -141,7 +141,8 @@ arma::mat SimVAR(int time, int burn_in, const arma::vec& constant,
         // Step 4.5: Iterate over outcome variables again
         for (int l = 0; l < num_outcome_vars; l++) {
           // Update data by applying VAR coefficients and lagged data
-          data(j, t) += coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
+          data(j, t) +=
+              coef(j, lag * num_outcome_vars + l) * data(l, t - lag - 1);
         }
       }
 
