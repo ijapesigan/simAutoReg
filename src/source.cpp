@@ -630,8 +630,8 @@ arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
     // Step 5.1: Generate random noise vector
     arma::vec noise = arma::randn(num_outcome_vars);
 
-    // Step 5.2: Multiply the noise vector by the Cholesky decomposition of the
-    // covariance matrix
+    // Step 5.2: Multiply the noise vector by the Cholesky decomposition
+    //           of the covariance matrix
     arma::vec mult_noise = chol_cov * noise;
 
     // Step 5.3: Iterate over outcome variables
@@ -727,8 +727,8 @@ arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant,
   // Step 2: Create a matrix to store simulated data
   arma::mat data(num_outcome_vars, total_time);
 
-  // Step 3: Initialize the data matrix with constant values for each outcome
-  // variable
+  // Step 3: Initialize the data matrix with constant values
+  //         for each outcome variable
   data.each_col() = constant;
 
   // Step 4: Transpose the exogenous matrix for efficient column access
@@ -739,8 +739,8 @@ arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant,
     // Step 5.1: Generate random noise vector
     arma::vec noise = arma::randn(num_outcome_vars);
 
-    // Step 5.2: Multiply the noise vector by the Cholesky decomposition of the
-    // covariance matrix
+    // Step 5.2: Multiply the noise vector by the Cholesky decomposition
+    //           of the covariance matrix
     arma::vec mult_noise = chol_cov * noise;
 
     // Step 5.3: Iterate over outcome variables
@@ -917,8 +917,8 @@ arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant,
   // Step 2: Create a matrix to store simulated data
   arma::mat data(num_outcome_vars, total_time);
 
-  // Step 3: Initialize the data matrix with constant values for each outcome
-  // variable
+  // Step 3: Initialize the data matrix with constant values
+  //         for each outcome variable
   data.each_col() = constant;
 
   // Step 4: Simulate VAR-ZIP data using a loop
@@ -1093,8 +1093,8 @@ arma::mat SimVAR(int time, int burn_in, const arma::vec& constant,
   // Step 2: Create a matrix to store simulated data
   arma::mat data(num_outcome_vars, total_time);
 
-  // Step 3: Initialize the data matrix with constant values for each outcome
-  // variable
+  // Step 3: Initialize the data matrix with constant values
+  //         for each outcome variable
   data.each_col() = constant;
 
   // Step 4: Simulate VAR data using a loop
