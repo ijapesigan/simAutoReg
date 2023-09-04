@@ -68,7 +68,7 @@
 //' yx <- YXExo(
 //'   data = y,
 //'   p = 2,
-//'   exo_mat = exo_mat[((burn_in + 1):time + burn_in), ]
+//'   exo_mat = exo_mat[(burn_in + 1):(time + burn_in), ]
 //' )
 //' str(yx)
 //'
