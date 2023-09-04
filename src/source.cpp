@@ -188,7 +188,7 @@ arma::vec SimARCoef(int p) {
   //         and stability check
   while (true) {
     // Step 2.1: Generate random coefficients between -0.9 and 0.9
-    arma::vec coefs = -0.9 + 1.8 * arma::randu<arma::vec>(p);
+    coefs = -0.9 + 1.8 * arma::randu<arma::vec>(p);
 
     // Step 2.2: Compute the roots of the characteristic polynomial
     //           of the autoregressive model
@@ -708,6 +708,47 @@ arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
 //'   with dimensions `k` by `time`,
 //'   where `k` is the number of variables
 //'   and `time` is the number of observations.
+//'
+//' @examples
+//' set.seed(42)
+//' time <- 1000L
+//' burn_in <- 200
+//' k <- 3
+//' p <- 2
+//' constant <- c(1, 1, 1)
+//' coef <- matrix(
+//'   data = c(
+//'     0.4, 0.0, 0.0, 0.1, 0.0, 0.0,
+//'     0.0, 0.5, 0.0, 0.0, 0.2, 0.0,
+//'     0.0, 0.0, 0.6, 0.0, 0.0, 0.3
+//'   ),
+//'   nrow = k,
+//'   byrow = TRUE
+//' )
+//' chol_cov <- chol(diag(3))
+//' exo_mat <- MASS::mvrnorm(
+//'   n = time + burn_in,
+//'   mu = c(0, 0, 0),
+//'   Sigma = diag(3)
+//' )
+//' exo_coef <- matrix(
+//'   data = c(
+//'     0.5, 0.0, 0.0,
+//'     0.0, 0.5, 0.0,
+//'     0.0, 0.0, 0.5
+//'   ),
+//'   nrow = 3
+//' )
+//' y <- SimVARZIPExo(
+//'   time = time,
+//'   burn_in = burn_in,
+//'   constant = constant,
+//'   coef = coef,
+//'   chol_cov = chol_cov,
+//'   exo_mat = exo_mat,
+//'   exo_coef = exo_coef
+//' )
+//' str(y)
 //'
 //' @family Simulation of Autoregressive Data Functions
 //' @keywords simAutoReg sim data var
@@ -1247,6 +1288,52 @@ arma::mat SimVariance(int n, const arma::vec& location,
 //' @return List containing the dependent variable (Y)
 //' and predictor variable (X) matrices.
 //' Note that the resulting matrices will have `t - p` rows.
+//'
+//' @examples
+//' set.seed(42)
+//' time <- 1000L
+//' burn_in <- 200
+//' k <- 3
+//' p <- 2
+//' constant <- c(1, 1, 1)
+//' coef <- matrix(
+//'   data = c(
+//'     0.4, 0.0, 0.0, 0.1, 0.0, 0.0,
+//'     0.0, 0.5, 0.0, 0.0, 0.2, 0.0,
+//'     0.0, 0.0, 0.6, 0.0, 0.0, 0.3
+//'   ),
+//'   nrow = k,
+//'   byrow = TRUE
+//' )
+//' chol_cov <- chol(diag(3))
+//' exo_mat <- MASS::mvrnorm(
+//'   n = time + burn_in,
+//'   mu = c(0, 0, 0),
+//'   Sigma = diag(3)
+//' )
+//' exo_coef <- matrix(
+//'   data = c(
+//'     0.5, 0.0, 0.0,
+//'     0.0, 0.5, 0.0,
+//'     0.0, 0.0, 0.5
+//'   ),
+//'   nrow = 3
+//' )
+//' y <- SimVARExo(
+//'   time = time,
+//'   burn_in = burn_in,
+//'   constant = constant,
+//'   coef = coef,
+//'   chol_cov = chol_cov,
+//'   exo_mat = exo_mat,
+//'   exo_coef = exo_coef
+//' )
+//' yx <- YXExo(
+//'   data = y,
+//'   p = 2,
+//'   exo_mat = exo_mat[(burn_in + 1):(time + burn_in), ]
+//' )
+//' str(yx)
 //'
 //' @details
 //' The [YX()] function creates the `Y` and `X` matrices
