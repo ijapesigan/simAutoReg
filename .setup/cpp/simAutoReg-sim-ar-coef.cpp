@@ -32,7 +32,7 @@ arma::vec SimARCoef(int p) {
   //         and stability check
   while (true) {
     // Step 2.1: Generate random coefficients between -0.9 and 0.9
-    arma::vec coefs = -0.9 + 1.8 * arma::randu<arma::vec>(p);
+    coefs = -0.9 + 1.8 * arma::randu<arma::vec>(p);
 
     // Step 2.2: Compute the roots of the characteristic polynomial
     //           of the autoregressive model
