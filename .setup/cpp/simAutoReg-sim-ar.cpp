@@ -85,7 +85,7 @@ arma::vec SimAR(int time, int burn_in, const double& constant,
   data *= constant;
 
   // Step 4: Generate a vector of random noise
-  arma::vec noise = arma::randn(total_time);
+  arma::vec noise = sd * arma::randn(total_time);
 
   // Step 5: Simulate autoregressive data using a loop
   for (int time_index = 0; time_index < total_time; time_index++) {
