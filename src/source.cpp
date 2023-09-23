@@ -293,7 +293,7 @@ arma::vec SimAR(int time, int burn_in, const double& constant,
   data *= constant;
 
   // Step 4: Generate a vector of random noise
-  arma::vec noise = arma::randn(total_time);
+  arma::vec noise = sd * arma::randn(total_time);
 
   // Step 5: Simulate autoregressive data using a loop
   for (int time_index = 0; time_index < total_time; time_index++) {
@@ -628,17 +628,13 @@ arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
   // Step 5: Simulate VAR-Exo data using a loop
   for (int t = num_lags; t < total_time; t++) {
     // Step 5.1: Generate random noise vector
-    arma::vec noise = arma::randn(num_outcome_vars);
+    arma::vec noise = chol_cov * arma::randn(num_outcome_vars);
 
-    // Step 5.2: Multiply the noise vector by the Cholesky decomposition
-    //           of the covariance matrix
-    arma::vec mult_noise = chol_cov * noise;
-
-    // Step 5.3: Iterate over outcome variables
+    // Step 5.2: Iterate over outcome variables
     for (int j = 0; j < num_outcome_vars; j++) {
-      // Step 5.4: Iterate over lags
+      // Step 5.3: Iterate over lags
       for (int lag = 0; lag < num_lags; lag++) {
-        // Step 5.5: Iterate over outcome variables again
+        // Step 5.4: Iterate over outcome variables again
         for (int l = 0; l < num_outcome_vars; l++) {
           // Update data by applying VAR coefficients and lagged data
           data(j, t) +=
@@ -646,14 +642,14 @@ arma::mat SimVARExo(int time, int burn_in, const arma::vec& constant,
         }
       }
 
-      // Step 5.6: Iterate over exogenous variables
+      // Step 5.5: Iterate over exogenous variables
       for (arma::uword x = 0; x < exo_mat_t.n_rows; x++) {
         // Update data with exogenous variables and their coefficients
         data(j, t) += exo_mat_t(x, t) * exo_coef(j, x);
       }
 
-      // Step 5.7: Add the corresponding element from the noise vector
-      data(j, t) += mult_noise(j);
+      // Step 5.6: Add the corresponding element from the noise vector
+      data(j, t) += noise(j);
     }
   }
 
@@ -778,17 +774,13 @@ arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant,
   // Step 5: Simulate VAR-ZIP-Exo data using a loop
   for (int t = num_lags; t < total_time; t++) {
     // Step 5.1: Generate random noise vector
-    arma::vec noise = arma::randn(num_outcome_vars);
+    arma::vec noise = chol_cov * arma::randn(num_outcome_vars);
 
-    // Step 5.2: Multiply the noise vector by the Cholesky decomposition
-    //           of the covariance matrix
-    arma::vec mult_noise = chol_cov * noise;
-
-    // Step 5.3: Iterate over outcome variables
+    // Step 5.2: Iterate over outcome variables
     for (int j = 0; j < num_outcome_vars; j++) {
-      // Step 5.4: Iterate over lags
+      // Step 5.3: Iterate over lags
       for (int lag = 0; lag < num_lags; lag++) {
-        // Step 5.5: Iterate over outcome variables again
+        // Step 5.4: Iterate over outcome variables again
         for (int l = 0; l < num_outcome_vars; l++) {
           // Update data by applying VAR coefficients and lagged data
           data(j, t) +=
@@ -796,20 +788,20 @@ arma::mat SimVARZIPExo(int time, int burn_in, const arma::vec& constant,
         }
       }
 
-      // Step 5.6: Iterate over exogenous variables
+      // Step 5.5: Iterate over exogenous variables
       for (arma::uword x = 0; x < exo_mat_t.n_rows; x++) {
         // Update data with exogenous variables and their coefficients
         data(j, t) += exo_mat_t(x, t) * exo_coef(j, x);
       }
 
-      // Step 5.7: Add the corresponding element from the noise vector
-      data(j, t) += mult_noise(j);
+      // Step 5.6: Add the corresponding element from the noise vector
+      data(j, t) += noise(j);
 
-      // Step 5.8: Calculate the intensity for the zero-inflated Poisson
+      // Step 5.7: Calculate the intensity for the zero-inflated Poisson
       // distribution
       double intensity = std::exp(data(0, t));
 
-      // Step 5.9: Simulate a zero-inflated Poisson random variable
+      // Step 5.8: Simulate a zero-inflated Poisson random variable
       if (R::runif(0, 1) < intensity / (1 + intensity)) {
         // Set to zero with probability 1 - intensity
         data(0, t) = 0;
@@ -965,17 +957,13 @@ arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant,
   // Step 4: Simulate VAR-ZIP data using a loop
   for (int t = num_lags; t < total_time; t++) {
     // Step 4.1: Generate random noise vector
-    arma::vec noise = arma::randn(num_outcome_vars);
+    arma::vec noise = chol_cov * arma::randn(num_outcome_vars);
 
-    // Step 4.2: Multiply the noise vector
-    //           by the Cholesky decomposition of the covariance matrix
-    arma::vec mult_noise = chol_cov * noise;
-
-    // Step 4.3: Iterate over outcome variables
+    // Step 4.2: Iterate over outcome variables
     for (int j = 0; j < num_outcome_vars; j++) {
-      // Step 4.4: Iterate over lags
+      // Step 4.3: Iterate over lags
       for (int lag = 0; lag < num_lags; lag++) {
-        // Step 4.5: Iterate over outcome variables again
+        // Step 4.4: Iterate over outcome variables again
         for (int l = 0; l < num_outcome_vars; l++) {
           // Update data by applying VAR coefficients and lagged data
           data(j, t) +=
@@ -983,14 +971,14 @@ arma::mat SimVARZIP(int time, int burn_in, const arma::vec& constant,
         }
       }
 
-      // Step 4.6: Add the corresponding element from the noise vector
-      data(j, t) += mult_noise(j);
+      // Step 4.5: Add the corresponding element from the noise vector
+      data(j, t) += noise(j);
 
-      // Step 4.7: Calculate the intensity
+      // Step 4.6: Calculate the intensity
       //           for the zero-inflated Poisson distribution
       double intensity = std::exp(data(0, t));
 
-      // Step 4.8: Simulate a zero-inflated Poisson random variable
+      // Step 4.7: Simulate a zero-inflated Poisson random variable
       if (R::runif(0, 1) < intensity / (1 + intensity)) {
         // Set to zero with probability 1 - intensity
         data(0, t) = 0;
@@ -1141,17 +1129,13 @@ arma::mat SimVAR(int time, int burn_in, const arma::vec& constant,
   // Step 4: Simulate VAR data using a loop
   for (int t = num_lags; t < total_time; t++) {
     // Step 4.1: Generate random noise vector
-    arma::vec noise = arma::randn(num_outcome_vars);
+    arma::vec noise = chol_cov * arma::randn(num_outcome_vars);
 
-    // Step 4.2: Multiply the noise vector
-    //           by the Cholesky decomposition of the covariance matrix
-    arma::vec mult_noise = chol_cov * noise;
-
-    // Step 4.3: Iterate over outcome variables
+    // Step 4.2: Iterate over outcome variables
     for (int j = 0; j < num_outcome_vars; j++) {
-      // Step 4.4: Iterate over lags
+      // Step 4.3: Iterate over lags
       for (int lag = 0; lag < num_lags; lag++) {
-        // Step 4.5: Iterate over outcome variables again
+        // Step 4.4: Iterate over outcome variables again
         for (int l = 0; l < num_outcome_vars; l++) {
           // Update data by applying VAR coefficients and lagged data
           data(j, t) +=
@@ -1159,8 +1143,8 @@ arma::mat SimVAR(int time, int burn_in, const arma::vec& constant,
         }
       }
 
-      // Step 4.6: Add the corresponding element from the noise vector
-      data(j, t) += mult_noise(j);
+      // Step 4.5: Add the corresponding element from the noise vector
+      data(j, t) += noise(j);
     }
   }
 
